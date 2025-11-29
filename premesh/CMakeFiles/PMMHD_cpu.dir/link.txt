@@ -1,0 +1,1 @@
+nvc++  -mp -fast -O3 -DNDEBUG CMakeFiles/PMMHD_cpu.dir/run_PMMHD.cpp.o -o bin/PMMHD_cpu  lib/libSimObj.a lib/libFieldObj.a lib/libPanelObj.a lib/libicsObj.a lib/libAMRObj_cpu.a /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/libacchost.so lib/libPanelObj.a lib/libicsObj.a 

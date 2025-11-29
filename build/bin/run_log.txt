@@ -1,0 +1,5 @@
+=== STDOUT ===
+deck address: deck.json
+
+=== STDERR ===
+malloc(): mismatching next->prev_size (unsorted)

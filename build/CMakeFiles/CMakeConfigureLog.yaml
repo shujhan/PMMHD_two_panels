@@ -1,0 +1,673 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 4.18.0-553.50.1.el8_10.x86_64 - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is NVHPC, found in:
+        /home/shujhan/research/PMMHD/build/CMakeFiles/3.26.5/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is NVHPC, found in:
+        /home/shujhan/research/PMMHD/build/CMakeFiles/3.26.5/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-Nltvjr"
+      binary: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-Nltvjr"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g -O0"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-Nltvjr
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_678f9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_678f9.dir/build.make CMakeFiles/cmTC_678f9.dir/build
+        gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-Nltvjr'
+        Building C object CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc   -v -MD -MT CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        Create file CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_PGCG_SOURCE --c -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --dependencies_target_to_stdout CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o --dependencies_to_file CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d -q -o /tmp/nvcYlphdwXAITdi9.il /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /usr/share/cmake/Modules/CMakeCCompilerABI.c -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /usr/share/cmake/Modules/CMakeCCompilerABI.c -il /tmp/nvcYlphdwXAITdi9.il -x 123 0x80000000 -x 123 4 -x 2 0x400 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 122 0x400000 -y 125 0x100000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -cmdline '+nvc /tmp/nvcYlphdwXAITdi9.il -v -MD -MT CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -c' -asm /tmp/nvcslphd2C41WiXU.ll
+        NVC++/x86-64 Linux 22.3-0: compilation successful
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvcslphd2C41WiXU.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o
+        Unlinking /tmp/nvcYlphdwXAITdi9.il
+        Unlinking /tmp/nvcclphdg8W24LkK.s
+        Unlinking /tmp/nvcslphd2C41WiXU.ll
+        Unlinking /tmp/nvcIlphdMd81erSA.llvm
+        Linking C executable cmTC_678f9
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_678f9.dir/link.txt --verbose=1
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc  -v CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -o cmTC_678f9 
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        
+        /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_678f9 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o
+        gmake[1]: Leaving directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-Nltvjr'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=start
+        warn: unable to parse implicit include dirs!
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-Nltvjr]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_678f9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_678f9.dir/build.make CMakeFiles/cmTC_678f9.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-Nltvjr']
+        ignore line: [Building C object CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc   -v -MD -MT CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: [Create file CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_PGCG_SOURCE --c -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --dependencies_target_to_stdout CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o --dependencies_to_file CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d -q -o /tmp/nvcYlphdwXAITdi9.il /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /usr/share/cmake/Modules/CMakeCCompilerABI.c -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /usr/share/cmake/Modules/CMakeCCompilerABI.c -il /tmp/nvcYlphdwXAITdi9.il -x 123 0x80000000 -x 123 4 -x 2 0x400 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 122 0x400000 -y 125 0x100000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -cmdline '+nvc /tmp/nvcYlphdwXAITdi9.il -v -MD -MT CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -c' -asm /tmp/nvcslphd2C41WiXU.ll]
+        ignore line: [NVC++/x86-64 Linux 22.3-0: compilation successful]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvcslphd2C41WiXU.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o]
+        ignore line: [Unlinking /tmp/nvcYlphdwXAITdi9.il]
+        ignore line: [Unlinking /tmp/nvcclphdg8W24LkK.s]
+        ignore line: [Unlinking /tmp/nvcslphd2C41WiXU.ll]
+        ignore line: [Unlinking /tmp/nvcIlphdMd81erSA.llvm]
+        ignore line: [Linking C executable cmTC_678f9]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_678f9.dir/link.txt --verbose=1]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc  -v CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -o cmTC_678f9 ]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: []
+        link line: [/usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_678f9 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [/usr/lib64/crt1.o] ==> obj [/usr/lib64/crt1.o]
+          arg [/usr/lib64/crti.o] ==> obj [/usr/lib64/crti.o]
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o] ==> obj [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o]
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-T] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld] ==> ignore
+          arg [-L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+          arg [-L/usr/lib64] ==> dir [/usr/lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8]
+          arg [CMakeFiles/cmTC_678f9.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_678f9] ==> ignore
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
+          arg [-lnvomp] ==> lib [nvomp]
+          arg [-ldl] ==> lib [dl]
+          arg [--as-needed] ==> ignore
+          arg [-lnvhpcatm] ==> lib [nvhpcatm]
+          arg [-latomic] ==> lib [atomic]
+          arg [--no-as-needed] ==> ignore
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lnvcpumath] ==> lib [nvcpumath]
+          arg [-lnsnvc] ==> lib [nsnvc]
+          arg [-lnvc] ==> lib [nvc]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lm] ==> lib [m]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o]
+          arg [/usr/lib64/crtn.o] ==> obj [/usr/lib64/crtn.o]
+        collapse library dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+        collapse library dir [/usr/lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8] ==> [/usr/lib/gcc/x86_64-redhat-linux/8]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
+        implicit libs: [nvomp;dl;nvhpcatm;atomic;pthread;nvcpumath;nsnvc;nvc;gcc;c;gcc_s;m]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o;/usr/lib64/crtn.o]
+        implicit dirs: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib;/usr/lib64;/usr/lib/gcc/x86_64-redhat-linux/8]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-V4pDKl"
+      binary: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-V4pDKl"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g -O0"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-V4pDKl
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_afc84/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_afc84.dir/build.make CMakeFiles/cmTC_afc84.dir/build
+        gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-V4pDKl'
+        Building CXX object CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++   -v -MD -MT CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        Create file CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_GNU_SOURCE -D_PGCG_SOURCE -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/include/c++/8 --sys_include /usr/include/c++/8/x86_64-redhat-linux --sys_include /usr/include/c++/8/backward --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --dependencies_target_to_stdout CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o --dependencies_to_file CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d -q -o /tmp/nvc++dMphdjZ5Y90Si.il /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -il /tmp/nvc++dMphdjZ5Y90Si.il -x 117 0x200 -x 123 0x80000000 -x 123 4 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -cmdline '+nvc++ /tmp/nvc++dMphdjZ5Y90Si.il -v -MD -MT CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -c' -asm /tmp/nvc++ZMphdzUjox-8s.ll
+        NVC++/x86-64 Linux 22.3-0: compilation successful
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvc++ZMphdzUjox-8s.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o
+        Unlinking /tmp/nvc++dMphdjZ5Y90Si.il
+        Unlinking /tmp/nvc++BMphdrmO3NqzP.s
+        Unlinking /tmp/nvc++ZMphdzUjox-8s.ll
+        Unlinking /tmp/nvc++lMphdHH3KvvNe.llvm
+        Linking CXX executable cmTC_afc84
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_afc84.dir/link.txt --verbose=1
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++  -v CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_afc84 
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        
+        /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_afc84 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -latomic -lnvhpcatm -lstdc++ -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o
+        gmake[1]: Leaving directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-V4pDKl'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=start
+        warn: unable to parse implicit include dirs!
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-V4pDKl]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_afc84/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_afc84.dir/build.make CMakeFiles/cmTC_afc84.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-V4pDKl']
+        ignore line: [Building CXX object CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++   -v -MD -MT CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: [Create file CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_GNU_SOURCE -D_PGCG_SOURCE -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/include/c++/8 --sys_include /usr/include/c++/8/x86_64-redhat-linux --sys_include /usr/include/c++/8/backward --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --dependencies_target_to_stdout CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o --dependencies_to_file CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d -q -o /tmp/nvc++dMphdjZ5Y90Si.il /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -il /tmp/nvc++dMphdjZ5Y90Si.il -x 117 0x200 -x 123 0x80000000 -x 123 4 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -cmdline '+nvc++ /tmp/nvc++dMphdjZ5Y90Si.il -v -MD -MT CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -c' -asm /tmp/nvc++ZMphdzUjox-8s.ll]
+        ignore line: [NVC++/x86-64 Linux 22.3-0: compilation successful]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvc++ZMphdzUjox-8s.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [Unlinking /tmp/nvc++dMphdjZ5Y90Si.il]
+        ignore line: [Unlinking /tmp/nvc++BMphdrmO3NqzP.s]
+        ignore line: [Unlinking /tmp/nvc++ZMphdzUjox-8s.ll]
+        ignore line: [Unlinking /tmp/nvc++lMphdHH3KvvNe.llvm]
+        ignore line: [Linking CXX executable cmTC_afc84]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_afc84.dir/link.txt --verbose=1]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++  -v CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_afc84 ]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: []
+        link line: [/usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_afc84 -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -latomic -lnvhpcatm -lstdc++ -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [/usr/lib64/crt1.o] ==> obj [/usr/lib64/crt1.o]
+          arg [/usr/lib64/crti.o] ==> obj [/usr/lib64/crti.o]
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o] ==> obj [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o]
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-T] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld] ==> ignore
+          arg [-L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+          arg [-L/usr/lib64] ==> dir [/usr/lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8]
+          arg [CMakeFiles/cmTC_afc84.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_afc84] ==> ignore
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
+          arg [-latomic] ==> lib [atomic]
+          arg [-lnvhpcatm] ==> lib [nvhpcatm]
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lnvomp] ==> lib [nvomp]
+          arg [-ldl] ==> lib [dl]
+          arg [--as-needed] ==> ignore
+          arg [-lnvhpcatm] ==> lib [nvhpcatm]
+          arg [-latomic] ==> lib [atomic]
+          arg [--no-as-needed] ==> ignore
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lnvcpumath] ==> lib [nvcpumath]
+          arg [-lnsnvc] ==> lib [nsnvc]
+          arg [-lnvc] ==> lib [nvc]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lm] ==> lib [m]
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o] ==> obj [/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o]
+          arg [/usr/lib64/crtn.o] ==> obj [/usr/lib64/crtn.o]
+        collapse library dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+        collapse library dir [/usr/lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8] ==> [/usr/lib/gcc/x86_64-redhat-linux/8]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
+        implicit libs: [atomic;nvhpcatm;stdc++;nvomp;dl;nvhpcatm;atomic;pthread;nvcpumath;nsnvc;nvc;gcc;c;gcc_s;m]
+        implicit objs: [/usr/lib64/crt1.o;/usr/lib64/crti.o;/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o;/usr/lib/gcc/x86_64-redhat-linux/8/crtend.o;/usr/lib64/crtn.o]
+        implicit dirs: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib;/usr/lib64;/usr/lib/gcc/x86_64-redhat-linux/8]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:219 (try_compile)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML"
+      binary: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g -O0"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_mp"
+      cached: true
+      stdout: |
+        Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_144bb/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_144bb.dir/build.make CMakeFiles/cmTC_144bb.dir/build
+        gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML'
+        Building C object CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc   -mp -v -MD -MT CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -c /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        Create file CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_PGCG_SOURCE --c -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= -D_OPENMP=202011 -DPGI_TESLA_TARGET --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --mp -D_OPENMP=202011 --dependencies_target_to_stdout CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o --dependencies_to_file CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d -q -o /tmp/nvcVfqhdnqnBAzSu.il /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c -il /tmp/nvcVfqhdnqnBAzSu.il -x 123 0x80000000 -x 123 4 -x 2 0x400 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 122 0x400000 -y 125 0x100000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -mp -x 69 0x200 -x 69 0x400 -x 69 2 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -x 180 0x4000000 -x 194 0x20000000 -cmdline '+nvc /tmp/nvcVfqhdnqnBAzSu.il -mp -v -MD -MT CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -c' -asm /tmp/nvcFfqhdDGX6er-3.ll
+        NVC++/x86-64 Linux 22.3-0: compilation successful
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvcFfqhdDGX6er-3.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o
+        Unlinking /tmp/nvcVfqhdnqnBAzSu.il
+        Unlinking /tmp/nvcNfqhd1rxi0go2.s
+        Unlinking /tmp/nvcFfqhdDGX6er-3.ll
+        Unlinking /tmp/nvcxfqhdfKD8VrZ2.llvm
+        Linking C executable cmTC_144bb
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_144bb.dir/link.txt --verbose=1
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc  -mp -v CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -o cmTC_144bb  -v 
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/acclnk -v /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_144bb -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o
+        /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_144bb -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o
+        gmake[1]: Leaving directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:262 (message)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:35 (find_package)"
+    message: |
+      Parsed C OpenMP implicit link information from above output:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_144bb/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_144bb.dir/build.make CMakeFiles/cmTC_144bb.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML']
+        ignore line: [Building C object CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc   -mp -v -MD -MT CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -c /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: [Create file CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_PGCG_SOURCE --c -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= -D_OPENMP=202011 -DPGI_TESLA_TARGET --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --mp -D_OPENMP=202011 --dependencies_target_to_stdout CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o --dependencies_to_file CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d -q -o /tmp/nvcVfqhdnqnBAzSu.il /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-KhCcML/OpenMPTryFlag.c -il /tmp/nvcVfqhdnqnBAzSu.il -x 123 0x80000000 -x 123 4 -x 2 0x400 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 122 0x400000 -y 125 0x100000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -mp -x 69 0x200 -x 69 0x400 -x 69 2 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -x 180 0x4000000 -x 194 0x20000000 -cmdline '+nvc /tmp/nvcVfqhdnqnBAzSu.il -mp -v -MD -MT CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -c' -asm /tmp/nvcFfqhdDGX6er-3.ll]
+        ignore line: [NVC++/x86-64 Linux 22.3-0: compilation successful]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvcFfqhdDGX6er-3.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o]
+        ignore line: [Unlinking /tmp/nvcVfqhdnqnBAzSu.il]
+        ignore line: [Unlinking /tmp/nvcNfqhd1rxi0go2.s]
+        ignore line: [Unlinking /tmp/nvcFfqhdDGX6er-3.ll]
+        ignore line: [Unlinking /tmp/nvcxfqhdfKD8VrZ2.llvm]
+        ignore line: [Linking C executable cmTC_144bb]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_144bb.dir/link.txt --verbose=1]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc  -mp -v CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -o cmTC_144bb  -v ]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/acclnk -v /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_144bb -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o]
+        link line: [/usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_144bb -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-T] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld] ==> ignore
+          arg [-L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+          arg [-L/usr/lib64] ==> dir [/usr/lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8]
+          arg [CMakeFiles/cmTC_144bb.dir/OpenMPTryFlag.c.o] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_144bb] ==> ignore
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
+          arg [-lacchost] ==> lib [acchost]
+          arg [-ldl] ==> lib [dl]
+          arg [-lnvomp] ==> lib [nvomp]
+          arg [-ldl] ==> lib [dl]
+          arg [--as-needed] ==> ignore
+          arg [-lnvhpcatm] ==> lib [nvhpcatm]
+          arg [-latomic] ==> lib [atomic]
+          arg [--no-as-needed] ==> ignore
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lnvcpumath] ==> lib [nvcpumath]
+          arg [-lnsnvc] ==> lib [nsnvc]
+          arg [-lnvc] ==> lib [nvc]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lm] ==> lib [m]
+        collapse library dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+        collapse library dir [/usr/lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8] ==> [/usr/lib/gcc/x86_64-redhat-linux/8]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
+        implicit libs: [acchost;dl;nvomp;dl;nvhpcatm;atomic;pthread;nvcpumath;nsnvc;nvc;gcc;c;gcc_s;m]
+        implicit objs: []
+        implicit dirs: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib;/usr/lib64;/usr/lib/gcc/x86_64-redhat-linux/8]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:219 (try_compile)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2"
+      binary: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g -O0"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_mp"
+      cached: true
+      stdout: |
+        Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_dacbe/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_dacbe.dir/build.make CMakeFiles/cmTC_dacbe.dir/build
+        gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2'
+        Building CXX object CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++   -mp -v --c++11 --gnu_extensions -MD -MT CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -c /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        Create file CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_GNU_SOURCE -D_PGCG_SOURCE --c++11 -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/include/c++/8 --sys_include /usr/include/c++/8/x86_64-redhat-linux --sys_include /usr/include/c++/8/backward --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= -D_OPENMP=202011 -DPGI_TESLA_TARGET --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --mp -D_OPENMP=202011 --gnu_extensions --dependencies_target_to_stdout CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o --dependencies_to_file CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d -q -o /tmp/nvc++tMqhd5DLbJYvH.il /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp -il /tmp/nvc++tMqhd5DLbJYvH.il -x 117 0x200 -x 123 0x80000000 -x 123 4 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -mp -x 69 0x200 -x 69 0x400 -x 69 2 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -x 180 0x4000000 -x 194 0x20000000 -cmdline '+nvc++ /tmp/nvc++tMqhd5DLbJYvH.il -mp -v --c++11 --gnu_extensions -MD -MT CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -c' -asm /tmp/nvc++dMqhdj1AdDT1E.ll
+        NVC++/x86-64 Linux 22.3-0: compilation successful
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvc++dMqhdj1AdDT1E.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o
+        Unlinking /tmp/nvc++tMqhd5DLbJYvH.il
+        Unlinking /tmp/nvc++RMqhdbnXdDv2z.s
+        Unlinking /tmp/nvc++dMqhdj1AdDT1E.ll
+        Unlinking /tmp/nvc++BMqhdrErmRMrl.llvm
+        Linking CXX executable cmTC_dacbe
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dacbe.dir/link.txt --verbose=1
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++  -mp -v CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -o cmTC_dacbe  -v 
+        Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3
+        Export PGI=/sw/pkgs/arc/nvhpc/22.3
+        
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/acclnk -v /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_dacbe -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -latomic -lnvhpcatm -lstdc++ -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o
+        /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_dacbe -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -latomic -lnvhpcatm -lstdc++ -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o
+        gmake[1]: Leaving directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:262 (message)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:35 (find_package)"
+    message: |
+      Parsed CXX OpenMP implicit link information from above output:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_dacbe/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_dacbe.dir/build.make CMakeFiles/cmTC_dacbe.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2']
+        ignore line: [Building CXX object CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++   -mp -v --c++11 --gnu_extensions -MD -MT CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -c /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: [Create file CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp1 --llalign -Dunix -D__unix -D__unix__ -Dlinux -D__linux -D__linux__ -D__NO_MATH_INLINES -D__LP64__ -D__x86_64 -D__x86_64__ -D__LONG_MAX__=9223372036854775807L '-D__SIZE_TYPE__=unsigned long int' '-D__PTRDIFF_TYPE__=long int' -D__amd64 -D__amd64__ -D__k8 -D__k8__ -D__MMX__ -D__SSE__ -D__SSE2__ -D__SSE3__ -D__SSSE3__ -D__ABM__ -D__SSE4_1__ -D__SSE4_2__ -D__AVX__ -D__AVX2__ -D__AVX512F__ -D__AVX512CD__ -D__AVX512VL__ -D__AVX512BW__ -D__AVX512DQ__ -D__F16C__ -D__FMA__ -D__XSAVE__ -D__XSAVEOPT__ -D__XSAVEC__ -D__XSAVES__ -D__POPCNT__ -D__AES__ -D__PCLMUL__ -D__CLFLUSHOPT__ -D__FSGSBASE__ -D__RDRND__ -D__BMI__ -D__BMI2__ -D__LZCNT__ -D__FXSR__ -D__RTM__ -D__PKU__ -D__PGI -D__NVCOMPILER -D_GNU_SOURCE -D_PGCG_SOURCE --c++11 -I- -I/sw/pkgs/arc/eigen/eigen-3.4.0 -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/extras/qd/include/qd -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nvshmem/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/nccl/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/comm_libs/mpi/include -I/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/math_libs/include --sys_include /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/include --sys_include /usr/include/c++/8 --sys_include /usr/include/c++/8/x86_64-redhat-linux --sys_include /usr/include/c++/8/backward --sys_include /usr/lib/gcc/x86_64-redhat-linux/8/include --sys_include /usr/local/include --sys_include /usr/include -D__PGLLVM__ -D__NVCOMPILER_LLVM__ -D__extension__= -D_OPENMP=202011 -DPGI_TESLA_TARGET --preinclude _cplus_preinclude.h --preinclude_macros _cplus_macros.h --gnu_version=80401 -D__pgnu_vsn=80401 --mp -D_OPENMP=202011 --gnu_extensions --dependencies_target_to_stdout CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o --dependencies_to_file CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d -q -o /tmp/nvc++tMqhd5DLbJYvH.il /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/cpp2 /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp -opt 1 -x 119 0xa10000 -x 122 0x40 -x 123 0x1000 -x 127 4 -x 127 17 -x 19 0x400000 -x 28 0x40000 -x 120 0x10000000 -x 70 0x8000 -x 122 1 -x 125 0x20000 -quad -x 59 4 -tp skylake-avx512 -x 120 0x1000 -astype 0 -x 121 1 -fn /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-vox9j2/OpenMPTryFlag.cpp -il /tmp/nvc++tMqhd5DLbJYvH.il -x 117 0x200 -x 123 0x80000000 -x 123 4 -x 119 0x20 -def __pgnu_vsn=80401 -x 70 0x40000000 -x 183 4 -x 121 0x800 -x 6 0x20000 -x 249 130 -x 120 0x200000 -x 70 0x40000000 -x 8 0x40000000 -x 164 0x800000 -x 85 0x2000 -x 85 0x4000 -x 34 0x40000000 -x 53 0x800000 -x 83 0x1 -x 84 0x3c7 -x 85 0x1 -x 206 0x02 -x 68 0x1 -x 39 4 -x 56 0x10 -x 26 0x10 -x 26 1 -x 56 0x4000 -y 163 0xc0000000 -x 189 0x10 -y 189 0x4000000 -mp -x 69 0x200 -x 69 0x400 -x 69 2 -gnuvsn 80401 -x 69 0x200 -x 123 0x400 -x 180 0x4000000 -x 194 0x20000000 -cmdline '+nvc++ /tmp/nvc++tMqhd5DLbJYvH.il -mp -v --c++11 --gnu_extensions -MD -MT CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -MF CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o.d -o CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -c' -asm /tmp/nvc++dMqhdj1AdDT1E.ll]
+        ignore line: [NVC++/x86-64 Linux 22.3-0: compilation successful]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/share/llvm/bin/llc /tmp/nvc++dMqhdj1AdDT1E.ll -march=x86-64 -mcpu=native -mattr=+mmx -mattr=+sse -mattr=+sse2 -mattr=+sse3 -mattr=+ssse3 -mattr=+sse4.1 -mattr=+sse4.2 -mattr=+avx -mattr=+avx2 -mattr=+avx512f -mattr=+avx512cd -mattr=+avx512vl -mattr=+avx512bw -mattr=+avx512dq -mattr=+f16c -mattr=+fma -mattr=+xsave -mattr=+xsaveopt -mattr=+xsavec -mattr=+xsaves -mattr=+popcnt -mattr=+aes -mattr=+pclmul -mattr=+clflushopt -mattr=+fsgsbase -mattr=+rdrnd -mattr=+bmi -mattr=+bmi2 -mattr=+lzcnt -mattr=+fxsr -mattr=+rtm -mattr=+pku -O1 -fast-isel=0 -non-global-value-max-name-size=4294967295 -x86-cmov-converter=0 -dwarf-directory=false --align-all-functions=6 -filetype=obj --frame-pointer=none -o CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o]
+        ignore line: [Unlinking /tmp/nvc++tMqhd5DLbJYvH.il]
+        ignore line: [Unlinking /tmp/nvc++RMqhdbnXdDv2z.s]
+        ignore line: [Unlinking /tmp/nvc++dMqhdj1AdDT1E.ll]
+        ignore line: [Unlinking /tmp/nvc++BMqhdrErmRMrl.llvm]
+        ignore line: [Linking CXX executable cmTC_dacbe]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dacbe.dir/link.txt --verbose=1]
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++  -mp -v CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -o cmTC_dacbe  -v ]
+        ignore line: [Export NVCOMPILER=/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3]
+        ignore line: [Export PGI=/sw/pkgs/arc/nvhpc/22.3]
+        ignore line: []
+        ignore line: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/tools/acclnk -v /usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_dacbe -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -latomic -lnvhpcatm -lstdc++ -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o]
+        link line: [/usr/bin/ld /usr/lib64/crt1.o /usr/lib64/crti.o /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/trace_init.o /usr/lib/gcc/x86_64-redhat-linux/8/crtbegin.o --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -T /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld -L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -L/usr/lib64 -L/usr/lib/gcc/x86_64-redhat-linux/8 CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o -rpath /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib -rpath /usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -o cmTC_dacbe -L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64 -lacchost -ldl -latomic -lnvhpcatm -lstdc++ -lnvomp -ldl --as-needed -lnvhpcatm -latomic --no-as-needed -lpthread -lnvcpumath -lnsnvc -lnvc -lgcc -lc -lgcc_s -lm /usr/lib/gcc/x86_64-redhat-linux/8/crtend.o /usr/lib64/crtn.o]
+          arg [/usr/bin/ld] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-T] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib/nvhpc.ld] ==> ignore
+          arg [-L/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+          arg [-L/usr/lib64] ==> dir [/usr/lib64]
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8]
+          arg [CMakeFiles/cmTC_dacbe.dir/OpenMPTryFlag.cpp.o] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_dacbe] ==> ignore
+          arg [-L/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64]
+          arg [-lacchost] ==> lib [acchost]
+          arg [-ldl] ==> lib [dl]
+          arg [-latomic] ==> lib [atomic]
+          arg [-lnvhpcatm] ==> lib [nvhpcatm]
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lnvomp] ==> lib [nvomp]
+          arg [-ldl] ==> lib [dl]
+          arg [--as-needed] ==> ignore
+          arg [-lnvhpcatm] ==> lib [nvhpcatm]
+          arg [-latomic] ==> lib [atomic]
+          arg [--no-as-needed] ==> ignore
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lnvcpumath] ==> lib [nvcpumath]
+          arg [-lnsnvc] ==> lib [nsnvc]
+          arg [-lnvc] ==> lib [nvc]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lm] ==> lib [m]
+        collapse library dir [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib] ==> [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib]
+        collapse library dir [/usr/lib64] ==> [/usr/lib64]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8] ==> [/usr/lib/gcc/x86_64-redhat-linux/8]
+        collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64] ==> [/usr/lib64]
+        implicit libs: [acchost;dl;atomic;nvhpcatm;stdc++;nvomp;dl;nvhpcatm;atomic;pthread;nvcpumath;nsnvc;nvc;gcc;c;gcc_s;m]
+        implicit objs: []
+        implicit dirs: [/sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/lib;/usr/lib64;/usr/lib/gcc/x86_64-redhat-linux/8]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:419 (try_compile)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:557 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting C OpenMP version"
+    directories:
+      source: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-EM0ocm"
+      binary: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-EM0ocm"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g -O0"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "OpenMP_SPECTEST_C_"
+      cached: true
+      stdout: |
+        Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-EM0ocm
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ae5f2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ae5f2.dir/build.make CMakeFiles/cmTC_ae5f2.dir/build
+        gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-EM0ocm'
+        Building C object CMakeFiles/cmTC_ae5f2.dir/OpenMPCheckVersion.c.o
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc   -mp -MD -MT CMakeFiles/cmTC_ae5f2.dir/OpenMPCheckVersion.c.o -MF CMakeFiles/cmTC_ae5f2.dir/OpenMPCheckVersion.c.o.d -o CMakeFiles/cmTC_ae5f2.dir/OpenMPCheckVersion.c.o -c /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-EM0ocm/OpenMPCheckVersion.c
+        Linking C executable cmTC_ae5f2
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ae5f2.dir/link.txt --verbose=1
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc  -mp CMakeFiles/cmTC_ae5f2.dir/OpenMPCheckVersion.c.o -o cmTC_ae5f2 
+        gmake[1]: Leaving directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-EM0ocm'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:419 (try_compile)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:557 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:35 (find_package)"
+    description: "Detecting CXX OpenMP version"
+    directories:
+      source: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-6boD6o"
+      binary: "/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-6boD6o"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g -O0"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "OpenMP_SPECTEST_CXX_"
+      cached: true
+      stdout: |
+        Change Dir: /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-6boD6o
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2649e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_2649e.dir/build.make CMakeFiles/cmTC_2649e.dir/build
+        gmake[1]: Entering directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-6boD6o'
+        Building CXX object CMakeFiles/cmTC_2649e.dir/OpenMPCheckVersion.cpp.o
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++   -mp --c++11 --gnu_extensions -MD -MT CMakeFiles/cmTC_2649e.dir/OpenMPCheckVersion.cpp.o -MF CMakeFiles/cmTC_2649e.dir/OpenMPCheckVersion.cpp.o.d -o CMakeFiles/cmTC_2649e.dir/OpenMPCheckVersion.cpp.o -c /home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-6boD6o/OpenMPCheckVersion.cpp
+        Linking CXX executable cmTC_2649e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2649e.dir/link.txt --verbose=1
+        /sw/pkgs/arc/nvhpc/22.3/Linux_x86_64/22.3/compilers/bin/nvc++  -mp CMakeFiles/cmTC_2649e.dir/OpenMPCheckVersion.cpp.o -o cmTC_2649e 
+        gmake[1]: Leaving directory '/home/shujhan/research/PMMHD/build/CMakeFiles/CMakeScratch/TryCompile-6boD6o'
+        
+      exitCode: 0
+...

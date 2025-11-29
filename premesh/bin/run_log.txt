@@ -1,0 +1,55 @@
+=== STDOUT ===
+deck address: deck.json
+============================
+Running a PMMHD simulation
+sim dir: 
+deck found in: deck.json
+0 <= x <= 10
+Using trap rule
+Taking 1 steps with dt = 0.5
+Remesh every 1 step(s), diagnostic dump every 1 step(s)
+-------------
+Field object: 
+=================
+AMR structure for species vorticity
+=================
+Computational domain: (x,y) in [0, 10]x[0, 10]
+Initial conditions: 
+w0_uniform distribution: constant 1
+-----------------
+Initial height: 2, y height: 0, max height: 2
+This structure is NOT adaptively refined
+Structure has reached full refinement
+---------
+
+=================
+AMR structure for species current density
+=================
+Computational domain: (x,y) in [0, 10]x[0, 10]
+Initial conditions: 
+w0_uniform distribution: constant 1
+-----------------
+Initial height: 4, y height: 0, max height: 4
+This structure is NOT adaptively refined
+Structure has reached full refinement
+---------
+
+============================
+#xs 81
+#ys 81
+#fs 81
+#qw 0
+#u1s 0
+#u2s 0
+Successfully wrote step 0 particle data files
+Unable to open step 0 panel data files
+#xs 1089
+#ys 1089
+#fs 1089
+#qw 0
+#u1s 0
+#u2s 0
+Successfully wrote step 0 particle data files
+Unable to open step 0 panel data files
+
+=== STDERR ===
