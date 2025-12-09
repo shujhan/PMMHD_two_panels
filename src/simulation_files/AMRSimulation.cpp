@@ -44,12 +44,14 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
         return;
     }
 
+    N_sp = species_list.size();
+
+    
     // initialize e
     iter_num = 0;
     t = 0;
-
+    evaluate_field_uniform_grid(t);
     
-    // evaluate_field_uniform_grid(t);
 
     // print AMR description
     print_sim_setup();

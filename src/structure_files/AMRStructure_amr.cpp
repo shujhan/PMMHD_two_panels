@@ -10,6 +10,41 @@ void AMRStructure::generate_mesh(std::function<double (double,double)> f,
     create_prerefined_mesh();
     // auto stop = high_resolution_clock::now();
     // add_time(tree_build_time,  duration_cast<duration<double>>(stop - start) );
+
+
+    if (is_initial_step) {
+        for (int ii = 0; ii < xs.size(); ii++) {
+            fs[ii] = (*f0)(xs[ii],ys[ii]);
+        }
+    } else {
+        int nx_points = 2*npanels_x + 1;
+        int ny_points = 2*npanels_y + 1;
+
+        #ifdef DEBUG
+        cout << "interpolating to grid " << endl;
+        #endif
+        #ifdef DEBUG_L2
+        cout << "xs size " << xs.size() << endl;
+        cout << "ps size " << ps.size() << endl;
+        #endif
+
+        interpolate_to_initial_xys(fs,xs,ys, nx_points, ny_points);
+        #ifdef DEBUG
+        cout << "done interpolating to grid" << endl;
+        #endif
+    }
+
+    int num_panels_pre_refine = panels.size();
+
+
+
+    //  TODO: Add AMR later: 
+    // if (do_adaptive_refine) {
+
+
+    // }
+
+    set_leaves_weights();
 }
 
 
@@ -443,6 +478,56 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
     //         test_panel(prospective_leaf_inds.at(ii), false);
     //     }
     // }
+}
+
+
+void AMRStructure::set_leaves_weights() {
+    leaf_inds = std::vector<int> ();
+    ws = std::vector<double> (xs.size());
+    recursively_set_leaves_weights(0);
+    for (int ii = 0; ii < xs.size(); ++ii) {
+        ws[ii] *= fs[ii];
+    }
+}
+
+void AMRStructure::recursively_set_leaves_weights(int panel_ind) {
+    auto panel_it = panels.begin() + panel_ind;
+    if (panel_it->is_refined_y) {
+        int child_start = panel_it->child_inds_start;
+        for (int ii = 0; ii < 2; ii++) {
+            recursively_set_leaves_weights(child_start + ii);
+        }
+    } else if (panel_it->is_refined_xy) {
+        int child_start = panel_it->child_inds_start;
+        for (int ii = 0; ii < 4; ii++) {
+            recursively_set_leaves_weights(child_start + ii);
+        }
+    }
+    else {
+        leaf_inds.push_back(panel_ind);
+        double dx = xs[panel_it->point_inds[3]] - xs[panel_it->point_inds[0]];
+        double y0 = ys[panel_it->point_inds[0]];
+        double y1 = ys[panel_it->point_inds[1]];
+        double dy = y1 - y0;
+        switch (quad) {
+            case simpsons : {
+                double dxdp9 = dx * dy / 9.0;
+                double weights[9] = {1.0,4.0,1.0, 4.0, 16.0,4.0,1.0,4.0,1.0};
+                for (int ii = 0; ii < 9; ii++) {
+                    ws[panel_it->point_inds[ii]] += dxdp9 * weights[ii];
+                }
+                break;
+            }
+            default : {// trap 
+                double dxdp4 = dx * dy / 4.0;
+                double weights[9] = {1.0,2.0,1.0,2.0,4.0,2.0,1.0, 2.0, 1.0};
+                for (int ii = 0; ii < 9; ii++) {
+                    ws[panel_it->point_inds[ii]] += dxdp4 * weights[ii];
+                }
+                break;
+            }
+        }  
+    }
 }
 
 

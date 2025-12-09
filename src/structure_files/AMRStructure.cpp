@@ -30,11 +30,8 @@ AMRStructure::AMRStructure(std::string sim_dir, std::string species_name,
 
     bool is_initial_step = true;
     generate_mesh([&](double x, double y) { return (*f0)(x,y); }, do_adaptively_refine, is_initial_step);
-
-
-
-
-
+    f_beyond_boundary = *std::min_element(fs.begin(), fs.end() );
+    cout << "extrapolating value is " << f_beyond_boundary << endl;
 }
 
 

@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libAMRObj_cpu.a CMakeFiles/AMRObj_cpu.dir/AMRStructure.cpp.o CMakeFiles/AMRObj_cpu.dir/AMRStructure_io.cpp.o CMakeFiles/AMRObj_cpu.dir/AMRStructure_amr.cpp.o
-/usr/bin/ranlib ../../lib/libAMRObj_cpu.a

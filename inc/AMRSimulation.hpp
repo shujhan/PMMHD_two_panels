@@ -27,7 +27,11 @@ class AMRSimulation {
     // load 
     vector<distribution*> ic_list;
     vector<AMRStructure*> general_list;
+    int N_sp;
+    std::vector<size_t> species_start, species_end;
 
+    std::vector<double> xs, ys, ws, es, rho_ws;
+    // std::vector<double> species_qs, species_ms, species_qms;
 
     // field parameters
     Quadrature quad;
@@ -43,7 +47,7 @@ class AMRSimulation {
     bool need_scatter;
     bool need_gather;
 
-    int bcs;
+    int bcs; // 0 for periodic 
     int iter_num, t;
 
 
@@ -67,13 +71,26 @@ class AMRSimulation {
 
 
         // functions for field evaluation
+        int evaluate_field_uniform_grid(double t);
+        // int evaluate_field(std::vector<double>& es_local, std::vector<double>& xs_local, std::vector<double>& q_ws_local, double t);
+
+
+
 
 
         // functions for pushing particles
-
+        int gather();
+        int scatter(bool send_e);
+        int run();
+        int step();
+        int euler();
+        int rk4(bool get_4th_e);
 
 
         // function for remeshing 
+
+
+        
         
 
         int write_to_file();
