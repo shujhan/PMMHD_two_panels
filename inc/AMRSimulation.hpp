@@ -71,10 +71,12 @@ class AMRSimulation {
 
 
         // functions for field evaluation
-        int evaluate_field_uniform_grid(double t);
-        // int evaluate_field(std::vector<double>& es_local, std::vector<double>& xs_local, std::vector<double>& q_ws_local, double t);
-
-
+        // u1 and u2, the ws is made of vorticity
+        int evaluate_u1_field(std::vector<double>& u1s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
+        int evaluate_u2_field(std::vector<double>& u2s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
+        // u1 and u2, the ws is made of current density 
+        int evaluate_b1_field(std::vector<double>& b1s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
+        int evaluate_b2_field(std::vector<double>& b2s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
 
 
 

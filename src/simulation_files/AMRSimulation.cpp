@@ -50,7 +50,10 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
     // initialize e
     iter_num = 0;
     t = 0;
-    evaluate_field_uniform_grid(t);
+    evaluate_u1_field();
+    evaluate_u2_field();
+    evaluate_b1_field();
+    evaluate_b2_field();
     
 
     // print AMR description

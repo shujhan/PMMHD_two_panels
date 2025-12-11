@@ -4,11 +4,11 @@
 
 int AMRSimulation::step() {
     std::cout << "step " << iter_num + 1 << std::endl;
-    if (need_gather) {
-        // gather from species (need at first and after every remesh)
-        // gather vorticity and current density xs and ys
-        gather();
-    }
+    // if (need_gather) {
+    //     // gather from species (need at first and after every remesh)
+    //     // gather vorticity and current density xs and ys
+    //     gather();
+    // }
 
     // rk4 step
     // rk4_step(false);
@@ -27,7 +27,10 @@ int AMRSimulation::step() {
     //     evaluate_field(es, xs, q_ws, t);
     // }
 
-    evaluate_field(es, xs, ws, t);
+    evaluate_u1_field();
+    evaluate_u2_field();
+    evaluate_b1_field();
+    evaluate_b2_field();
 
     // if dump : write to file
     if (iter_num % n_steps_diag == 0) {
@@ -42,7 +45,7 @@ int AMRSimulation::euler() {
     for (size_t sp_i = 0; sp_i < N_sp; ++sp_i) {
         for (size_t xi = species_start[sp_i]; xi < species_end[sp_i]; ++xi) {
             xs[xi] += dt * u1_s[xi];
-            ps[xi] += dt * u2_s[xi];
+            ys[xi] += dt * u2_s[xi];
         }
     }
     need_scatter = true;
