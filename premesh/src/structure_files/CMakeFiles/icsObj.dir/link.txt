@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libicsObj.a CMakeFiles/icsObj.dir/initial_distributions.cpp.o
-/usr/bin/ranlib ../../lib/libicsObj.a

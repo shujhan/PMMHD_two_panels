@@ -615,6 +615,7 @@ void AMRStructure::update_panel_positions_and_q(const std::vector<double>& vx,
         std::cerr << "Error: size mismatch in update_panel_positions_and_q()" << std::endl;
         return;
     }
+    // cout << xs.size() << "," << ys.size() << "," << vx.size() << "," << vy.size() << "," << source.size() << "," << q0s.size() << endl;
 
     for (size_t ii = 0; ii < xs.size(); ++ii) {
         xs[ii] += vx[ii] * dt;
@@ -622,3 +623,34 @@ void AMRStructure::update_panel_positions_and_q(const std::vector<double>& vx,
         q0s[ii] += sign * source[ii] * dt;
     }
 }
+
+void AMRStructure::set_u1s(const std::vector<double>& vals) {
+    u1s = vals;
+}
+
+void AMRStructure::set_u2s(const std::vector<double>& vals) {
+    u2s = vals;
+}
+
+void AMRStructure::set_b1s(const std::vector<double>& vals) {
+    b1s = vals;
+}
+
+void AMRStructure::set_b2s(const std::vector<double>& vals) {
+    b2s = vals;
+}
+
+void AMRStructure::set_xs(const std::vector<double>& vals) {
+    xs = vals;
+}
+
+void AMRStructure::set_ys(const std::vector<double>& vals) {
+    ys = vals;
+}
+
+void AMRStructure::set_q0s(const std::vector<double>& vals) {
+    q0s = vals;
+}
+
+
+

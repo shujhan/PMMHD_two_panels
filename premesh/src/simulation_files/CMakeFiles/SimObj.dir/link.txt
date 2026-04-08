@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libSimObj.a CMakeFiles/SimObj.dir/AMRSimulation.cpp.o CMakeFiles/SimObj.dir/AMRSimulation_load.cpp.o CMakeFiles/SimObj.dir/AMRSimulation_io.cpp.o
-/usr/bin/ranlib ../../lib/libSimObj.a

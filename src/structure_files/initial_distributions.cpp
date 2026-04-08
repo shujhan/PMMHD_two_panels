@@ -28,7 +28,8 @@ w0_alfven::w0_alfven(double kx_w, double amp_w):
     kx(kx_w), amp(amp_w) {}
 
 double w0_alfven::operator()(double x, double y) {
-    return -1.0 * amp * kx * sin(kx * x);
+    return -1 * amp * kx * sin(kx * x);
+    // return amp * kx * cos(kx * x);
 }
 
 void w0_alfven::print() {
@@ -81,7 +82,8 @@ j0_alfven::j0_alfven(double kx_j, double amp_j):
     kx(kx_j), amp(amp_j) {}
 
 double j0_alfven::operator()(double x, double y) {
-    return -1.0 * amp * kx * sin(kx * x);
+    return -1 * amp * kx * sin(kx * x);
+    // return amp * kx * cos(kx * x);
 }
 
 void j0_alfven::print() {

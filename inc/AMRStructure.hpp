@@ -173,10 +173,24 @@ class AMRStructure {
 
         std::vector<double>& get_xs() { return xs; }
         std::vector<double>& get_ys() { return ys; }
+        std::vector<double>& get_q0s() { return q0s; }
         std::vector<double>& get_u_weights() { return u_weights; }
         std::vector<double>& get_b_weights() { return b_weights; }
-
+        std::vector<double>& get_u1s() { return u1s; }
+        std::vector<double>& get_u2s() { return u2s; }
+        std::vector<double>& get_b1s() { return b1s; }
+        std::vector<double>& get_b2s() { return b2s; }
+        
         size_t get_xs_size() { return xs.size(); }
+        void set_u1s(const std::vector<double>& vals);
+        void set_u2s(const std::vector<double>& vals);
+        void set_b1s(const std::vector<double>& vals);
+        void set_b2s(const std::vector<double>& vals);
+
+        void set_xs(const std::vector<double>& vals);
+        void set_ys(const std::vector<double>& vals);
+        void set_q0s(const std::vector<double>& vals);
+
 
 
 };

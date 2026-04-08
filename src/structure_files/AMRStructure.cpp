@@ -36,6 +36,14 @@ AMRStructure::AMRStructure(std::string sim_dir, std::string species_name,
     u2s.assign(xs.size(), 0.0);
     b1s.assign(xs.size(), 0.0);
     b2s.assign(xs.size(), 0.0);
+    evaluate_u_field(u1s, u2s, xs, ys, u_weights, 0);
+    evaluate_b_field(b1s, b2s, xs, ys, b_weights, 0);
+
+    //external field for alfven wave
+    for (size_t i = 0; i < b1s.size(); ++i) {
+        b1s[i] +=  1.0;
+    }
+
 }
 //destructor
 AMRStructure::~AMRStructure() = default;

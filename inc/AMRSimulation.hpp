@@ -41,6 +41,7 @@ class AMRSimulation {
     Quadrature quad;
     Field* calculate_e;
 
+    int method; // 0: rk4, otherwise euler
 
     // pusher parameters
     int num_steps;
@@ -50,6 +51,7 @@ class AMRSimulation {
 
     int bcs; // 0 for periodic 
     int iter_num, t;
+
 
 
 
@@ -85,12 +87,12 @@ class AMRSimulation {
 
 
         // functions for pushing particles
-        int gather();
-        int scatter(bool send_e);
+        // int gather();
+        // int scatter(bool send_e);
         int run();
         int step();
         int euler();
-        int rk4(bool get_4th_e);
+        int rk4();
 
 
         // function for remeshing 

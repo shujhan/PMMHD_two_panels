@@ -394,9 +394,9 @@ int AMRStructure::find_leaf_containing_point_from_neighbor(double& tx, double& t
         }
 
 
-        bool ineq_right = (x_tr - x_br) * (ty - y_br) > (y_tr - y_br) * (tx - (x_br));
+        bool ineq_right = (x_tr - x_br) * (ty - y_br) >= (y_tr - y_br) * (tx - (x_br));
         bool ineq_left = (x_tl - x_bl) * (ty - y_bl) <= (y_tl - y_bl) * (tx - x_bl);
-        bool ineq_top = (x_tr - x_tl) * (ty - y_tl) < (y_tr - y_tl) * (tx - x_tl);
+        bool ineq_top = (x_tr - x_tl) * (ty - y_tl) <= (y_tr - y_tl) * (tx - x_tl);
         bool ineq_bottom = (x_br - x_bl) * (ty - y_bl) >= (y_br - y_bl) * (tx - x_bl);
         int new_leaf_ind = leaf_ind;
         // if (verbose) {

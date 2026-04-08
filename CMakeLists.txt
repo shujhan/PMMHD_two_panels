@@ -35,7 +35,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 
-option(ENABLE_GPU_BUILD "build OpenACC GPU version"             OFF)
+option(ENABLE_GPU_BUILD "build OpenACC GPU version"             ON)
 
 find_package(OpenMP     REQUIRED)
 if(OpenMP_CXX_FOUND)
@@ -95,24 +95,24 @@ endif()
 
 
 if (ENABLE_GPU_BUILD)
-    add_executable(farrsight_gpu run_FARRSIGHT2.cpp) 
+    add_executable(PMMHD_gpu run_PMMHD.cpp) 
     #find_library(BARYTREE_LIB_GPU BaryTree_gpu REQUIRED)
-    target_link_libraries(farrsight_gpu PUBLIC   OpenMP::OpenMP_CXX
+    target_link_libraries(PMMHD_gpu PUBLIC   OpenMP::OpenMP_CXX
                                                 OpenACC_CXX
                                                 SimObj_gpu
                                                 FieldObj_gpu
                                                 PanelObj
                                                 icsObj
                                                 AMRObj_cpu)
-    target_include_directories(farrsight_gpu PUBLIC ${INCLUDE_HEADERS})
-    target_include_directories(farrsight_gpu PUBLIC   inc)
-    target_compile_definitions(farrsight_gpu PUBLIC OPENACC_ENABLED)
+    target_include_directories(PMMHD_gpu PUBLIC ${INCLUDE_HEADERS})
+    target_include_directories(PMMHD_gpu PUBLIC   inc)
+    target_compile_definitions(PMMHD_gpu PUBLIC OPENACC_ENABLED)
 
-    install(TARGETS farrsight_gpu RUNTIME DESTINATION bin
+    install(TARGETS PMMHD_gpu RUNTIME DESTINATION bin
                                 LIBRARY DESTINATION lib
                                 ARCHIVE DESTINATION lib)
 
-TARGET_LINK_LIBRARIES(farrsight_gpu LINK_PUBLIC ${Boost_LIBRARIES} )
+TARGET_LINK_LIBRARIES(PMMHD_gpu LINK_PUBLIC ${Boost_LIBRARIES} )
                                
 endif()
 

@@ -16,7 +16,7 @@ int AMRSimulation::get_box_t_params(pt::ptree &deck) {
     std::string project_name = deck.get<std::string>("sim_name", "no_name_found");
     x_min = deck.get<double>("xmin", 0.0), x_max = deck.get<double>("xmax", 0.0);
     y_min = deck.get<double>("ymin", 0.0), y_max = deck.get<double>("ymax",0.0);
-    // int bcs_int = deck.get<int>("bcs",0);
+    int bcs_int = deck.get<int>("bcs",0);
     
     // if (bcs_int < 0 || bcs_int >= last_bc) {
     //     cout << "Invalid boundary condition provided in input deck. Valid BCs are: " << endl;
@@ -29,6 +29,7 @@ int AMRSimulation::get_box_t_params(pt::ptree &deck) {
 
     int which_quad = deck.get<int>("quadrature",0);
     quad = static_cast<Quadrature>(which_quad);
+    method = deck.get<int>("method",0);
 
     num_steps = deck.get<int>("num_steps", 1);
     n_steps_remesh = deck.get<int>("remesh_period", 1); 
@@ -52,9 +53,11 @@ Field* AMRSimulation::make_field_return_ptr(pt::ptree &deck) {
     
     if (use_treecode > 0) {
         calculate_field = new U_Treecode(Lx, greens_epsilon, mac, degree, max_source, max_target);
+        cout << "using treecode" << endl;
     }
     else {
         calculate_field = new U_DirectSum(Lx, greens_epsilon);
+        cout << "using direct sum" << endl;
     }
     return calculate_field;
 }
@@ -70,12 +73,29 @@ distribution* AMRSimulation::make_f0_return_ptr(pt::ptree &species_deck_portion)
     distribution* f0;
     switch (ics_type)
     {
-        case 1: // for vorticity 
+        case 1: 
             f0 = new w0_uniform();
             break;
-        case 2: // for current_density
+        case 2: 
             f0 = new j0_uniform();
             break;
+
+        // for current sheet 
+        case 3: 
+            f0 = new w0_zero();
+            break;
+        case 4: 
+            f0 = new j0_current_sheet(kx,amp);
+            break;
+
+        // for alfven
+        case 5: 
+            f0 = new w0_alfven(kx, amp);
+            break;
+        case 6: 
+            f0 = new j0_alfven(kx,amp);
+            break;
+
         default:
             cout << "Using default initial conditions, all 1s" << endl;
             f0 = new w0_uniform();
