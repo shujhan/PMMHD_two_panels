@@ -18,6 +18,7 @@ using namespace Eigen;
 #include "FieldStructure.hpp"
 
 enum Quadrature {trap, simpsons, last_quad};
+enum BoundaryConditions {periodic_bcs, open_bcs};
 
 
 class AMRStructure {
@@ -64,7 +65,8 @@ class AMRStructure {
 
 
     Quadrature quad;
-    int bcs; // 0 for periodic bc 
+    // int bcs; // 0 for periodic bc 
+    BoundaryConditions bcs;
 
     Field* calculate_e;
     double greens_epsilon;
@@ -91,7 +93,7 @@ class AMRStructure {
         AMRStructure(); 
         AMRStructure(std::string sim_dir, std::string species_name, distribution* w0, distribution* j0, distribution* q0,
                     int initial_height, int y_height, int max_height,
-                    double x_min, double x_max, double y_min, double y_max,
+                    double x_min, double x_max, double y_min, double y_max, BoundaryConditions bcs,
                     Quadrature quad, Field* calculate_e,
                     bool do_adaptively_refine, double amr_epsilons);
     // destructor

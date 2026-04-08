@@ -15,6 +15,10 @@ using namespace std;
 #include "AMRStructure.hpp"
 
 
+
+
+// enum BoundaryConditions {periodic_bcs, open_bcs};
+
 class AMRSimulation {
     ofstream outFile;
     string sim_dir;
@@ -40,6 +44,7 @@ class AMRSimulation {
     // // field parameters
     Quadrature quad;
     Field* calculate_e;
+    BoundaryConditions bcs; // 0 periodic in y, 1 open in y 
 
     int method; // 0: rk4, otherwise euler
 

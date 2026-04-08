@@ -11,7 +11,8 @@ enum KernelMode {
     // u2_grad for u2s_grad_x, u2s_grad_y, b2s_grad_x, b2s_grad_y
     // vorticity_grad for vorticity_grad_x, vorticity_grad_x, j_grad_x, j_grad_y
     // laplacian  vorticity_laplacian, j_laplacian
-    original, u1_grad, u2_grad, vorticity_grad, laplacian
+    original, u1_grad, u2_grad, vorticity_grad, laplacian,
+    periodic_y
 };
 
 class Field {
@@ -42,6 +43,7 @@ class U_DirectSum : public Field {
         KernelMode mode;
 
 };
+
 
 class U_Treecode : public Field {
     public:

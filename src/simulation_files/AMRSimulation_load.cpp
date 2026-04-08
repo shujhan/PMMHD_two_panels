@@ -18,12 +18,12 @@ int AMRSimulation::get_box_t_params(pt::ptree &deck) {
     y_min = deck.get<double>("ymin", 0.0), y_max = deck.get<double>("ymax",0.0);
     int bcs_int = deck.get<int>("bcs",0);
     
-    // if (bcs_int < 0 || bcs_int >= last_bc) {
-    //     cout << "Invalid boundary condition provided in input deck. Valid BCs are: " << endl;
-    //     cout << "0: periodic, 1: open" << endl;
-    //     return 1;
-    // }
-    // bcs = static_cast<BoundaryConditions> (bcs_int);
+    if (bcs_int < 0 || bcs_int >= 2) {
+        cout << "Invalid boundary condition provided in input deck. Valid BCs are: " << endl;
+        cout << "0: periodic in x and y, 1: periodic in x, open in y" << endl;
+        return 1;
+    }
+    bcs = static_cast<BoundaryConditions> (bcs_int);
     
     Lx = x_max - x_min;
 
@@ -52,12 +52,28 @@ Field* AMRSimulation::make_field_return_ptr(pt::ptree &deck) {
     int max_target = deck.get<int>("max_target", 3000); 
     
     if (use_treecode > 0) {
-        calculate_field = new U_Treecode(Lx, greens_epsilon, mac, degree, max_source, max_target);
-        cout << "using treecode" << endl;
+        if (bcs!=periodic_bcs) { // open_bcs in y 
+            calculate_field = new U_Treecode(Lx, greens_epsilon, mac, degree, max_source, max_target);
+            cout << "using treecode: periodic in x and open in y" << endl;
+        }
+        else { // periodic in y, suing free space kernel 
+            KernelMode m = periodic_y;
+            calculate_field = new U_Treecode(Lx, greens_epsilon, mac, degree, max_source, max_target);
+            calculate_field->set_mode(m);
+            cout << "using treecode: periodic in x and y" << endl;
+        }
     }
     else {
-        calculate_field = new U_DirectSum(Lx, greens_epsilon);
-        cout << "using direct sum" << endl;
+        if (bcs!=periodic_bcs) { // open_bcs in y 
+            calculate_field = new U_DirectSum(Lx, greens_epsilon);
+            cout << "using direct sum: : periodic in x and open in y" << endl;
+        }
+        else {
+            KernelMode m = periodic_y;
+            calculate_field = new U_DirectSum(Lx, greens_epsilon);
+            calculate_field->set_mode(m);
+            cout << "using treecode: periodic in x and y" << endl;
+        }
     }
     return calculate_field;
 }
@@ -125,7 +141,7 @@ AMRStructure* AMRSimulation::make_species_return_ptr(pt::ptree &species_deck_por
 
     AMRStructure *species = new AMRStructure{sim_dir, sp_name,
                 w0, j0, q0, initial_height, y_height,max_height,
-                x_min, x_max, y_min, y_max, quad, this->calculate_e,
+                x_min, x_max, y_min, y_max, bcs, quad, this->calculate_e,
                 do_adaptively_refine, amr_epsilons};
     return species;
 }
