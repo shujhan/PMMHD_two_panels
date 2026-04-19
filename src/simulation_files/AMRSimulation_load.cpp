@@ -15,7 +15,7 @@ int AMRSimulation::get_box_t_params(pt::ptree &deck) {
 
     std::string project_name = deck.get<std::string>("sim_name", "no_name_found");
     x_min = deck.get<double>("xmin", 0.0), x_max = deck.get<double>("xmax", 0.0);
-    y_min = deck.get<double>("ymin", 0.0), y_max = deck.get<double>("ymax",0.0);
+    y_min = deck.get<double>("ymin", 0.0), y_max = deck.get<double>("ymax",1.0);
     int bcs_int = deck.get<int>("bcs",0);
     
     if (bcs_int < 0 || bcs_int >= 2) {
@@ -26,6 +26,7 @@ int AMRSimulation::get_box_t_params(pt::ptree &deck) {
     bcs = static_cast<BoundaryConditions> (bcs_int);
     
     Lx = x_max - x_min;
+    Ly = y_max - y_min;
 
     int which_quad = deck.get<int>("quadrature",0);
     quad = static_cast<Quadrature>(which_quad);
@@ -83,7 +84,9 @@ Field* AMRSimulation::make_field_return_ptr(pt::ptree &deck) {
 distribution* AMRSimulation::make_f0_return_ptr(pt::ptree &species_deck_portion) {
     pt::ptree deck = species_deck_portion;
 
-    double kx = 2.0 * M_PI / Lx * deck.get<double>("normalized_wavenumber",1.0);
+    double kx = 2.0 * M_PI / Lx * deck.get<double>("normalized_wavenumber", 2.0);
+    double ky = 2.0 * M_PI / Ly * deck.get<double>("normalized_wavenumber_y",1.0);
+
     double amp = deck.get<double>("amp", 0.0);
     int ics_type = deck.get<int>("ics_type", 1);
     distribution* f0;
@@ -111,6 +114,30 @@ distribution* AMRSimulation::make_f0_return_ptr(pt::ptree &species_deck_portion)
         case 6: 
             f0 = new j0_alfven(kx,amp);
             break;
+
+        // for polarized alfven
+        case 7: 
+            // Athena nomalization
+            // kx = kx/ sqrt(5.0);
+            // ky = ky/ sqrt(5.0);
+            f0 = new w0_polarized_alfven(kx, ky, amp);
+            break;
+        case 8: 
+            // Athena nomalization
+            // kx = kx/ sqrt(5.0);
+            // ky = ky/ sqrt(5.0);
+            f0 = new j0_polarized_alfven(kx, ky, amp);
+            break;
+
+        // for orszag-tang vortex test
+        case 9:
+            f0 = new w0_orszag_tang(kx, ky, amp);
+            break;
+
+        case 10: 
+            f0 = new j0_orszag_tang(kx, ky, amp);
+            break;
+
 
         default:
             cout << "Using default initial conditions, all 1s" << endl;

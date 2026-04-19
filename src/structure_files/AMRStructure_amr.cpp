@@ -103,7 +103,7 @@ int AMRStructure::create_prerefined_mesh() {
     j0s = std::vector<double>(25, 1.0);
     q0s = std::vector<double>(25, 1.0);
 
-    if (bcs == 0) { // periodic_bcs
+    if (bcs == 1) { // open in y 
         panels.push_back(Panel{});
         panels[0].is_left_bdry = true;
         panels[0].is_right_bdry = true;
@@ -115,7 +115,25 @@ int AMRStructure::create_prerefined_mesh() {
         panels[3].is_right_bdry = true;
         panels.push_back(Panel{4, 1, 0, 3, 2,-2,2,3});
         panels[4].is_right_bdry = true;
-    } 
+    } else if (bcs == 0) { // periodic in y 
+        panels.push_back(Panel{});
+        panels[0].is_left_bdry = true;
+        panels[0].is_right_bdry = true;
+        panels[0].is_top_bdry = true;
+        panels[0].is_bottom_bdry = true;
+        panels.push_back(Panel{1, 1, 0, 0, 3, 2, 3, 2});
+        panels[1].is_left_bdry = true;
+        panels[1].is_bottom_bdry = true;
+        panels.push_back(Panel{2, 1, 0, 1, 4, 1, 4, 1});
+        panels[2].is_left_bdry = true;
+        panels[2].is_top_bdry = true;
+        panels.push_back(Panel{3, 1, 0, 2, 1, 4, 1, 4});
+        panels[3].is_right_bdry = true;
+        panels[3].is_bottom_bdry = true;
+        panels.push_back(Panel{4, 1, 0, 3, 2, 3, 2,3});
+        panels[4].is_right_bdry = true;
+        panels[4].is_top_bdry = true;
+    }
 
     panels[1].set_point_inds(0,9,1,11,12,13,3,16,4);
     panels[1].needs_refinement = true;
@@ -251,8 +269,8 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
                     child_1_left_nbr_ind = panel_left->child_inds_start + 3;
                     Panel* child_1_left_nbr = &(panels[child_1_left_nbr_ind]);
                     child_1_left_nbr->right_nbr_ind = num_new_panels + 1;
-                    // if (panel->is_left_bdry && bcs==periodic_bcs) {
-                    if (panel->is_left_bdry && bcs==0) {
+                    // if (panel->is_left_bdry && bcs==0) {
+                    if (panel->is_left_bdry) {
                         point_9_ind = new_vert_ind++;
                         point_10_ind = new_vert_ind++;
                         new_xs.push_back(subpanel_xs[0]); new_xs.push_back(subpanel_xs[0]);
@@ -302,8 +320,18 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
                     Panel* child_2_bottom_nbr = &(panels[child_2_bottom_nbr_ind]);
                     child_2_bottom_nbr->top_nbr_ind = num_new_panels + 2;
 
-                    point_11_ind = child_0_bottom_nbr->point_inds[5];
-                    point_18_ind = child_2_bottom_nbr->point_inds[5];
+                    if (panel->is_bottom_bdry && bcs == periodic_bcs) {
+                        point_11_ind = new_vert_ind++;
+                        point_18_ind = new_vert_ind++;
+                        new_xs.push_back(subpanel_xs[1]);
+                        new_xs.push_back(subpanel_xs[3]);
+                        new_ys.push_back(subpanel_ys[0]);
+                        new_ys.push_back(subpanel_ys[0]);
+                    }
+                    else {
+                        point_11_ind = child_0_bottom_nbr->point_inds[5];
+                        point_18_ind = child_2_bottom_nbr->point_inds[5];
+                    }
                 }
             }
 
@@ -343,9 +371,19 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
                     child_3_top_nbr_ind = panel_top->child_inds_start + 2;
                     Panel* child_3_top_nbr = &(panels[child_3_top_nbr_ind]);
                     child_3_top_nbr->bottom_nbr_ind = num_new_panels + 3;
+                    if (panel->is_top_bdry && bcs == periodic_bcs) {
+                        point_15_ind = new_vert_ind++;
+                        point_22_ind = new_vert_ind++;
 
-                    point_15_ind = child_1_top_nbr->point_inds[3];
-                    point_22_ind = child_3_top_nbr->point_inds[3];
+                        new_xs.push_back(subpanel_xs[1]);
+                        new_xs.push_back(subpanel_xs[3]);
+                        new_ys.push_back(subpanel_ys[4]);
+                        new_ys.push_back(subpanel_ys[4]);
+                    }
+                    else {
+                        point_15_ind = child_1_top_nbr->point_inds[3];
+                        point_22_ind = child_3_top_nbr->point_inds[3];
+                    }
                 }
             }
 
@@ -392,7 +430,7 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
                     child_3_right_nbr->left_nbr_ind = num_new_panels + 3;
 
                     // if (panel->is_right_bdry and bcs==periodic_bcs) {
-                    if (panel->is_right_bdry && bcs==0) {
+                    if (panel->is_right_bdry) {
                         point_23_ind = new_vert_ind++;
                         point_24_ind = new_vert_ind++;
                         new_xs.push_back(subpanel_xs[4]); new_xs.push_back(subpanel_xs[4]);
@@ -445,28 +483,28 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
                     point_inds[3], point_16_ind, point_inds[4],
                     child_0_left_nbr_ind, num_new_panels + 1, 
                     num_new_panels + 2, child_0_bottom_nbr_ind,
-                    panel->is_left_bdry, false});
+                    panel->is_left_bdry, false, false, panel->is_bottom_bdry});
             panels.push_back(Panel {num_new_panels+1, child_level, panel_ind, 1, 
                     point_inds[1], point_10_ind, point_inds[2],
                     point_12_ind+1, point_12_ind+2, point_15_ind,
                     point_inds[4], point_16_ind+1, point_inds[5],
                     child_1_left_nbr_ind, child_1_top_nbr_ind,
                     num_new_panels + 3, num_new_panels,
-                    panel->is_left_bdry, false});
+                    panel->is_left_bdry, false, panel->is_top_bdry, false});
             panels.push_back(Panel {num_new_panels+2, child_level, panel_ind, 2, 
                     point_inds[3], point_16_ind, point_inds[4],
                     point_18_ind, point_19_ind, point_19_ind+1,
                     point_inds[6], point_23_ind, point_inds[7],
                     num_new_panels, num_new_panels+3, 
                     child_2_right_nbr_ind, child_2_bottom_nbr_ind,
-                    false, panel->is_right_bdry});
+                    false, panel->is_right_bdry, false, panel->is_bottom_bdry});
             panels.push_back(Panel {num_new_panels+3, child_level, panel_ind, 3,
                     point_inds[4], point_16_ind+1, point_inds[5],
                     point_19_ind+1, point_19_ind+2, point_22_ind,
                     point_inds[7], point_24_ind, point_inds[8],
                     num_new_panels+1, child_3_top_nbr_ind,
                     child_3_right_nbr_ind, num_new_panels+2,
-                    false, panel->is_right_bdry});
+                    false, panel->is_right_bdry, panel->is_top_bdry, false});
 
         } // end if panel is flagged
     } //end for loop through panels

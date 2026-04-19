@@ -23,38 +23,31 @@ int AMRStructure::write_particles_to_file(bool pre_remesh) {
         remesh_str = "preremesh_";
     }
 
-    xs_file.open(sim_dir + "simulation_output/" + species_name + "/xs/xs_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    ys_file.open(sim_dir + "simulation_output/" + species_name + "/ys/ys_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    w0s_file.open(sim_dir + "simulation_output/" + species_name + "/w0s/w0s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    j0s_file.open(sim_dir + "simulation_output/" + species_name + "/j0s/j0s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
     q0s_file.open(sim_dir + "simulation_output/" + species_name + "/q0s/q0s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    u1s_file.open(sim_dir + "simulation_output/" + species_name + "/u1s/u1s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    u2s_file.open(sim_dir + "simulation_output/" + species_name + "/u2s/u2s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    b1s_file.open(sim_dir + "simulation_output/" + species_name + "/b1s/b1s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    b2s_file.open(sim_dir + "simulation_output/" + species_name + "/b2s/b2s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-
     
-    
-    // ys_file.open(sim_dir + "simulation_output/ys/ys_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    // w0s_file.open(sim_dir + "simulation_output/w0s/w0s_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    // j0s_file.open(sim_dir + "simulation_output/j0s/j0s_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary);
-    // q0s_file.open(sim_dir + "simulation_output/q0s/q0s_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary);
-    // // uweights_file.open(sim_dir + "simulation_output/uweights/uweights_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    // u1s_file.open(sim_dir + "simulation_output/u1s/u1s_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    // u2s_file.open(sim_dir + "simulation_output/u2s/u2s_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    // b1s_file.open(sim_dir + "simulation_output/b1s/b1s_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary); 
-    // b2s_file.open(sim_dir + "simulation_output/b2s/b2s_" + remesh_str  + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+    if(species_name == "vorticity") {
+        xs_file.open(sim_dir + "simulation_output/" + species_name + "/xs/xs_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+        ys_file.open(sim_dir + "simulation_output/" + species_name + "/ys/ys_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+        w0s_file.open(sim_dir + "simulation_output/" + species_name + "/w0s/w0s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+        j0s_file.open(sim_dir + "simulation_output/" + species_name + "/j0s/j0s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+        u1s_file.open(sim_dir + "simulation_output/" + species_name + "/u1s/u1s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+        u2s_file.open(sim_dir + "simulation_output/" + species_name + "/u2s/u2s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+        b1s_file.open(sim_dir + "simulation_output/" + species_name + "/b1s/b1s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+        b2s_file.open(sim_dir + "simulation_output/" + species_name + "/b2s/b2s_" + remesh_str + std::to_string(iter_num), std::ios::out | std::ios::binary); 
+    }
 
-    std::cout << "#xs " << xs.size() << std::endl;
-    std::cout << "#ys " << ys.size() << std::endl;
-    std::cout << "#w0s " << w0s.size() << std::endl;
-    std::cout << "#j0s " << j0s.size() << std::endl;
+
     std::cout << "#q0s " << q0s.size() << std::endl;
-    // std::cout << "#uweights " << u_weights.size() << std::endl;
-    std::cout << "#u1s " << u1s.size() << std::endl;
-    std::cout << "#u2s " << u2s.size() << std::endl;
-    std::cout << "#b1s " << b1s.size() << std::endl;
-    std::cout << "#b2s " << b2s.size() << std::endl;
+    if(species_name == "vorticity") {
+        std::cout << "#xs " << xs.size() << std::endl;
+        std::cout << "#ys " << ys.size() << std::endl;
+        std::cout << "#w0s " << w0s.size() << std::endl;
+        std::cout << "#j0s " << j0s.size() << std::endl;
+        std::cout << "#u1s " << u1s.size() << std::endl;
+        std::cout << "#u2s " << u2s.size() << std::endl;
+        std::cout << "#b1s " << b1s.size() << std::endl;
+        std::cout << "#b2s " << b2s.size() << std::endl;
+    }
 
     if (!xs_file | !ys_file | !w0s_file | !j0s_file | !q0s_file | !u1s_file | !u2s_file | !b1s_file | !b2s_file) {
         cout << "Unable to open step " << iter_num << " particle data files" << endl;
@@ -63,26 +56,26 @@ int AMRStructure::write_particles_to_file(bool pre_remesh) {
 
     // assert(xs.size() == vs.size() && vs.size() == fs.size() && fs.size() == q_ws.size() && q_ws.size() == es.size());
     for (int ii = 0; ii < xs.size(); ++ii) {
-        double x = xs[ii];
-        double y = ys[ii];
-        double w0 = w0s[ii];
-        double j0 = j0s[ii];
         double q0 = q0s[ii];
-        // double uweight = u_weights[ii];
-        double u1 = u1s[ii];
-        double u2 = u2s[ii];
-        double b1 = b1s[ii];
-        double b2 = b2s[ii];
-        xs_file.write((char *) &x, sizeof(double));
-        ys_file.write((char *) &y, sizeof(double));
-        w0s_file.write((char *) &w0, sizeof(double));
-        j0s_file.write((char *) &j0, sizeof(double));
         q0s_file.write((char *) &q0, sizeof(double));
-        // uweights_file.write((char *) &uweight, sizeof(double));
-        u1s_file.write((char *) &u1, sizeof(double));
-        u2s_file.write((char *) &u2, sizeof(double));
-        b1s_file.write((char *) &b1, sizeof(double));
-        b2s_file.write((char *) &b2, sizeof(double));
+        if(species_name == "vorticity") {
+            double x = xs[ii];
+            double y = ys[ii];
+            double w0 = w0s[ii];
+            double j0 = j0s[ii];
+            double u1 = u1s[ii];
+            double u2 = u2s[ii];
+            double b1 = b1s[ii];
+            double b2 = b2s[ii];
+            xs_file.write((char *) &x, sizeof(double));
+            ys_file.write((char *) &y, sizeof(double));
+            w0s_file.write((char *) &w0, sizeof(double));
+            j0s_file.write((char *) &j0, sizeof(double));
+            u1s_file.write((char *) &u1, sizeof(double));
+            u2s_file.write((char *) &u2, sizeof(double));
+            b1s_file.write((char *) &b1, sizeof(double));
+            b2s_file.write((char *) &b2, sizeof(double));
+        }
     }
 
     if (!xs_file.good() | !ys_file.good() | !w0s_file.good() | !j0s_file.good() | !q0s_file.good() | !u1s_file.good()

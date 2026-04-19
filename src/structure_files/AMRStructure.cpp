@@ -27,7 +27,6 @@ AMRStructure::AMRStructure(std::string sim_dir, std::string species_name,
     initial_dx = Lx / npanels_x;
     initial_dy = Ly / npanels_y;
     this->amr_epsilons = amr_epsilons;
-    bcs = 0;
 
     bool is_initial_step = true;
     generate_mesh([&](double x, double y) { return (*w0)(x,y); }, [&](double x, double y) { return (*j0)(x,y); }, [&](double x, double y) { return (*q0)(x,y); }, do_adaptively_refine, is_initial_step);
@@ -41,9 +40,15 @@ AMRStructure::AMRStructure(std::string sim_dir, std::string species_name,
     evaluate_b_field(b1s, b2s, xs, ys, b_weights, 0);
 
     //external field for alfven wave
-    for (size_t i = 0; i < b1s.size(); ++i) {
-        b1s[i] +=  1.0;
-    }
+    // for (size_t i = 0; i < b1s.size(); ++i) {
+    //     b1s[i] +=  1.0;
+    // }
+
+    //external field for polarized_alfven wave
+    // for (size_t i = 0; i < b1s.size(); ++i) {
+    //     b1s[i] +=  2/sqrt(5);
+    //     b2s[i] +=  1/sqrt(5);
+    // }
 
 }
 //destructor

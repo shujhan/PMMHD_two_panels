@@ -54,7 +54,6 @@ class AMRSimulation {
     int n_steps_diag;
     double dt;
 
-    int bcs; // 0 for periodic 
     int iter_num, t;
 
 

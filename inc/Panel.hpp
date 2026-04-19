@@ -14,7 +14,7 @@ using namespace std;
      *  |  [0]  |  [2]  |
      *  0 ----- 3 ----- 6
      * 
-     *  v refined panel
+     *  y refined panel
      * Stored in the format
      *  2 ----- 5 ----- 8
      *  |      [1]      |
@@ -22,7 +22,13 @@ using namespace std;
      *  |      [0]      |
      *  0 ----- 3 ----- 6
      * 
-     */
+     *
+     * -----
+     * Root panel `parent_ind` and `which_child` are -1
+     * if panel is not refined, `child_ind_start` is -1
+     * Neighbor indices are -1 if not determined yet
+     * Neighbor indices are -2 if panel is a boundary and can't have neighbors
+    */
 
 struct Panel {
     int panel_ind;
@@ -32,6 +38,7 @@ struct Panel {
     int which_child;
     int left_nbr_ind, top_nbr_ind, right_nbr_ind, bottom_nbr_ind;
     bool is_left_bdry, is_right_bdry;
+    bool is_top_bdry, is_bottom_bdry;
     bool needs_refinement;
     bool is_refined_xy;
     bool is_refined_y;
@@ -52,7 +59,8 @@ struct Panel {
         int p6, int p7, int p8, 
         int ln_ind, int tn_ind, 
         int rn_ind, int bn_ind,
-        bool is_left_bdry, bool is_right_bdry);
+        bool is_left_bdry, bool is_right_bdry,
+        bool is_top_bdry, bool is_bottom_bdry);
 
 
     // End Constructors

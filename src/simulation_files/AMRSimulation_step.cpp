@@ -66,9 +66,15 @@ int AMRSimulation::euler() {
         general_list[0]->evaluate_b_field(b1s, b2s, xs, ys, b_ws, t);
 
         //external field for alfven wave
-        for (size_t i = 0; i < b1s.size(); ++i) {
-            b1s[i] +=  1.0;
-        }
+        // for (size_t i = 0; i < b1s.size(); ++i) {
+        //     b1s[i] +=  1.0;
+        // }
+
+        //external field for polarized_alfven wave
+        // for (size_t i = 0; i < b1s.size(); ++i) {
+        //     b1s[i] +=  2/sqrt(5);
+        //     b2s[i] +=  1/sqrt(5);
+        // }
         
         general_list[0]->set_u1s(u1s);
         general_list[0]->set_u2s(u2s);
@@ -168,10 +174,17 @@ int AMRSimulation::rk4() {
         general_list[0]->evaluate_b_field(k1_b1s, k1_b2s, xs, ys, k1_b_ws, t);
 
         //external field for alfven wave
-        for (size_t i = 0; i < k1_b1s.size(); ++i) {
-            k1_b1s[i] +=  1.0;
-        }
-        
+        // for (size_t i = 0; i < k1_b1s.size(); ++i) {
+        //     k1_b1s[i] +=  1.0;
+        // }
+
+        //external field for polarized_alfven wave
+        // for (size_t i = 0; i < k1_b1s.size(); ++i) {
+        //     k1_b1s[i] +=  2/sqrt(5);
+        //     k1_b1s[i] +=  1/sqrt(5);
+        // }
+
+
         general_list[0]->set_u1s(k1_u1s);
         general_list[0]->set_u2s(k1_u2s);
         general_list[0]->set_b1s(k1_b1s);
@@ -266,9 +279,15 @@ int AMRSimulation::rk4() {
     general_list[0]->evaluate_b_field(k2_b1s, k2_b2s, xs, ys, k2_b_ws, t + 0.5 * dt);
 
     //external field for alfven wave
-    for (size_t i = 0; i < k2_b1s.size(); ++i) {
-        k2_b1s[i] +=  1.0;
-    }
+    // for (size_t i = 0; i < k2_b1s.size(); ++i) {
+    //     k2_b1s[i] +=  1.0;
+    // }
+
+    //external field for polarized_alfven wave
+    // for (size_t i = 0; i < k2_b1s.size(); ++i) {
+    //     k2_b1s[i] +=  2/sqrt(5);
+    //     k2_b1s[i] +=  1/sqrt(5);
+    // }
 
     u1s_grad_x.assign(xs.size(), 0.0);
     u1s_grad_y.assign(xs.size(), 0.0);
@@ -338,9 +357,15 @@ int AMRSimulation::rk4() {
     general_list[0]->evaluate_b_field(k3_b1s, k3_b2s, xs, ys, k3_b_ws, t + 0.5 * dt);
 
     //external field for alfven wave
-    for (size_t i = 0; i < k3_b1s.size(); ++i) {
-        k3_b1s[i] +=  1.0;
-    }
+    // for (size_t i = 0; i < k3_b1s.size(); ++i) {
+    //     k3_b1s[i] +=  1.0;
+    // }
+
+    //external field for polarized_alfven wave
+    // for (size_t i = 0; i < k3_b1s.size(); ++i) {
+    //     k3_b1s[i] +=  2/sqrt(5);
+    //     k3_b1s[i] +=  1/sqrt(5);
+    // }
 
     u1s_grad_x.assign(xs.size(), 0.0);
     u1s_grad_y.assign(xs.size(), 0.0);
@@ -410,9 +435,15 @@ int AMRSimulation::rk4() {
     general_list[0]->evaluate_b_field(k4_b1s, k4_b2s, xs, ys, k4_b_ws, t + dt);
 
     //external field for alfven wave
-    for (size_t i = 0; i < k4_b1s.size(); ++i) {
-        k4_b1s[i] +=  1.0;
-    }
+    // for (size_t i = 0; i < k4_b1s.size(); ++i) {
+    //     k4_b1s[i] +=  1.0;
+    // }
+
+    //external field for polarized_alfven wave
+    // for (size_t i = 0; i < k4_b1s.size(); ++i) {
+    //     k4_b1s[i] +=  2/sqrt(5);
+    //     k4_b1s[i] +=  1/sqrt(5);
+    // }
 
     u1s_grad_x.assign(xs.size(), 0.0);
     u1s_grad_y.assign(xs.size(), 0.0);

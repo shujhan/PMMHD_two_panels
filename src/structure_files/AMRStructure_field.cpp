@@ -1,30 +1,183 @@
 #include "AMRStructure.hpp"
 
+// int AMRStructure::evaluate_u_field(std::vector<double>& u1s_local, std::vector<double>& u2s_local, 
+//                      std::vector<double>& xs_local,std::vector<double>& ys_local,
+//                      std::vector<double>& ws_local, double t) {
+//     std::vector<double> xtemp_cpy(xs_local), ytemp_cpy(ys_local);
+//     std::vector<double> ws_temp_cpy(ws_local);
+//     KernelMode m = original;
+//     calculate_e->set_mode(m);
+//     (*calculate_e)(u1s_local.data(), u2s_local.data(), xtemp_cpy.data(), xtemp_cpy.size(),
+//                     ytemp_cpy.data(), ws_temp_cpy.data(), ytemp_cpy.size());
+//     return 0;
+// }
+
+
+
+// int AMRStructure::evaluate_b_field(std::vector<double>& b1s_local, std::vector<double>& b2s_local, 
+//                     std::vector<double>& xs_local,std::vector<double>& ys_local,
+//                         std::vector<double>& ws_local, double t) {
+//     std::vector<double> xtemp_cpy(xs_local), ytemp_cpy(ys_local);
+//     std::vector<double> ws_temp_cpy(ws_local);
+//     KernelMode m = original;
+//     calculate_e->set_mode(m);
+//     (*calculate_e)(b1s_local.data(), b2s_local.data(), xtemp_cpy.data(), xtemp_cpy.size(),
+//                     ytemp_cpy.data(), ws_temp_cpy.data(), ytemp_cpy.size());
+//     return 0;
+// }
+
+
 int AMRStructure::evaluate_u_field(std::vector<double>& u1s_local, std::vector<double>& u2s_local, 
-                     std::vector<double>& xs_local,std::vector<double>& ys_local,
-                     std::vector<double>& ws_local, double t) {
-    std::vector<double> xtemp_cpy(xs_local), ytemp_cpy(ys_local);
-    std::vector<double> ws_temp_cpy(ws_local);
-    KernelMode m = original;
-    calculate_e->set_mode(m);
-    (*calculate_e)(u1s_local.data(), u2s_local.data(), xtemp_cpy.data(), xtemp_cpy.size(),
+                     std::vector<double>& xs_local, std::vector<double>& ys_local,
+                     std::vector<double>& ws_local, double t) 
+{
+    const int n_local = (int)xs_local.size();
+
+    // build particle list: local domain first, then image copies
+    std::vector<double> xtemp_cpy;
+    std::vector<double> ytemp_cpy;
+    std::vector<double> ws_temp_cpy;
+    std::vector<double> u1s_temp;
+    std::vector<double> u2s_temp;
+
+    // x is always periodic
+    // y is periodic only when bcs == periodic_bcs
+    if (bcs == periodic_bcs) {
+        xtemp_cpy.reserve(9 * n_local);
+        ytemp_cpy.reserve(9 * n_local);
+        ws_temp_cpy.reserve(9 * n_local);
+        const double shift_x[9] = {0.0, -Lx,  Lx, 0.0, 0.0, -Lx, -Lx,  Lx,  Lx};
+        const double shift_y[9] = {0.0,  0.0, 0.0, -Ly, Ly, -Ly,  Ly, -Ly,  Ly};
+        for (int img = 0; img < 9; ++img) {
+            for (int i = 0; i < n_local; ++i) {
+                xtemp_cpy.push_back(xs_local[i] + shift_x[img]);
+                ytemp_cpy.push_back(ys_local[i] + shift_y[img]);
+                ws_temp_cpy.push_back(ws_local[i]);
+            }
+        }
+        
+        // xtemp_cpy.reserve(25 * n_local);
+        // ytemp_cpy.reserve(25 * n_local);
+        // ws_temp_cpy.reserve(25 * n_local);
+
+        // // center block first
+        // for (int k = 0; k < n_local; ++k) {
+        //     xtemp_cpy.push_back(xs_local[k]);
+        //     ytemp_cpy.push_back(ys_local[k]);
+        //     ws_temp_cpy.push_back(ws_local[k]);
+        // }
+
+        // // then the surrounding image blocks
+        // for (int j = -2; j <= 2; ++j) {
+        //     for (int i = -2; i <= 2; ++i) {
+        //         if (i == 0 && j == 0) continue;
+        //         for (int k = 0; k < n_local; ++k) {
+        //             xtemp_cpy.push_back(xs_local[k] + i * Lx);
+        //             ytemp_cpy.push_back(ys_local[k] + j * Ly);
+        //             ws_temp_cpy.push_back(ws_local[k]);
+        //         }
+        //     }
+        // }
+
+        KernelMode m = periodic_y;
+        calculate_e->set_mode(m);
+        u1s_temp.assign(xtemp_cpy.size(), 0.0);
+        u2s_temp.assign(xtemp_cpy.size(), 0.0);
+        (*calculate_e)(u1s_temp.data(), u2s_temp.data(),
+                    xtemp_cpy.data(), xtemp_cpy.size(),
                     ytemp_cpy.data(), ws_temp_cpy.data(), ytemp_cpy.size());
+
+        // keep only the local-domain field values (first block)
+        for (int i = 0; i < n_local; ++i) {
+            u1s_local[i] = u1s_temp[i];
+            u2s_local[i] = u2s_temp[i];
+        }
+    }
+    else {
+        xtemp_cpy = xs_local;
+        ytemp_cpy = ys_local;
+        ws_temp_cpy = ws_local;
+        u1s_temp.assign(xtemp_cpy.size(), 0.0);
+        u2s_temp.assign(xtemp_cpy.size(), 0.0);
+        KernelMode m = original;
+        calculate_e->set_mode(m);
+        (*calculate_e)(u1s_temp.data(), u2s_temp.data(), xtemp_cpy.data(), xtemp_cpy.size(),
+                        ytemp_cpy.data(), ws_temp_cpy.data(), ytemp_cpy.size());
+        for (int i = 0; i < n_local; ++i) {
+            u1s_local[i] = u1s_temp[i];
+            u2s_local[i] = u2s_temp[i];
+        }
+    }
     return 0;
 }
+
 
 
 
 int AMRStructure::evaluate_b_field(std::vector<double>& b1s_local, std::vector<double>& b2s_local, 
-                    std::vector<double>& xs_local,std::vector<double>& ys_local,
-                        std::vector<double>& ws_local, double t) {
-    std::vector<double> xtemp_cpy(xs_local), ytemp_cpy(ys_local);
-    std::vector<double> ws_temp_cpy(ws_local);
-    KernelMode m = original;
-    calculate_e->set_mode(m);
-    (*calculate_e)(b1s_local.data(), b2s_local.data(), xtemp_cpy.data(), xtemp_cpy.size(),
+                     std::vector<double>& xs_local, std::vector<double>& ys_local,
+                     std::vector<double>& ws_local, double t) 
+{
+    const int n_local = (int)xs_local.size();
+
+    // build particle list: local domain first, then image copies
+    std::vector<double> xtemp_cpy;
+    std::vector<double> ytemp_cpy;
+    std::vector<double> ws_temp_cpy;
+    std::vector<double> b1s_temp;
+    std::vector<double> b2s_temp;
+
+    // x is always periodic
+    // y is periodic only when bcs == periodic_bcs
+    if (bcs == periodic_bcs) {
+        xtemp_cpy.reserve(9 * n_local);
+        ytemp_cpy.reserve(9 * n_local);
+        ws_temp_cpy.reserve(9 * n_local);
+        const double shift_x[9] = {0.0, -Lx,  Lx, 0.0, 0.0, -Lx, -Lx,  Lx,  Lx};
+        const double shift_y[9] = {0.0,  0.0, 0.0, -Ly, Ly, -Ly,  Ly, -Ly,  Ly};
+        for (int img = 0; img < 9; ++img) {
+            for (int i = 0; i < n_local; ++i) {
+                xtemp_cpy.push_back(xs_local[i] + shift_x[img]);
+                ytemp_cpy.push_back(ys_local[i] + shift_y[img]);
+                ws_temp_cpy.push_back(ws_local[i]);
+            }
+        }
+        KernelMode m = periodic_y;
+        calculate_e->set_mode(m);
+        b1s_temp.assign(xtemp_cpy.size(), 0.0);
+        b2s_temp.assign(xtemp_cpy.size(), 0.0);
+        (*calculate_e)(b1s_temp.data(), b2s_temp.data(),
+                    xtemp_cpy.data(), xtemp_cpy.size(),
                     ytemp_cpy.data(), ws_temp_cpy.data(), ytemp_cpy.size());
+
+        // keep only the local-domain field values (first block)
+        for (int i = 0; i < n_local; ++i) {
+            b1s_local[i] = b1s_temp[i];
+            b2s_local[i] = b2s_temp[i];
+        }
+    }
+    else {
+        xtemp_cpy = xs_local;
+        ytemp_cpy = ys_local;
+        ws_temp_cpy = ws_local;
+        b1s_temp.assign(xtemp_cpy.size(), 0.0);
+        b2s_temp.assign(xtemp_cpy.size(), 0.0);
+        KernelMode m = original;
+        calculate_e->set_mode(m);
+        (*calculate_e)(b1s_temp.data(), b2s_temp.data(), xtemp_cpy.data(), xtemp_cpy.size(),
+                        ytemp_cpy.data(), ws_temp_cpy.data(), ytemp_cpy.size());
+        for (int i = 0; i < n_local; ++i) {
+            b1s_local[i] = b1s_temp[i];
+            b2s_local[i] = b2s_temp[i];
+        }
+    }
     return 0;
 }
+
+
+
+
+
 
 
 // int AMRStructure::evaluate_u1s_grad(std::vector<double>& u1s_grad_x_local, std::vector<double>& u1s_grad_y_local, 
@@ -414,3 +567,4 @@ int AMRStructure::compute_rhs_state(
     }
     return 0;
 }
+

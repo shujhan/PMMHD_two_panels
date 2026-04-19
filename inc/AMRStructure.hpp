@@ -151,7 +151,7 @@ class AMRStructure {
         void interpolate_to_initial_xys(std::vector<double>& fs, std::vector<double>& xs, 
                                                 std::vector<double>& ys, int nx, int ny);
         void shift_xs(std::vector<double>& shifted_xs, const std::vector<double>& xs, const std::vector<double>& ys);
-        int find_leaf_containing_xy_recursively(double &x, const double &y, bool& beyond_boundary, int panel_ind);
+        int find_leaf_containing_xy_recursively(double &x, double &y, bool& beyond_boundary, int panel_ind);
         int find_leaf_containing_point_from_neighbor(double& tx, double& ty, bool& beyond_boundary, int leaf_ind, std::set<int>& history);
         void interpolate_from_panel_to_points(std::vector<double>& values_q0s, std::vector<double>& xs, std::vector<double>& ys,
                                                 std::vector<int>& point_inds, int panel_ind, bool use_limiter, double limit_val);
