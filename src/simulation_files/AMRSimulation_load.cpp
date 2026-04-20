@@ -168,7 +168,7 @@ AMRStructure* AMRSimulation::make_species_return_ptr(pt::ptree &species_deck_por
 
     AMRStructure *species = new AMRStructure{sim_dir, sp_name,
                 w0, j0, q0, initial_height, y_height,max_height,
-                x_min, x_max, y_min, y_max, bcs, quad, this->calculate_e,
+                x_min, x_max, y_min, y_max, bcs, quad, this->calculate_e, periodizer,
                 do_adaptively_refine, amr_epsilons};
     return species;
 }

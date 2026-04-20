@@ -22,6 +22,7 @@ add_library(AMRObj_cpu  AMRStructure.cpp
                     AMRStructure_amr.cpp
                     AMRStructure_interp.cpp
                     AMRStructure_field.cpp
+                    Periodizer.cpp 
                     )
 target_link_libraries(AMRObj_cpu    PUBLIC  PanelObj
                                             icsObj

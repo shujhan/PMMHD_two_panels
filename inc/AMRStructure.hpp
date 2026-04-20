@@ -16,6 +16,7 @@ using namespace Eigen;
 #include "initial_distributions.hpp"
 #include "Panel.hpp"
 #include "FieldStructure.hpp"
+#include "Periodizer.hpp"
 
 enum Quadrature {trap, simpsons, last_quad};
 enum BoundaryConditions {periodic_bcs, open_bcs};
@@ -70,6 +71,8 @@ class AMRStructure {
 
     Field* calculate_e;
     double greens_epsilon;
+    Periodizer* periodizer = nullptr;
+   
 
 
 
@@ -94,7 +97,7 @@ class AMRStructure {
         AMRStructure(std::string sim_dir, std::string species_name, distribution* w0, distribution* j0, distribution* q0,
                     int initial_height, int y_height, int max_height,
                     double x_min, double x_max, double y_min, double y_max, BoundaryConditions bcs,
-                    Quadrature quad, Field* calculate_e,
+                    Quadrature quad, Field* calculate_e, Periodizer* periodizer,
                     bool do_adaptively_refine, double amr_epsilons);
     // destructor
         ~AMRStructure();
@@ -193,7 +196,7 @@ class AMRStructure {
         void set_ys(const std::vector<double>& vals);
         void set_q0s(const std::vector<double>& vals);
 
-
+        void set_periodizer(Periodizer* p) { periodizer = p; }
 
 };
 

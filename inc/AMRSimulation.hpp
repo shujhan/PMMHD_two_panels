@@ -13,7 +13,7 @@ using namespace std;
 
 #include "FieldStructure.hpp"
 #include "AMRStructure.hpp"
-
+#include "Periodizer.hpp"
 
 
 
@@ -45,6 +45,7 @@ class AMRSimulation {
     Quadrature quad;
     Field* calculate_e;
     BoundaryConditions bcs; // 0 periodic in y, 1 open in y 
+    Periodizer* periodizer = nullptr;
 
     int method; // 0: rk4, otherwise euler
 

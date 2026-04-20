@@ -18,6 +18,7 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
     calculate_e = make_field_return_ptr(deck);
     // make_external_field(deck);
 
+
     // load vorticity and current density
     try {
         pt::ptree &initial_list_deck = deck.get_child("initial_list");
@@ -66,10 +67,37 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
         return;
     }
 
-    // N_sp = species_list.size();
+    if (bcs == periodic_bcs) {
+        periodizer = new Periodizer(x_min, x_max, y_min, y_max, calculate_e);
+        periodizer->precompute_Q();
+        // inject into the two species
+        general_list[0]->set_periodizer(periodizer);
+        general_list[1]->set_periodizer(periodizer);
+    }
 
     iter_num = 0;
     t = 0;
+
+    xs = general_list[0]->get_xs();
+    ys = general_list[0]->get_ys();
+    std::vector<double> u_ws_step0(xs.size(), 0.0);
+    std::vector<double> b_ws_step0(xs.size(), 0.0);
+    u_ws_step0 = general_list[0]->get_u_weights();
+    b_ws_step0 = general_list[0]->get_b_weights();
+    u1s.assign(xs.size(), 0.0); u2s.assign(xs.size(), 0.0);
+    b1s.assign(xs.size(), 0.0); b2s.assign(xs.size(), 0.0);
+    general_list[0]->evaluate_u_field(u1s, u2s, xs, ys, u_ws_step0, t);
+    general_list[0]->evaluate_b_field(b1s, b2s, xs, ys, b_ws_step0, t);
+    //external field for polarized_alfven wave
+    for (size_t i = 0; i < b1s.size(); ++i) {
+        b1s[i] +=  2/sqrt(5);
+        b2s[i] +=  1/sqrt(5);
+    }
+
+    // general_list[1]->evaluate_u_field(u1s, u2s, xs, ys, u_weights, 0);
+    // general_list[1]->evaluate_b_field(b1s, b2s, xs, ys, b_weights, 0);
+
+
 
     // print AMR description
     print_sim_setup();
@@ -87,6 +115,7 @@ AMRSimulation::~AMRSimulation() {
         delete general_list[ii];
     }
     delete calculate_e;
+    delete periodizer;
 }
 
 

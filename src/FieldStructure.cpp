@@ -79,6 +79,32 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
                 }
             break;
 
+        case free_space:
+            cout << "periodic in x and y kernel, using free space kernel: " <<endl;
+            #ifdef OPENACC_ENABLED
+            #pragma acc parallel loop independent
+            #else
+            #pragma omp parallel for
+            #endif
+                for (int i = 0; i < nx; i++) {
+                    double u1 = 0.0;
+                    double u2 = 0.0;
+                #ifdef OPENACC_ENABLED
+                #pragma acc loop independent reduction(+:u1, u2)
+                #endif
+                    for(int k = 0; k < ny; k++) {
+                        double x_diff = x_vals[i] - x_vals[k];
+                        double y_diff = y_vals[i] - y_vals[k];
+                        double r2 = x_diff * x_diff + y_diff * y_diff + epsilon * epsilon;
+                        u1 -= (1.0 / (2.0 * pi)) * y_diff / r2 * q_ws[k];
+                        u2 += (1.0 / (2.0 * pi)) * x_diff / r2 * q_ws[k];
+                    }
+                    u1s[i] = u1;
+                    u2s[i] = u2;
+                }
+            break;
+
+
 
         case u1_grad: // for u1s_grad_x, u1s_grad_y, b1s_grad_x, b1s_grad_y
             // cout << "u1_grad kernel: " <<endl;
