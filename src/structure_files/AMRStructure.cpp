@@ -5,14 +5,14 @@ AMRStructure::AMRStructure() {}
 
 AMRStructure::AMRStructure(std::string sim_dir, std::string species_name,
                             distribution* w0, distribution* j0, distribution* q0,
-                            int initial_height, int y_height, int max_height, 
+                            int initial_height, int y_height, int max_height, double greens_epsilon,
                             double x_min, double x_max, double y_min, double y_max, 
-                            BoundaryConditions bcs,
+                            BoundaryConditions bcs, 
                             Quadrature quad, Field* calculate_e, Periodizer* periodizer,
                             bool do_adaptively_refine, double amr_epsilons)
                            : w0(w0), j0(j0), q0(q0),
                            initial_height(initial_height), y_height(y_height),
-                           max_height(max_height), 
+                           max_height(max_height), greens_epsilon(greens_epsilon),
                            x_min(x_min), x_max(x_max), y_min(y_min), y_max(y_max), 
                            bcs(bcs), quad(quad), calculate_e(calculate_e), periodizer(periodizer),
                            is_initial_mesh_set(false), minimum_unrefined_index(0), need_further_refinement(false),

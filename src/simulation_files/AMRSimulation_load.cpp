@@ -44,7 +44,7 @@ Field* AMRSimulation::make_field_return_ptr(pt::ptree &deck) {
     
     Field* calculate_field;
 
-    double greens_epsilon = deck.get<double>("greens_epsilon",0.1);
+    greens_epsilon = deck.get<double>("greens_epsilon",0.1);
     int use_treecode = deck.get<int>("use_treecode", 0);  // 0 no treecode; 1 with treecode
     // double beta = deck.get<double>("beta", -1.0);
     double mac = deck.get<double>("mac", -1.0); 
@@ -167,7 +167,7 @@ AMRStructure* AMRSimulation::make_species_return_ptr(pt::ptree &species_deck_por
     
 
     AMRStructure *species = new AMRStructure{sim_dir, sp_name,
-                w0, j0, q0, initial_height, y_height,max_height,
+                w0, j0, q0, initial_height, y_height,max_height, greens_epsilon,
                 x_min, x_max, y_min, y_max, bcs, quad, this->calculate_e, periodizer,
                 do_adaptively_refine, amr_epsilons};
     return species;

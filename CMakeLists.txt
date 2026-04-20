@@ -83,6 +83,18 @@ TARGET_LINK_LIBRARIES(PMMHD_cpu LINK_PUBLIC ${Boost_LIBRARIES} )
 
 
 
+#  for test periodicity
+add_executable(test_periodicity test_periodicity.cpp
+               src/structure_files/Periodizer.cpp)
+target_link_libraries(test_periodicity PUBLIC FieldObj)
+target_include_directories(test_periodicity PUBLIC
+    ${PROJECT_SOURCE_DIR}/inc
+    ${PROJECT_SOURCE_DIR}/inc_eigen/eigen-3.3.7
+    ${INCLUDE_HEADERS})
+
+
+
+
 
 # Set additional flags for NVIDIA compilers if ENABLE_GPU_BUILD is on
 if(ENABLE_GPU_BUILD AND CMAKE_CXX_COMPILER_ID MATCHES NVHPC)

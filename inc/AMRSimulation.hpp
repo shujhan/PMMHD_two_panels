@@ -46,6 +46,7 @@ class AMRSimulation {
     Field* calculate_e;
     BoundaryConditions bcs; // 0 periodic in y, 1 open in y 
     Periodizer* periodizer = nullptr;
+    double greens_epsilon;
 
     int method; // 0: rk4, otherwise euler
 

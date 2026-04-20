@@ -95,7 +95,7 @@ class AMRStructure {
     int iter_num = 0;
         AMRStructure(); 
         AMRStructure(std::string sim_dir, std::string species_name, distribution* w0, distribution* j0, distribution* q0,
-                    int initial_height, int y_height, int max_height,
+                    int initial_height, int y_height, int max_height,  double greens_epsilon,
                     double x_min, double x_max, double y_min, double y_max, BoundaryConditions bcs,
                     Quadrature quad, Field* calculate_e, Periodizer* periodizer,
                     bool do_adaptively_refine, double amr_epsilons);
