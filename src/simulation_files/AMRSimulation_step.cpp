@@ -55,7 +55,7 @@ int AMRSimulation::euler() {
     u2s.assign(xs.size(), 0.0);
     b1s.assign(xs.size(), 0.0);
     b2s.assign(xs.size(), 0.0);
-    if(iter_num > 1) {
+    if(iter_num >= 1) {
         xs = general_list[0]->get_xs();
         ys = general_list[0]->get_ys();
         std::vector<double> u_ws(xs.size(), 0.0);
@@ -72,8 +72,8 @@ int AMRSimulation::euler() {
 
         // external field for polarized_alfven wave
         for (size_t i = 0; i < b1s.size(); ++i) {
-            b1s[i] +=  2/sqrt(5);
-            b2s[i] +=  1/sqrt(5);
+            b1s[i] +=  2.0/sqrt(5);
+            b2s[i] +=  1.0/sqrt(5);
         }
         
         general_list[0]->set_u1s(u1s);
@@ -180,8 +180,8 @@ int AMRSimulation::rk4() {
 
         // external field for polarized_alfven wave
         for (size_t i = 0; i < k1_b1s.size(); ++i) {
-            k1_b1s[i] +=  2/sqrt(5);
-            k1_b2s[i] +=  1/sqrt(5);
+            k1_b1s[i] +=  2.0/sqrt(5);
+            k1_b2s[i] +=  1.0/sqrt(5);
         }
 
 
@@ -285,8 +285,8 @@ int AMRSimulation::rk4() {
 
     //external field for polarized_alfven wave
     for (size_t i = 0; i < k2_b1s.size(); ++i) {
-        k2_b1s[i] +=  2/sqrt(5);
-        k2_b2s[i] +=  1/sqrt(5);
+        k2_b1s[i] +=  2.0/sqrt(5);
+        k2_b2s[i] +=  1.0/sqrt(5);
     }
 
     u1s_grad_x.assign(xs.size(), 0.0);
@@ -441,8 +441,8 @@ int AMRSimulation::rk4() {
 
     //external field for polarized_alfven wave
     for (size_t i = 0; i < k4_b1s.size(); ++i) {
-        k4_b1s[i] +=  2/sqrt(5);
-        k4_b2s[i] +=  1/sqrt(5);
+        k4_b1s[i] +=  2.0/sqrt(5);
+        k4_b2s[i] +=  1.0/sqrt(5);
     }
 
     u1s_grad_x.assign(xs.size(), 0.0);

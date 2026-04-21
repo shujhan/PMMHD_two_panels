@@ -589,7 +589,8 @@ int AMRStructure::compute_rhs_state(
 
         double top_panel_u1s[9], top_panel_u2s[9];
         double top_panel_b1s[9], top_panel_b2s[9];
-        if (panel->top_nbr_ind > -2) {
+
+        if (bcs == periodic_bcs) {
             Panel* top_panel = &(panels[panel->top_nbr_ind]);
             const int* top_panel_point_inds = top_panel->point_inds;
             for (int ii = 0; ii < 9; ++ii) {
@@ -600,10 +601,25 @@ int AMRStructure::compute_rhs_state(
                 top_panel_b2s[ii] = b2s_in[pind];
             }
         }
+        else {
+            if (panel->top_nbr_ind > -2) {
+                Panel* top_panel = &(panels[panel->top_nbr_ind]);
+                const int* top_panel_point_inds = top_panel->point_inds;
+                for (int ii = 0; ii < 9; ++ii) {
+                    int pind = top_panel_point_inds[ii];
+                    top_panel_u1s[ii] = u1s_in[pind];
+                    top_panel_u2s[ii] = u2s_in[pind];
+                    top_panel_b1s[ii] = b1s_in[pind];
+                    top_panel_b2s[ii] = b2s_in[pind];
+                }
+            }
+        }
+
 
         double bottom_panel_u1s[9], bottom_panel_u2s[9];
         double bottom_panel_b1s[9], bottom_panel_b2s[9];
-        if (panel->bottom_nbr_ind > -2) {
+
+        if (bcs == periodic_bcs) {
             Panel* bottom_panel = &(panels[panel->bottom_nbr_ind]);
             const int* bottom_panel_point_inds = bottom_panel->point_inds;
             for (int ii = 0; ii < 9; ++ii) {
@@ -614,6 +630,20 @@ int AMRStructure::compute_rhs_state(
                 bottom_panel_b2s[ii] = b2s_in[pind];
             }
         }
+        else {
+            if (panel->bottom_nbr_ind > -2) {
+                Panel* bottom_panel = &(panels[panel->bottom_nbr_ind]);
+                const int* bottom_panel_point_inds = bottom_panel->point_inds;
+                for (int ii = 0; ii < 9; ++ii) {
+                    int pind = bottom_panel_point_inds[ii];
+                    bottom_panel_u1s[ii] = u1s_in[pind];
+                    bottom_panel_u2s[ii] = u2s_in[pind];
+                    bottom_panel_b1s[ii] = b1s_in[pind];
+                    bottom_panel_b2s[ii] = b2s_in[pind];
+                }
+            }
+        }
+
 
         std::vector<double> dx_u1s(9, 0.0);
         std::vector<double> dx_u2s(9, 0.0);
@@ -640,32 +670,48 @@ int AMRStructure::compute_rhs_state(
         dx_u1s[5] = (panel_u1s[8] - panel_u1s[2]) / (2 * hx);
         dx_u1s[8] = (right_panel_u1s[5] - panel_u1s[5]) / (2 * hx);
 
-        if (panel->bottom_nbr_ind > -2) {
+        if (bcs == periodic_bcs) {
             dy_u1s[0] = (panel_u1s[1] - bottom_panel_u1s[1]) / (2 * hy);
             dy_u1s[3] = (panel_u1s[4] - bottom_panel_u1s[4]) / (2 * hy);
             dy_u1s[6] = (panel_u1s[7] - bottom_panel_u1s[7]) / (2 * hy);
         }
         else {
-            dy_u1s[0] = (-3 * (panel_u1s[0] - panel_u1s[1]) + (panel_u1s[1] - panel_u1s[2])) / (2 * hy);
-            dy_u1s[3] = (-3 * (panel_u1s[3] - panel_u1s[4]) + (panel_u1s[4] - panel_u1s[5])) / (2 * hy);
-            dy_u1s[6] = (-3 * (panel_u1s[6] - panel_u1s[7]) + (panel_u1s[7] - panel_u1s[8])) / (2 * hy);
+            if (panel->bottom_nbr_ind > -2) {
+                dy_u1s[0] = (panel_u1s[1] - bottom_panel_u1s[1]) / (2 * hy);
+                dy_u1s[3] = (panel_u1s[4] - bottom_panel_u1s[4]) / (2 * hy);
+                dy_u1s[6] = (panel_u1s[7] - bottom_panel_u1s[7]) / (2 * hy);
+            }
+            else {
+                dy_u1s[0] = (-3 * (panel_u1s[0] - panel_u1s[1]) + (panel_u1s[1] - panel_u1s[2])) / (2 * hy);
+                dy_u1s[3] = (-3 * (panel_u1s[3] - panel_u1s[4]) + (panel_u1s[4] - panel_u1s[5])) / (2 * hy);
+                dy_u1s[6] = (-3 * (panel_u1s[6] - panel_u1s[7]) + (panel_u1s[7] - panel_u1s[8])) / (2 * hy);
+            }
         }
+
 
         dy_u1s[1] = (panel_u1s[2] - panel_u1s[0]) / (2 * hy);
         dy_u1s[4] = (panel_u1s[5] - panel_u1s[3]) / (2 * hy);
         dy_u1s[7] = (panel_u1s[8] - panel_u1s[6]) / (2 * hy);
 
-        if (panel->top_nbr_ind > -2) {
+        if (bcs == periodic_bcs) {
             dy_u1s[2] = (top_panel_u1s[1] - panel_u1s[1]) / (2 * hy);
             dy_u1s[5] = (top_panel_u1s[4] - panel_u1s[4]) / (2 * hy);
             dy_u1s[8] = (top_panel_u1s[7] - panel_u1s[7]) / (2 * hy);
         }
         else {
-            dy_u1s[2] = (-3 * (panel_u1s[0] - panel_u1s[1]) + (panel_u1s[1] - panel_u1s[2])) / (2 * hy);
-            dy_u1s[5] = (-3 * (panel_u1s[3] - panel_u1s[4]) + (panel_u1s[4] - panel_u1s[5])) / (2 * hy);
-            dy_u1s[8] = (-3 * (panel_u1s[6] - panel_u1s[7]) + (panel_u1s[7] - panel_u1s[8])) / (2 * hy);
+            if (panel->top_nbr_ind > -2) {
+                dy_u1s[2] = (top_panel_u1s[1] - panel_u1s[1]) / (2 * hy);
+                dy_u1s[5] = (top_panel_u1s[4] - panel_u1s[4]) / (2 * hy);
+                dy_u1s[8] = (top_panel_u1s[7] - panel_u1s[7]) / (2 * hy);
+            }
+            else {
+                dy_u1s[2] = (-3 * (panel_u1s[0] - panel_u1s[1]) + (panel_u1s[1] - panel_u1s[2])) / (2 * hy);
+                dy_u1s[5] = (-3 * (panel_u1s[3] - panel_u1s[4]) + (panel_u1s[4] - panel_u1s[5])) / (2 * hy);
+                dy_u1s[8] = (-3 * (panel_u1s[6] - panel_u1s[7]) + (panel_u1s[7] - panel_u1s[8])) / (2 * hy);
+            }
         }
 
+        
         //////////// u2s ///////////////
         dx_u2s[0] = (panel_u2s[3] - left_panel_u2s[3]) / (2 * hx);
         dx_u2s[3] = (panel_u2s[6] - panel_u2s[0]) / (2 * hx);
@@ -679,31 +725,51 @@ int AMRStructure::compute_rhs_state(
         dx_u2s[5] = (panel_u2s[8] - panel_u2s[2]) / (2 * hx);
         dx_u2s[8] = (right_panel_u2s[5] - panel_u2s[5]) / (2 * hx);
 
-        if (panel->bottom_nbr_ind > -2) {
-            dy_u2s[0] = (panel_u2s[1] - bottom_panel_u2s[1]) / (2 * hy);
-            dy_u2s[3] = (panel_u2s[4] - bottom_panel_u2s[4]) / (2 * hy);
-            dy_u2s[6] = (panel_u2s[7] - bottom_panel_u2s[7]) / (2 * hy);
+
+        if (bcs == periodic_bcs) {
+            if (panel->bottom_nbr_ind > -2) {
+                dy_u2s[0] = (panel_u2s[1] - bottom_panel_u2s[1]) / (2 * hy);
+                dy_u2s[3] = (panel_u2s[4] - bottom_panel_u2s[4]) / (2 * hy);
+                dy_u2s[6] = (panel_u2s[7] - bottom_panel_u2s[7]) / (2 * hy);
+            }
         }
         else {
-            dy_u2s[0] = (-3 * (panel_u2s[0] - panel_u2s[1]) + (panel_u2s[1] - panel_u2s[2])) / (2 * hy);
-            dy_u2s[3] = (-3 * (panel_u2s[3] - panel_u2s[4]) + (panel_u2s[4] - panel_u2s[5])) / (2 * hy);
-            dy_u2s[6] = (-3 * (panel_u2s[6] - panel_u2s[7]) + (panel_u2s[7] - panel_u2s[8])) / (2 * hy);
+            if (panel->bottom_nbr_ind > -2) {
+                dy_u2s[0] = (panel_u2s[1] - bottom_panel_u2s[1]) / (2 * hy);
+                dy_u2s[3] = (panel_u2s[4] - bottom_panel_u2s[4]) / (2 * hy);
+                dy_u2s[6] = (panel_u2s[7] - bottom_panel_u2s[7]) / (2 * hy);
+            }
+            else {
+                dy_u2s[0] = (-3 * (panel_u2s[0] - panel_u2s[1]) + (panel_u2s[1] - panel_u2s[2])) / (2 * hy);
+                dy_u2s[3] = (-3 * (panel_u2s[3] - panel_u2s[4]) + (panel_u2s[4] - panel_u2s[5])) / (2 * hy);
+                dy_u2s[6] = (-3 * (panel_u2s[6] - panel_u2s[7]) + (panel_u2s[7] - panel_u2s[8])) / (2 * hy);
+            }
         }
+
 
         dy_u2s[1] = (panel_u2s[2] - panel_u2s[0]) / (2 * hy);
         dy_u2s[4] = (panel_u2s[5] - panel_u2s[3]) / (2 * hy);
         dy_u2s[7] = (panel_u2s[8] - panel_u2s[6]) / (2 * hy);
 
-        if (panel->top_nbr_ind > -2) {
+        if (bcs == periodic_bcs) {
             dy_u2s[2] = (top_panel_u2s[1] - panel_u2s[1]) / (2 * hy);
             dy_u2s[5] = (top_panel_u2s[4] - panel_u2s[4]) / (2 * hy);
             dy_u2s[8] = (top_panel_u2s[7] - panel_u2s[7]) / (2 * hy);
         }
         else {
-            dy_u2s[2] = (-3 * (panel_u2s[0] - panel_u2s[1]) + (panel_u2s[1] - panel_u2s[2])) / (2 * hy);
-            dy_u2s[5] = (-3 * (panel_u2s[3] - panel_u2s[4]) + (panel_u2s[4] - panel_u2s[5])) / (2 * hy);
-            dy_u2s[8] = (-3 * (panel_u2s[6] - panel_u2s[7]) + (panel_u2s[7] - panel_u2s[8])) / (2 * hy);
+            if (panel->top_nbr_ind > -2) {
+                dy_u2s[2] = (top_panel_u2s[1] - panel_u2s[1]) / (2 * hy);
+                dy_u2s[5] = (top_panel_u2s[4] - panel_u2s[4]) / (2 * hy);
+                dy_u2s[8] = (top_panel_u2s[7] - panel_u2s[7]) / (2 * hy);
+            }
+            else {
+                dy_u2s[2] = (-3 * (panel_u2s[0] - panel_u2s[1]) + (panel_u2s[1] - panel_u2s[2])) / (2 * hy);
+                dy_u2s[5] = (-3 * (panel_u2s[3] - panel_u2s[4]) + (panel_u2s[4] - panel_u2s[5])) / (2 * hy);
+                dy_u2s[8] = (-3 * (panel_u2s[6] - panel_u2s[7]) + (panel_u2s[7] - panel_u2s[8])) / (2 * hy);
+            }
         }
+
+
 
         //////////// b1s ///////////////
         dx_b1s[0] = (panel_b1s[3] - left_panel_b1s[3]) / (2 * hx);
@@ -718,31 +784,52 @@ int AMRStructure::compute_rhs_state(
         dx_b1s[5] = (panel_b1s[8] - panel_b1s[2]) / (2 * hx);
         dx_b1s[8] = (right_panel_b1s[5] - panel_b1s[5]) / (2 * hx);
 
-        if (panel->bottom_nbr_ind > -2) {
+        if (bcs == periodic_bcs) {
             dy_b1s[0] = (panel_b1s[1] - bottom_panel_b1s[1]) / (2 * hy);
             dy_b1s[3] = (panel_b1s[4] - bottom_panel_b1s[4]) / (2 * hy);
             dy_b1s[6] = (panel_b1s[7] - bottom_panel_b1s[7]) / (2 * hy);
         }
+
         else {
-            dy_b1s[0] = (-3 * (panel_b1s[0] - panel_b1s[1]) + (panel_b1s[1] - panel_b1s[2])) / (2 * hy);
-            dy_b1s[3] = (-3 * (panel_b1s[3] - panel_b1s[4]) + (panel_b1s[4] - panel_b1s[5])) / (2 * hy);
-            dy_b1s[6] = (-3 * (panel_b1s[6] - panel_b1s[7]) + (panel_b1s[7] - panel_b1s[8])) / (2 * hy);
+            if (panel->bottom_nbr_ind > -2) {
+                dy_b1s[0] = (panel_b1s[1] - bottom_panel_b1s[1]) / (2 * hy);
+                dy_b1s[3] = (panel_b1s[4] - bottom_panel_b1s[4]) / (2 * hy);
+                dy_b1s[6] = (panel_b1s[7] - bottom_panel_b1s[7]) / (2 * hy);
+            }
+            else {
+                dy_b1s[0] = (-3 * (panel_b1s[0] - panel_b1s[1]) + (panel_b1s[1] - panel_b1s[2])) / (2 * hy);
+                dy_b1s[3] = (-3 * (panel_b1s[3] - panel_b1s[4]) + (panel_b1s[4] - panel_b1s[5])) / (2 * hy);
+                dy_b1s[6] = (-3 * (panel_b1s[6] - panel_b1s[7]) + (panel_b1s[7] - panel_b1s[8])) / (2 * hy);
+            }
         }
+
+
+
 
         dy_b1s[1] = (panel_b1s[2] - panel_b1s[0]) / (2 * hy);
         dy_b1s[4] = (panel_b1s[5] - panel_b1s[3]) / (2 * hy);
         dy_b1s[7] = (panel_b1s[8] - panel_b1s[6]) / (2 * hy);
 
-        if (panel->top_nbr_ind > -2) {
+
+        if (bcs == periodic_bcs) {
             dy_b1s[2] = (top_panel_b1s[1] - panel_b1s[1]) / (2 * hy);
             dy_b1s[5] = (top_panel_b1s[4] - panel_b1s[4]) / (2 * hy);
             dy_b1s[8] = (top_panel_b1s[7] - panel_b1s[7]) / (2 * hy);
         }
         else {
-            dy_b1s[2] = (-3 * (panel_b1s[0] - panel_b1s[1]) + (panel_b1s[1] - panel_b1s[2])) / (2 * hy);
-            dy_b1s[5] = (-3 * (panel_b1s[3] - panel_b1s[4]) + (panel_b1s[4] - panel_b1s[5])) / (2 * hy);
-            dy_b1s[8] = (-3 * (panel_b1s[6] - panel_b1s[7]) + (panel_b1s[7] - panel_b1s[8])) / (2 * hy);
+            if (panel->top_nbr_ind > -2) {
+                dy_b1s[2] = (top_panel_b1s[1] - panel_b1s[1]) / (2 * hy);
+                dy_b1s[5] = (top_panel_b1s[4] - panel_b1s[4]) / (2 * hy);
+                dy_b1s[8] = (top_panel_b1s[7] - panel_b1s[7]) / (2 * hy);
+            }
+            else {
+                dy_b1s[2] = (-3 * (panel_b1s[0] - panel_b1s[1]) + (panel_b1s[1] - panel_b1s[2])) / (2 * hy);
+                dy_b1s[5] = (-3 * (panel_b1s[3] - panel_b1s[4]) + (panel_b1s[4] - panel_b1s[5])) / (2 * hy);
+                dy_b1s[8] = (-3 * (panel_b1s[6] - panel_b1s[7]) + (panel_b1s[7] - panel_b1s[8])) / (2 * hy);
+            }
         }
+
+
 
         //////////// b2s ///////////////
         dx_b2s[0] = (panel_b2s[3] - left_panel_b2s[3]) / (2 * hx);
@@ -757,31 +844,48 @@ int AMRStructure::compute_rhs_state(
         dx_b2s[5] = (panel_b2s[8] - panel_b2s[2]) / (2 * hx);
         dx_b2s[8] = (right_panel_b2s[5] - panel_b2s[5]) / (2 * hx);
 
-        if (panel->bottom_nbr_ind > -2) {
+
+        if (bcs == periodic_bcs) {
             dy_b2s[0] = (panel_b2s[1] - bottom_panel_b2s[1]) / (2 * hy);
             dy_b2s[3] = (panel_b2s[4] - bottom_panel_b2s[4]) / (2 * hy);
             dy_b2s[6] = (panel_b2s[7] - bottom_panel_b2s[7]) / (2 * hy);
         }
         else {
-            dy_b2s[0] = (-3 * (panel_b2s[0] - panel_b2s[1]) + (panel_b2s[1] - panel_b2s[2])) / (2 * hy);
-            dy_b2s[3] = (-3 * (panel_b2s[3] - panel_b2s[4]) + (panel_b2s[4] - panel_b2s[5])) / (2 * hy);
-            dy_b2s[6] = (-3 * (panel_b2s[6] - panel_b2s[7]) + (panel_b2s[7] - panel_b2s[8])) / (2 * hy);
+            if (panel->bottom_nbr_ind > -2) {
+                dy_b2s[0] = (panel_b2s[1] - bottom_panel_b2s[1]) / (2 * hy);
+                dy_b2s[3] = (panel_b2s[4] - bottom_panel_b2s[4]) / (2 * hy);
+                dy_b2s[6] = (panel_b2s[7] - bottom_panel_b2s[7]) / (2 * hy);
+            }
+            else {
+                dy_b2s[0] = (-3 * (panel_b2s[0] - panel_b2s[1]) + (panel_b2s[1] - panel_b2s[2])) / (2 * hy);
+                dy_b2s[3] = (-3 * (panel_b2s[3] - panel_b2s[4]) + (panel_b2s[4] - panel_b2s[5])) / (2 * hy);
+                dy_b2s[6] = (-3 * (panel_b2s[6] - panel_b2s[7]) + (panel_b2s[7] - panel_b2s[8])) / (2 * hy);
+            }
         }
+
 
         dy_b2s[1] = (panel_b2s[2] - panel_b2s[0]) / (2 * hy);
         dy_b2s[4] = (panel_b2s[5] - panel_b2s[3]) / (2 * hy);
         dy_b2s[7] = (panel_b2s[8] - panel_b2s[6]) / (2 * hy);
 
-        if (panel->top_nbr_ind > -2) {
+        if (bcs == periodic_bcs) {
             dy_b2s[2] = (top_panel_b2s[1] - panel_b2s[1]) / (2 * hy);
             dy_b2s[5] = (top_panel_b2s[4] - panel_b2s[4]) / (2 * hy);
             dy_b2s[8] = (top_panel_b2s[7] - panel_b2s[7]) / (2 * hy);
         }
         else {
-            dy_b2s[2] = (-3 * (panel_b2s[0] - panel_b2s[1]) + (panel_b2s[1] - panel_b2s[2])) / (2 * hy);
-            dy_b2s[5] = (-3 * (panel_b2s[3] - panel_b2s[4]) + (panel_b2s[4] - panel_b2s[5])) / (2 * hy);
-            dy_b2s[8] = (-3 * (panel_b2s[6] - panel_b2s[7]) + (panel_b2s[7] - panel_b2s[8])) / (2 * hy);
+            if (panel->top_nbr_ind > -2) {
+                dy_b2s[2] = (top_panel_b2s[1] - panel_b2s[1]) / (2 * hy);
+                dy_b2s[5] = (top_panel_b2s[4] - panel_b2s[4]) / (2 * hy);
+                dy_b2s[8] = (top_panel_b2s[7] - panel_b2s[7]) / (2 * hy);
+            }
+            else {
+                dy_b2s[2] = (-3 * (panel_b2s[0] - panel_b2s[1]) + (panel_b2s[1] - panel_b2s[2])) / (2 * hy);
+                dy_b2s[5] = (-3 * (panel_b2s[3] - panel_b2s[4]) + (panel_b2s[4] - panel_b2s[5])) / (2 * hy);
+                dy_b2s[8] = (-3 * (panel_b2s[6] - panel_b2s[7]) + (panel_b2s[7] - panel_b2s[8])) / (2 * hy);
+            }
         }
+
 
         for (int ii = 0; ii < 9; ++ii) {
             int pind = panel_point_inds[ii];
