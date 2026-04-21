@@ -553,12 +553,12 @@ int AMRStructure::compute_rhs_state(
 
         for (int ii = 0; ii < 9; ++ii) {
             int pind = panel_point_inds[ii];
-            panel_xs[ii]  = xs[pind];
-            panel_ys[ii]  = ys[pind];
-            panel_u1s[ii] = u1s[pind];
-            panel_u2s[ii] = u2s[pind];
-            panel_b1s[ii] = b1s[pind];
-            panel_b2s[ii] = b2s[pind];
+            panel_xs[ii]  = xs_in[pind];
+            panel_ys[ii]  = ys_in[pind];
+            panel_u1s[ii] = u1s_in[pind];
+            panel_u2s[ii] = u2s_in[pind];
+            panel_b1s[ii] = b1s_in[pind];
+            panel_b2s[ii] = b2s_in[pind];
         }
 
         Panel* left_panel = &(panels[panel->left_nbr_ind]);
@@ -568,10 +568,10 @@ int AMRStructure::compute_rhs_state(
 
         for (int ii = 0; ii < 9; ++ii) {
             int pind = left_panel_point_inds[ii];
-            left_panel_u1s[ii] = u1s[pind];
-            left_panel_u2s[ii] = u2s[pind];
-            left_panel_b1s[ii] = b1s[pind];
-            left_panel_b2s[ii] = b2s[pind];
+            left_panel_u1s[ii] = u1s_in[pind];
+            left_panel_u2s[ii] = u2s_in[pind];
+            left_panel_b1s[ii] = b1s_in[pind];
+            left_panel_b2s[ii] = b2s_in[pind];
         }
 
         Panel* right_panel = &(panels[panel->right_nbr_ind]);
@@ -581,10 +581,10 @@ int AMRStructure::compute_rhs_state(
 
         for (int ii = 0; ii < 9; ++ii) {
             int pind = right_panel_point_inds[ii];
-            right_panel_u1s[ii] = u1s[pind];
-            right_panel_u2s[ii] = u2s[pind];
-            right_panel_b1s[ii] = b1s[pind];
-            right_panel_b2s[ii] = b2s[pind];
+            right_panel_u1s[ii] = u1s_in[pind];
+            right_panel_u2s[ii] = u2s_in[pind];
+            right_panel_b1s[ii] = b1s_in[pind];
+            right_panel_b2s[ii] = b2s_in[pind];
         }
 
         double top_panel_u1s[9], top_panel_u2s[9];
@@ -594,10 +594,10 @@ int AMRStructure::compute_rhs_state(
             const int* top_panel_point_inds = top_panel->point_inds;
             for (int ii = 0; ii < 9; ++ii) {
                 int pind = top_panel_point_inds[ii];
-                top_panel_u1s[ii] = u1s[pind];
-                top_panel_u2s[ii] = u2s[pind];
-                top_panel_b1s[ii] = b1s[pind];
-                top_panel_b2s[ii] = b2s[pind];
+                top_panel_u1s[ii] = u1s_in[pind];
+                top_panel_u2s[ii] = u2s_in[pind];
+                top_panel_b1s[ii] = b1s_in[pind];
+                top_panel_b2s[ii] = b2s_in[pind];
             }
         }
 
@@ -608,10 +608,10 @@ int AMRStructure::compute_rhs_state(
             const int* bottom_panel_point_inds = bottom_panel->point_inds;
             for (int ii = 0; ii < 9; ++ii) {
                 int pind = bottom_panel_point_inds[ii];
-                bottom_panel_u1s[ii] = u1s[pind];
-                bottom_panel_u2s[ii] = u2s[pind];
-                bottom_panel_b1s[ii] = b1s[pind];
-                bottom_panel_b2s[ii] = b2s[pind];
+                bottom_panel_u1s[ii] = u1s_in[pind];
+                bottom_panel_u2s[ii] = u2s_in[pind];
+                bottom_panel_b1s[ii] = b1s_in[pind];
+                bottom_panel_b2s[ii] = b2s_in[pind];
             }
         }
 

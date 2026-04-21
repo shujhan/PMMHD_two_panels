@@ -73,7 +73,7 @@ Field* AMRSimulation::make_field_return_ptr(pt::ptree &deck) {
             KernelMode m = periodic_y;
             calculate_field = new U_DirectSum(Lx, greens_epsilon);
             calculate_field->set_mode(m);
-            cout << "using treecode: periodic in x and y" << endl;
+            cout << "using direct sum: periodic in x and y" << endl;
         }
     }
     return calculate_field;
