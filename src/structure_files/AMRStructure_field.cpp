@@ -905,6 +905,13 @@ int AMRStructure::compute_rhs_state(
         source_term[i] = 2*(b1s_grad_x[i] * u2s_grad_x[i] + b2s_grad_x[i] * u2s_grad_y[i])
                         -2* (b1s_grad_y[i] * u1s_grad_x[i] + b2s_grad_y[i] * u1s_grad_y[i]);
     }
+
+    // double smax = 0.0;
+    // for (size_t i = 0; i < source_term.size(); ++i) {
+    //     if (std::abs(source_term[i]) > smax) smax = std::abs(source_term[i]);
+    // }
+    // std::cout << "[rhs] t=" << t_in << " max|source|=" << smax << std::endl;
+
     return 0;
 }
 

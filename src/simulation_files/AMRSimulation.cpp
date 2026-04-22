@@ -71,7 +71,7 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
         periodizer = new Periodizer(x_min, x_max, y_min, y_max, calculate_e, 
                             80,  // M
                             22,  // m
-                            1.25);
+                            1.15);
         periodizer->precompute_Q();
         // inject into the two species
         general_list[0]->set_periodizer(periodizer);
@@ -92,10 +92,10 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
     general_list[0]->evaluate_u_field(u1s, u2s, xs, ys, u_ws_step0, t);
     general_list[0]->evaluate_b_field(b1s, b2s, xs, ys, b_ws_step0, t);
     //external field for polarized_alfven wave
-    for (size_t i = 0; i < b1s.size(); ++i) {
-        b1s[i] +=  2.0/sqrt(5);
-        b2s[i] +=  1.0/sqrt(5);
-    }
+    // for (size_t i = 0; i < b1s.size(); ++i) {
+    //     b1s[i] +=  2.0/sqrt(5);
+    //     b2s[i] +=  1.0/sqrt(5);
+    // }
 
     general_list[0]->set_u1s(u1s);
     general_list[0]->set_u2s(u2s);

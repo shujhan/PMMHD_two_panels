@@ -76,7 +76,8 @@ void Periodizer::precompute_Q()
     Q_matrix.resize(4 * m, M);
 
     const double pi  = 3.14159265358979323846;
-    const double eps = 1e-12;   // proxy is far from all walls, no singularity
+    // const double eps = 1e-12;   // proxy is far from all walls, no singularity
+    const double eps = 0.1;
 
     for (int j = 0; j < M; ++j) {
         double yx = proxy_x[j];
@@ -168,7 +169,8 @@ void Periodizer::add_correction(const std::vector<double>& tx,
                                 std::vector<double>& u2) const
 {
     const double pi  = 3.14159265358979323846;
-    const double eps = 1e-12;
+    // const double eps = 1e-12;
+    const double eps = 0.1;
     const int N = (int)tx.size();
 
     #pragma omp parallel for
