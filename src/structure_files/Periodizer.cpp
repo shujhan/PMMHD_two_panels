@@ -8,9 +8,10 @@
 // -----------------------------------------------------------------------
 Periodizer::Periodizer(double x_min, double x_max,
                        double y_min, double y_max,
+                       double eps,
                        Field* free_space_kernel,
                        int M_, int m_, double Rp_factor)
-    : Lx(x_max - x_min), Ly(y_max - y_min),
+    : Lx(x_max - x_min), Ly(y_max - y_min), eps(eps),
       cx(0.5 * (x_min + x_max)), cy(0.5 * (y_min + y_max)),
       M(M_), m(m_), kernel(free_space_kernel)
 {
@@ -77,7 +78,7 @@ void Periodizer::precompute_Q()
 
     const double pi  = 3.14159265358979323846;
     // const double eps = 1e-12;   // proxy is far from all walls, no singularity
-    const double eps = 0.1;
+    // const double eps = 0.1;
 
     for (int j = 0; j < M; ++j) {
         double yx = proxy_x[j];
@@ -170,7 +171,7 @@ void Periodizer::add_correction(const std::vector<double>& tx,
 {
     const double pi  = 3.14159265358979323846;
     // const double eps = 1e-12;
-    const double eps = 0.1;
+    // const double eps = 0.1;
     const int N = (int)tx.size();
 
     #pragma omp parallel for

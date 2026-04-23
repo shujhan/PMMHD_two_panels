@@ -9,6 +9,7 @@ class Periodizer {
 public:
     Periodizer(double x_min, double x_max,
                double y_min, double y_max,
+               double eps,
                Field* free_space_kernel,
                int M = 80,
                int m = 22,
@@ -35,6 +36,7 @@ public:
 
 private:
     double Lx, Ly, cx, cy, Rp;
+    double eps;
     int M, m;
     Field* kernel;   // not owned — just used for type; actual evaluation is inline
 

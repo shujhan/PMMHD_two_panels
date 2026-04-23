@@ -165,17 +165,20 @@ class U_Treecode : public Field {
         void Call_BL(); // far field
         void Call_Ds(); // near field direct
 
+        void Call_BL_free_space(); 
+        void Call_DS_free_space();
+
         void Call_BL_u1_grad(); 
         void Call_DS_u1_grad(); 
 
         void Call_BL_u2_grad();
         void Call_DS_u2_grad();
 
-        void Call_BL_vorticity_grad(); 
-        void Call_DS_vorticity_grad(); 
+        // void Call_BL_vorticity_grad(); 
+        // void Call_DS_vorticity_grad(); 
 
-        void Call_BL_laplacian();
-        void Call_DS_laplacian();
+        // void Call_BL_laplacian();
+        // void Call_DS_laplacian();
 
         // =========================
         // Parameters

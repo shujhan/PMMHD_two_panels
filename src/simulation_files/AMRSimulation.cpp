@@ -68,10 +68,10 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
     }
 
     if (bcs == periodic_bcs) {
-        periodizer = new Periodizer(x_min, x_max, y_min, y_max, calculate_e, 
-                            80,  // M
+        periodizer = new Periodizer(x_min, x_max, y_min, y_max, greens_epsilon, calculate_e,
+                            100,  // M
                             22,  // m
-                            1.15);
+                            1.9);
         periodizer->precompute_Q();
         // inject into the two species
         general_list[0]->set_periodizer(periodizer);
