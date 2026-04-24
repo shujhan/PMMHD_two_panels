@@ -334,12 +334,21 @@ void U_Treecode::operator()(double* e1s, double* e2s,
     particles_x = new double[numpars_s];
     particles_y = new double[numpars_s];
 
-    for (size_t i = 0; i < numpars_s; i++) {
-        // particles_x[i] = x_vals[i];
-        particles_x[i] = fmod(x_vals[i],L);
-        particles_y[i] = y_vals[i];
-        lambda[i]      = q_ws[i];
+    if (mode == periodic_y || mode == free_space) {
+        for (size_t i = 0; i < numpars_s; i++) {
+            particles_x[i] = x_vals[i];
+            particles_y[i] = y_vals[i];
+            lambda[i]      = q_ws[i];
+        }
     }
+    else {
+        for (size_t i = 0; i < numpars_s; i++) {
+            particles_x[i] = fmod(x_vals[i],L);
+            particles_y[i] = y_vals[i];
+            lambda[i]      = q_ws[i];
+        }
+    }
+
 
 #if OPENACC_ENABLED
 std::cout << "Running with OpenACC" << std::endl;
@@ -1972,7 +1981,7 @@ void U_Treecode::Compute_SUM()
         case free_space:
             Call_BL_free_space();
             Call_DS_free_space();
-
+            break;
 
         case u1_grad: // for u1s_grad_x, u1s_grad_y, b1s_grad_x, b1s_grad_y
             // cout << "u1_grad kernel: " <<endl;

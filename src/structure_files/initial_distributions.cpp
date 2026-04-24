@@ -67,6 +67,21 @@ void w0_orszag_tang::print() {
 }
 
 
+// ---- w0_orszag_tang ----
+w0_orszag_tang_2::w0_orszag_tang_2(double kx_w, double ky_w, double amp_w):
+    kx(kx_w), ky(ky_w), amp(amp_w) {}
+
+double w0_orszag_tang_2::operator()(double x, double y) {
+    return amp * (sin(ky * y) - cos(kx * x));
+}
+
+void w0_orszag_tang_2::print() {
+    std::cout << "w0_orszag_tang_2: amp * (sin(ky * y) - cos(kx * x))" << std::endl;
+}
+
+
+
+
 
 
 // ---- j0_uniform ----
@@ -144,6 +159,25 @@ double j0_orszag_tang::operator()(double x, double y) {
 void j0_orszag_tang::print() {
     std::cout << "j0_orszag_tang: mp * (cos(kx * x) + cos(ky * y))" << std::endl;
 }
+
+
+// ---- j0_orszag_tang ----
+j0_orszag_tang_2::j0_orszag_tang_2(double kx_j, double ky_j, double amp_j):
+    kx(kx_j), ky(ky_j), amp(amp_j) {}
+
+double j0_orszag_tang_2::operator()(double x, double y) {
+    return amp * (2 * cos(ky * y) - cos(kx * x));
+}
+
+void j0_orszag_tang_2::print() {
+    std::cout << "j0_orszag_tang: amp * (2 * cos(ky * y) - cos(kx * x))" << std::endl;
+}
+
+
+
+
+
+
 
 
 

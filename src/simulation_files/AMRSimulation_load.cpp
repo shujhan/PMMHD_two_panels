@@ -138,6 +138,16 @@ distribution* AMRSimulation::make_f0_return_ptr(pt::ptree &species_deck_portion)
             f0 = new j0_orszag_tang(kx, ky, amp);
             break;
 
+        // for orszag-tang vortex test 2
+        case 11:
+            f0 = new w0_orszag_tang_2(kx, ky, amp);
+            break;
+
+        case 12: 
+            f0 = new j0_orszag_tang_2(kx, ky, amp);
+            break;
+
+
 
         default:
             cout << "Using default initial conditions, all 1s" << endl;

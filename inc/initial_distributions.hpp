@@ -56,7 +56,15 @@ class w0_orszag_tang : public distribution {
     double amp;
 };
 
-
+class w0_orszag_tang_2 : public distribution {
+    public:
+        w0_orszag_tang_2(double kx_w, double ky_w, double amp_w);
+        double operator() (double x, double y);
+        void print();
+    double kx;
+    double ky;
+    double amp;
+};
 
 
 class j0_uniform : public distribution {
@@ -117,7 +125,15 @@ class j0_orszag_tang : public distribution {
     double amp;
 };
 
-
+class j0_orszag_tang_2 : public distribution {
+    public:
+        j0_orszag_tang_2(double kx_j, double ky_j, double amp_j);
+        double operator() (double x, double y);
+        void print();
+    double kx;
+    double ky;
+    double amp;
+};
 
 
 class combined_distribution : public distribution {
