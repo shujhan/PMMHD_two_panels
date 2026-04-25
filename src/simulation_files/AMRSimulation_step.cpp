@@ -3,15 +3,26 @@
 // #define DEBUG
 
 int AMRSimulation::step() {
+
+    // if dump : write to file
+    if (iter_num % n_steps_diag == 0) {
+        write_to_file();
+    }
+
+    // ---- Conservation diagnostics (every step) ----
+    {
+        MHDDiagnostics d = compute_diagnostics();
+        write_diagnostics(d);
+        // std::cout << "[diag] iter=" << d.iter
+        //           << " t="    << d.t
+        //           << " E="    << d.E_tot
+        //           << " H_C="  << d.H_C << std::endl;
+    }
+
     iter_num += 1;
     general_list[0]->iter_num = iter_num;
     general_list[1]->iter_num = iter_num;
     std::cout << "step " << iter_num << std::endl;
-    // if (need_gather) {
-    //     // gather from species (need at first and after every remesh)
-    //     // gather vorticity and current density xs and ys
-    //     gather();
-    // }
 
     if (method > 0) {
         euler();
@@ -37,12 +48,6 @@ int AMRSimulation::step() {
 
     // Then in future for amr, do amr here for new w0 and j0. 
 
-
-
-    // if dump : write to file
-    if (iter_num % n_steps_diag == 0) {
-        write_to_file();
-    }
 
     return 0;
 }

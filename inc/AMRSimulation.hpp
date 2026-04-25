@@ -17,7 +17,14 @@ using namespace std;
 
 
 
-// enum BoundaryConditions {periodic_bcs, open_bcs};
+struct MHDDiagnostics {
+    int    iter;
+    double t;
+    double E_kin;
+    double E_mag;
+    double E_tot;
+    double H_C;
+};
 
 class AMRSimulation {
     ofstream outFile;
@@ -80,18 +87,6 @@ class AMRSimulation {
         AMRStructure* make_species_return_ptr(pt::ptree &species_deck_portion, distribution* w0, distribution* j0, distribution* q0);
 
 
-
-
-        // // functions for field evaluation
-        // // u1 and u2, the ws is made of vorticity
-        // int evaluate_u1_field(std::vector<double>& u1s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
-        // int evaluate_u2_field(std::vector<double>& u2s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
-        // // u1 and u2, the ws is made of current density 
-        // int evaluate_b1_field(std::vector<double>& b1s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
-        // int evaluate_b2_field(std::vector<double>& b2s_local, std::vector<double>& xs_local,std::vector<double>& ys_local,std::vector<double>& ws_local,double t);
-
-
-
         // functions for pushing particles
         // int gather();
         // int scatter(bool send_e);
@@ -99,6 +94,9 @@ class AMRSimulation {
         int step();
         int euler();
         int rk4();
+
+        MHDDiagnostics compute_diagnostics();   
+        int write_diagnostics(const MHDDiagnostics& d); 
 
 
         // function for remeshing 
