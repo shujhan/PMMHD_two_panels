@@ -145,6 +145,30 @@ class AMRStructure {
                             std::vector<double>& source_term
                         );
 
+        int AMRStructure::evaluate_u1s_grad(std::vector<double>& u2s_grad_x_local,
+                                    std::vector<double>& u2s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t);
+                                       
+        int AMRStructure::evaluate_u2s_grad(std::vector<double>& u2s_grad_x_local,
+                                    std::vector<double>& u2s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t);
+                       
+        int AMRStructure::evaluate_b1s_grad(std::vector<double>& u2s_grad_x_local,
+                                    std::vector<double>& u2s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t);
+                                       
+        int AMRStructure::evaluate_b2s_grad(std::vector<double>& u2s_grad_x_local,
+                                    std::vector<double>& u2s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t);
+                       
 
     // remesh
     void remesh();

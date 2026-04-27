@@ -366,43 +366,133 @@ int AMRStructure::evaluate_b_field(std::vector<double>& b1s_local, std::vector<d
 
 
 
+int AMRStructure::evaluate_u1s_grad(std::vector<double>& u1s_grad_x_local,
+                                    std::vector<double>& u1s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t)
+{
+    const int n_local = (int)xs_local.size();
 
+    if (bcs == periodic_bcs) {
+        // ---------- Step A: build 9x image list, direct sum at PARTICLES ----------
+        const int n9 = 9 * n_local;
+        std::vector<double> xtmp(n9), ytmp(n9), wtmp(n9);
+        const double sx[9] = {0.0, -Lx,  Lx, 0.0, 0.0, -Lx, -Lx,  Lx,  Lx};
+        const double sy[9] = {0.0,  0.0, 0.0, -Ly, Ly, -Ly,  Ly, -Ly,  Ly};
+        for (int img = 0; img < 9; ++img) {
+            for (int i = 0; i < n_local; ++i) {
+                xtmp[img * n_local + i] = xs_local[i] + sx[img];
+                ytmp[img * n_local + i] = ys_local[i] + sy[img];
+                wtmp[img * n_local + i] = ws_local[i];
+            }
+        }
 
+        std::vector<double> g1tmp(n9, 0.0), g2tmp(n9, 0.0);
+        KernelMode km = u1_grad_free_space;
+        calculate_e->set_mode(km);
+        (*calculate_e)(g1tmp.data(), g2tmp.data(),
+                       xtmp.data(), n9,
+                       ytmp.data(), wtmp.data(), n9);
 
+        for (int i = 0; i < n_local; ++i) {
+            u1s_grad_x_local[i] = g1tmp[i];
+            u1s_grad_y_local[i] = g2tmp[i];
+        }
 
+        // ---------- Step B: add gradient of proxy correction ----------
+        // Assumes evaluate_u_field has been called earlier in this RK stage,
+        // so that periodizer->xi is current.
+        periodizer->add_correction_grad_u1(xs_local, ys_local,
+                                           u1s_grad_x_local, u1s_grad_y_local);
+    }
+    else {
+        // channel case: no proxy needed
+        std::vector<double> g1tmp(n_local, 0.0), g2tmp(n_local, 0.0);
+        // need to be changed in future for open in y bc
+        KernelMode km = u1_grad_free_space;
+        calculate_e->set_mode(km);
+        (*calculate_e)(g1tmp.data(), g2tmp.data(),
+                       xs_local.data(), n_local,
+                       ys_local.data(), ws_local.data(), n_local);
+        u1s_grad_x_local = g1tmp;
+        u1s_grad_y_local = g2tmp;
+    }
+    return 0;
+}
 
+int AMRStructure::evaluate_u2s_grad(std::vector<double>& u2s_grad_x_local,
+                                    std::vector<double>& u2s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t)
+{
+    const int n_local = (int)xs_local.size();
 
+    if (bcs == periodic_bcs) {
+        const int n9 = 9 * n_local;
+        std::vector<double> xtmp(n9), ytmp(n9), wtmp(n9);
+        const double sx[9] = {0.0, -Lx,  Lx, 0.0, 0.0, -Lx, -Lx,  Lx,  Lx};
+        const double sy[9] = {0.0,  0.0, 0.0, -Ly, Ly, -Ly,  Ly, -Ly,  Ly};
+        for (int img = 0; img < 9; ++img) {
+            for (int i = 0; i < n_local; ++i) {
+                xtmp[img * n_local + i] = xs_local[i] + sx[img];
+                ytmp[img * n_local + i] = ys_local[i] + sy[img];
+                wtmp[img * n_local + i] = ws_local[i];
+            }
+        }
 
+        std::vector<double> g1tmp(n9, 0.0), g2tmp(n9, 0.0);
+        KernelMode km = u2_grad_free_space;
+        calculate_e->set_mode(km);
+        (*calculate_e)(g1tmp.data(), g2tmp.data(),
+                       xtmp.data(), n9,
+                       ytmp.data(), wtmp.data(), n9);
 
+        for (int i = 0; i < n_local; ++i) {
+            u2s_grad_x_local[i] = g1tmp[i];
+            u2s_grad_y_local[i] = g2tmp[i];
+        }
 
+        // gradient of proxy correction (uses same xi computed for u-field)
+        periodizer->add_correction_grad_u2(xs_local, ys_local,
+                                           u2s_grad_x_local, u2s_grad_y_local);
+    }
+    else {
+        std::vector<double> g1tmp(n_local, 0.0), g2tmp(n_local, 0.0);
+        KernelMode km = u2_grad_free_space;
+        calculate_e->set_mode(km);
+        (*calculate_e)(g1tmp.data(), g2tmp.data(),
+                       xs_local.data(), n_local,
+                       ys_local.data(), ws_local.data(), n_local);
+        u2s_grad_x_local = g1tmp;
+        u2s_grad_y_local = g2tmp;
+    }
+    return 0;
+}
 
+int AMRStructure::evaluate_b1s_grad(std::vector<double>& b1s_grad_x_local,
+                                    std::vector<double>& b1s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t)
+{
+    // Same structure as evaluate_u1s_grad — b is computed from j-weights via the
+    // same Biot-Savart-style kernel, so the gradient kernels are identical.
+    // (Caller must pass b-weights as ws_local.)
+    return evaluate_u1s_grad(b1s_grad_x_local, b1s_grad_y_local,
+                             xs_local, ys_local, ws_local, t);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int AMRStructure::evaluate_b2s_grad(std::vector<double>& b2s_grad_x_local,
+                                    std::vector<double>& b2s_grad_y_local,
+                                    std::vector<double>& xs_local,
+                                    std::vector<double>& ys_local,
+                                    std::vector<double>& ws_local, double t)
+{
+    return evaluate_u2s_grad(b2s_grad_x_local, b2s_grad_y_local,
+                             xs_local, ys_local, ws_local, t);
+}
 
 
 
@@ -906,12 +996,7 @@ int AMRStructure::compute_rhs_state(
                         -2* (b1s_grad_y[i] * u1s_grad_x[i] + b2s_grad_y[i] * u1s_grad_y[i]);
     }
 
-    // double smax = 0.0;
-    // for (size_t i = 0; i < source_term.size(); ++i) {
-    //     if (std::abs(source_term[i]) > smax) smax = std::abs(source_term[i]);
-    // }
-    // std::cout << "[rhs] t=" << t_in << " max|source|=" << smax << std::endl;
-
     return 0;
 }
+
 

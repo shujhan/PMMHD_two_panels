@@ -13,7 +13,7 @@ enum KernelMode {
     // laplacian  vorticity_laplacian, j_laplacian
     original, u1_grad, u2_grad, vorticity_grad, laplacian,
     periodic_y,
-    free_space
+    free_space, u1_grad_free_space, u2_grad_free_space
 };
 
 class Field {

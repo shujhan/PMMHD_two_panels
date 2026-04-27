@@ -63,7 +63,8 @@ class AMRSimulation {
     int n_steps_diag;
     double dt;
 
-    int iter_num, t;
+    int iter_num;
+    double t;
 
 
 

@@ -10,6 +10,7 @@ add_library(SimObj AMRSimulation.cpp
                 #    AMRSimulation_remesh.cpp
                    AMRSimulation_run.cpp
                    AMRSimulation_io.cpp
+                   AMRSimulation_diagnostics.cpp
                 )
 target_link_libraries(SimObj       PUBLIC  AMRObj_cpu
                                             FieldObj

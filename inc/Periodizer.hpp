@@ -28,6 +28,18 @@ public:
                         std::vector<double>& u1,
                         std::vector<double>& u2) const;
 
+    // Add the gradient of the proxy correction at target points.
+    // Outputs the (x,y) components of grad(u1) and grad(u2).
+    void add_correction_grad_u1(const std::vector<double>& tx,
+                                const std::vector<double>& ty,
+                                std::vector<double>& du1_dx,
+                                std::vector<double>& du1_dy) const;
+
+    void add_correction_grad_u2(const std::vector<double>& tx,
+                                const std::vector<double>& ty,
+                                std::vector<double>& du2_dx,
+                                std::vector<double>& du2_dy) const;                  
+
     // Accessors so the caller can build the near-sum wall targets
     const std::vector<double>& get_wall_xs() const { return wall_xs_4m; }
     const std::vector<double>& get_wall_ys() const { return wall_ys_4m; }

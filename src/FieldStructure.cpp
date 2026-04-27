@@ -105,6 +105,57 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
             break;
 
 
+        case u1_grad_free_space:
+            // Outputs: du1/dx in u1s, du1/dy in u2s
+            #ifdef OPENACC_ENABLED
+            #pragma acc parallel loop independent
+            #else
+            #pragma omp parallel for
+            #endif
+                for (int i = 0; i < nx; i++) {
+                    double g1 = 0.0, g2 = 0.0;
+                #ifdef OPENACC_ENABLED
+                #pragma acc loop independent reduction(+:g1, g2)
+                #endif
+                    for (int k = 0; k < ny; k++) {
+                        double dx = x_vals[i] - x_vals[k];
+                        double dy = y_vals[i] - y_vals[k];
+                        double R  = dx*dx + dy*dy + epsilon*epsilon;
+                        double R2 = R * R;
+                        g1 += (1.0 / pi) * (dx * dy) / R2 * q_ws[k];
+                        g2 -= (1.0 / (2.0 * pi)) * (dx*dx - dy*dy + epsilon*epsilon) / R2 * q_ws[k];
+                    }
+                    u1s[i] = g1;
+                    u2s[i] = g2;
+                }
+            break;
+
+        case u2_grad_free_space:
+            // Outputs: du2/dx in u1s, du2/dy in u2s
+            #ifdef OPENACC_ENABLED
+            #pragma acc parallel loop independent
+            #else
+            #pragma omp parallel for
+            #endif
+                for (int i = 0; i < nx; i++) {
+                    double g1 = 0.0, g2 = 0.0;
+                #ifdef OPENACC_ENABLED
+                #pragma acc loop independent reduction(+:g1, g2)
+                #endif
+                    for (int k = 0; k < ny; k++) {
+                        double dx = x_vals[i] - x_vals[k];
+                        double dy = y_vals[i] - y_vals[k];
+                        double R  = dx*dx + dy*dy + epsilon*epsilon;
+                        double R2 = R * R;
+                        g1 += (1.0 / (2.0 * pi)) * (dy*dy - dx*dx + epsilon*epsilon) / R2 * q_ws[k];
+                        g2 -= (1.0 / pi) * (dx * dy) / R2 * q_ws[k];
+                    }
+                    u1s[i] = g1;
+                    u2s[i] = g2;
+                }
+            break;
+
+
 
         case u1_grad: // for u1s_grad_x, u1s_grad_y, b1s_grad_x, b1s_grad_y
             // cout << "u1_grad kernel: " <<endl;
@@ -123,9 +174,9 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
                         double x_diff = 2*pi/ L * (x_vals[i] - x_vals[k]);
                         double y_diff = 2*pi/ L * (y_vals[i] - y_vals[k]);
                         // if ((abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
-                        if (std::abs(std::abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
-                            x_diff = 0.0;
-                        }
+                        // if (std::abs(std::abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
+                        //     x_diff = 0.0;
+                        // }
                         double denom_sqr = (cosh(y_diff) - cos(x_diff) + epsilon * epsilon) * (cosh(y_diff) - cos(x_diff) + epsilon * epsilon);
                         double constant_c = pi/L/L;
                         u1 += constant_c * sinh(y_diff) * sin(x_diff) / denom_sqr * q_ws[k];
@@ -152,10 +203,6 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
                     for(int k = 0; k < ny; k++) {
                         double x_diff = 2*pi/ L * (x_vals[i] - x_vals[k]);
                         double y_diff = 2*pi/ L * (y_vals[i] - y_vals[k]);
-                        // if ((abs(x_vals[i] - x_vals[k]) - L) < 1e-14) {
-                        if (std::abs(std::abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
-                            x_diff = 0.0;
-                        }
                         double denom_sqr = (cosh(y_diff) - cos(x_diff) + epsilon * epsilon) * (cosh(y_diff) - cos(x_diff) + epsilon * epsilon);
                         double constant_c = pi/L/L;
                         u1 += constant_c * (cos(x_diff) * cosh(y_diff) - 1 + epsilon * epsilon * cos(x_diff)) / denom_sqr * q_ws[k];

@@ -60,11 +60,13 @@ int AMRSimulation::euler() {
     u2s.assign(xs.size(), 0.0);
     b1s.assign(xs.size(), 0.0);
     b2s.assign(xs.size(), 0.0);
+    std::vector<double> u_ws(xs.size(), 0.0);
+    std::vector<double> b_ws(xs.size(), 0.0);
     if(iter_num >= 1) {
         xs = general_list[0]->get_xs();
         ys = general_list[0]->get_ys();
-        std::vector<double> u_ws(xs.size(), 0.0);
-        std::vector<double> b_ws(xs.size(), 0.0);
+
+
         u_ws = general_list[0]->get_u_weights();
         b_ws = general_list[0]->get_b_weights();
         general_list[0]->evaluate_u_field(u1s, u2s, xs, ys, u_ws, t);
@@ -112,9 +114,32 @@ int AMRSimulation::euler() {
     b2s_grad_y.assign(xs.size(), 0.0);
 
     std::vector<double> source_term(xs.size(), 0.0);
-    general_list[0]->compute_rhs_state(xs, ys, u1s, u2s, b1s, b2s, t, 
-                u1s_grad_x, u1s_grad_y, u2s_grad_x, u2s_grad_y, 
-                b1s_grad_x, b1s_grad_y, b2s_grad_x, b2s_grad_y, source_term);
+    // general_list[0]->compute_rhs_state(xs, ys, u1s, u2s, b1s, b2s, t, 
+    //             u1s_grad_x, u1s_grad_y, u2s_grad_x, u2s_grad_y, 
+    //             b1s_grad_x, b1s_grad_y, b2s_grad_x, b2s_grad_y, source_term);
+
+
+    // compute source term using integral 
+    if (bcs == periodic_bcs) {
+        general_list[0]->evaluate_u1s_grad(u1s_grad_x, u1s_grad_y, xs, ys, u_ws, t);
+    }
+    else {
+        general_list[0]->evaluate_u2s_grad(u2s_grad_x, u2s_grad_y, xs, ys, u_ws, t);
+    }
+    
+    if (bcs == periodic_bcs) {
+        general_list[0]->evaluate_b1s_grad(b1s_grad_x, b1s_grad_y, xs, ys, b_ws, t);
+    }
+    else {
+        general_list[0]->evaluate_b2s_grad(b2s_grad_x, b2s_grad_y, xs, ys, b_ws, t);
+    }
+
+    for (int i = 0; i < xs.size(); ++i) {
+        source_term[i] = 2*(b1s_grad_x[i] * u2s_grad_x[i] + b2s_grad_x[i] * u2s_grad_y[i])
+                        -2* (b1s_grad_y[i] * u1s_grad_x[i] + b2s_grad_y[i] * u1s_grad_y[i]);
+    }
+
+
 
     // build advection velocities
     std::vector<double> vx_plus(xs.size()), vy_plus(xs.size());
