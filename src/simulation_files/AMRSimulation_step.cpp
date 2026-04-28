@@ -62,13 +62,12 @@ int AMRSimulation::euler() {
     b2s.assign(xs.size(), 0.0);
     std::vector<double> u_ws(xs.size(), 0.0);
     std::vector<double> b_ws(xs.size(), 0.0);
+    u_ws = general_list[0]->get_u_weights();
+    b_ws = general_list[0]->get_b_weights();
     if(iter_num >= 1) {
         xs = general_list[0]->get_xs();
         ys = general_list[0]->get_ys();
 
-
-        u_ws = general_list[0]->get_u_weights();
-        b_ws = general_list[0]->get_b_weights();
         general_list[0]->evaluate_u_field(u1s, u2s, xs, ys, u_ws, t);
         general_list[0]->evaluate_b_field(b1s, b2s, xs, ys, b_ws, t);
 
@@ -122,15 +121,14 @@ int AMRSimulation::euler() {
     // compute source term using integral 
     if (bcs == periodic_bcs) {
         general_list[0]->evaluate_u1s_grad(u1s_grad_x, u1s_grad_y, xs, ys, u_ws, t);
-    }
-    else {
         general_list[0]->evaluate_u2s_grad(u2s_grad_x, u2s_grad_y, xs, ys, u_ws, t);
-    }
-    
-    if (bcs == periodic_bcs) {
         general_list[0]->evaluate_b1s_grad(b1s_grad_x, b1s_grad_y, xs, ys, b_ws, t);
+        general_list[0]->evaluate_b2s_grad(b2s_grad_x, b2s_grad_y, xs, ys, b_ws, t);
     }
-    else {
+    else { // future change to open y 
+        general_list[0]->evaluate_u1s_grad(u1s_grad_x, u1s_grad_y, xs, ys, u_ws, t);
+        general_list[0]->evaluate_u2s_grad(u2s_grad_x, u2s_grad_y, xs, ys, u_ws, t);
+        general_list[0]->evaluate_b1s_grad(b1s_grad_x, b1s_grad_y, xs, ys, b_ws, t);
         general_list[0]->evaluate_b2s_grad(b2s_grad_x, b2s_grad_y, xs, ys, b_ws, t);
     }
 
