@@ -17,6 +17,8 @@ int AMRSimulation::get_box_t_params(pt::ptree &deck) {
     x_min = deck.get<double>("xmin", 0.0), x_max = deck.get<double>("xmax", 0.0);
     y_min = deck.get<double>("ymin", 0.0), y_max = deck.get<double>("ymax",1.0);
     int bcs_int = deck.get<int>("bcs",0);
+    B0x = deck.get<double>("B0x", 0.0);
+    B0y = deck.get<double>("B0y", 0.0);
     
     if (bcs_int < 0 || bcs_int >= 2) {
         cout << "Invalid boundary condition provided in input deck. Valid BCs are: " << endl;

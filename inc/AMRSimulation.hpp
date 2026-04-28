@@ -55,6 +55,11 @@ class AMRSimulation {
     Periodizer* periodizer = nullptr;
     double greens_epsilon;
 
+    // External uniform field for polarized-Alfvén test
+    // Set to 0 for tests without external field
+    double B0x = 0.0;
+    double B0y = 0.0;
+
     int method; // 0: rk4, otherwise euler
 
     // pusher parameters
@@ -95,6 +100,17 @@ class AMRSimulation {
         int step();
         int euler();
         int rk4();
+
+
+        void compute_stage_rhs(double t_stage,
+                       std::vector<double>& stage_xs,    
+                       std::vector<double>& stage_ys,   
+                       std::vector<double>& stage_u1s,
+                       std::vector<double>& stage_u2s,
+                       std::vector<double>& stage_b1s,
+                       std::vector<double>& stage_b2s,
+                       std::vector<double>& stage_source);
+
 
         MHDDiagnostics compute_diagnostics();   
         int write_diagnostics(const MHDDiagnostics& d); 

@@ -111,7 +111,7 @@ AMRSimulation::AMRSimulation(std::string sim_dir, std::string deck_address)
     // print AMR description
     print_sim_setup();
     //write to file
-    write_to_file();
+    // write_to_file();
 }
 
 
