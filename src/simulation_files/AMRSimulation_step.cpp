@@ -50,10 +50,10 @@ int AMRSimulation::step() {
     general_list[0]->evaluate_u_field(u1s, u2s, xs, ys, u_ws_step, t);
     general_list[0]->evaluate_b_field(b1s, b2s, xs, ys, b_ws_step, t);
     //external field for polarized_alfven wave
-    for (size_t i = 0; i < b1s.size(); ++i) {
-        b1s[i] +=  2.0/sqrt(5);
-        b2s[i] +=  1.0/sqrt(5);
-    }
+    // for (size_t i = 0; i < b1s.size(); ++i) {
+    //     b1s[i] +=  2.0/sqrt(5);
+    //     b2s[i] +=  1.0/sqrt(5);
+    // }
     // for (size_t i = 0; i < b1s.size(); ++i) {
     //     b1s[i] += B0x;
     //     b2s[i] += B0y;
@@ -67,9 +67,6 @@ int AMRSimulation::step() {
     general_list[1]->set_u2s(u2s);
     general_list[1]->set_b1s(b1s);
     general_list[1]->set_b2s(b2s);
-
-
-
 
     // in future amr implementation
 
@@ -699,10 +696,10 @@ int AMRSimulation::rk4() {
     // }
 
     // external field for polarized_alfven wave
-    for (size_t i = 0; i < k2_b1s.size(); ++i) {
-        k2_b1s[i] +=  2.0/sqrt(5);
-        k2_b2s[i] +=  1.0/sqrt(5);
-    }
+    // for (size_t i = 0; i < k2_b1s.size(); ++i) {
+    //     k2_b1s[i] +=  2.0/sqrt(5);
+    //     k2_b2s[i] +=  1.0/sqrt(5);
+    // }
     // for (size_t i = 0; i < k2_b1s.size(); ++i) {
     //     k2_b1s[i] += B0x;
     //     k2_b1s[i] += B0y;
@@ -781,10 +778,10 @@ int AMRSimulation::rk4() {
     // }
 
     //external field for polarized_alfven wave
-    for (size_t i = 0; i < k3_b1s.size(); ++i) {
-        k3_b1s[i] +=  2/sqrt(5);
-        k3_b2s[i] +=  1/sqrt(5);
-    }
+    // for (size_t i = 0; i < k3_b1s.size(); ++i) {
+    //     k3_b1s[i] +=  2/sqrt(5);
+    //     k3_b2s[i] +=  1/sqrt(5);
+    // }
     // for (size_t i = 0; i < k3_b1s.size(); ++i) {
     //     k3_b1s[i] +=  B0x;
     //     k3_b2s[i] +=  B0y;
@@ -863,10 +860,10 @@ int AMRSimulation::rk4() {
     // }
 
     //external field for polarized_alfven wave
-    for (size_t i = 0; i < k4_b1s.size(); ++i) {
-        k4_b1s[i] +=  2.0/sqrt(5);
-        k4_b2s[i] +=  1.0/sqrt(5);
-    }
+    // for (size_t i = 0; i < k4_b1s.size(); ++i) {
+    //     k4_b1s[i] +=  2.0/sqrt(5);
+    //     k4_b2s[i] +=  1.0/sqrt(5);
+    // }
     // for (size_t i = 0; i < k4_b1s.size(); ++i) {
     //     k4_b1s[i] +=  B0x;
     //     k4_b2s[i] +=  B0y;
