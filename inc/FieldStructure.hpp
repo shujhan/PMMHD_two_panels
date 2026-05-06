@@ -174,6 +174,13 @@ class U_Treecode : public Field {
         void Call_BL_u2_grad();
         void Call_DS_u2_grad();
 
+        void Call_BL_u1_grad_free_space(); 
+        void Call_DS_u1_grad_free_space(); 
+
+        void Call_BL_u2_grad_free_space();
+        void Call_DS_u2_grad_free_space();
+
+
         // void Call_BL_vorticity_grad(); 
         // void Call_DS_vorticity_grad(); 
 

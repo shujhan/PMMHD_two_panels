@@ -410,7 +410,7 @@ int AMRStructure::evaluate_u1s_grad(std::vector<double>& u1s_grad_x_local,
         // channel case: no proxy needed
         std::vector<double> g1tmp(n_local, 0.0), g2tmp(n_local, 0.0);
         // need to be changed in future for open in y bc
-        KernelMode km = u1_grad_free_space;
+        KernelMode km = u1_grad;
         calculate_e->set_mode(km);
         (*calculate_e)(g1tmp.data(), g2tmp.data(),
                        xs_local.data(), n_local,
@@ -460,7 +460,7 @@ int AMRStructure::evaluate_u2s_grad(std::vector<double>& u2s_grad_x_local,
     }
     else {
         std::vector<double> g1tmp(n_local, 0.0), g2tmp(n_local, 0.0);
-        KernelMode km = u2_grad_free_space;
+        KernelMode km = u2_grad;
         calculate_e->set_mode(km);
         (*calculate_e)(g1tmp.data(), g2tmp.data(),
                        xs_local.data(), n_local,

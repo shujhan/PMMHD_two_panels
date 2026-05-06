@@ -106,6 +106,7 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
 
 
         case u1_grad_free_space:
+            cout << "periodic in x and y kernel, u1_grad: " <<endl;
             // Outputs: du1/dx in u1s, du1/dy in u2s
             #ifdef OPENACC_ENABLED
             #pragma acc parallel loop independent
@@ -131,6 +132,7 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
             break;
 
         case u2_grad_free_space:
+            cout << "periodic in x and y kernel, u2_grad: " <<endl;
             // Outputs: du2/dx in u1s, du2/dy in u2s
             #ifdef OPENACC_ENABLED
             #pragma acc parallel loop independent
@@ -158,7 +160,7 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
 
 
         case u1_grad: // for u1s_grad_x, u1s_grad_y, b1s_grad_x, b1s_grad_y
-            // cout << "u1_grad kernel: " <<endl;
+            cout << "u1_grad kernel: " <<endl;
             #ifdef OPENACC_ENABLED
             #pragma acc parallel loop independent
             #else
@@ -188,7 +190,7 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
             break;
 
         case u2_grad: // for u2s_grad_x, u2s_grad_y, b2s_grad_x, b2s_grad_y
-            // cout << "u2_grad kernel: " <<endl;
+            cout << "u2_grad kernel: " <<endl;
             #ifdef OPENACC_ENABLED
             #pragma acc parallel loop independent
             #else
@@ -213,76 +215,76 @@ void U_DirectSum::operator() (double* u1s, double* u2s, double* x_vals, int nx,
                 }
             break;
 
-        case vorticity_grad: // for vorticity_grad_x, vorticity_grad_x, j_grad_x, j_grad_y
-            // cout << "vorticity_grad kernel: " <<endl;
-            #ifdef OPENACC_ENABLED
-            #pragma acc parallel loop independent
-            #else
-            #pragma omp parallel for
-            #endif
-                for (int i = 0; i < nx; i++) {
-                    double u1 = 0.0;
-                    double u2 = 0.0;
-                #ifdef OPENACC_ENABLED
-                #pragma acc loop independent reduction(+:u1, u2)
-                #endif
-                    for(int k = 0; k < ny; k++) {
-                        double x_diff = 2*pi/ L * (x_vals[i] - x_vals[k]);
-                        double y_diff = 2*pi/ L * (y_vals[i] - y_vals[k]);
-                        // if ((abs(x_vals[i] - x_vals[k]) - L) < 1e-14) {
-                        if (std::abs(std::abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
-                            x_diff = 0.0;
-                        }
-                        double denom_cube = (cosh(y_diff) - cos(x_diff) + epsilon * epsilon) * (cosh(y_diff) - cos(x_diff) + epsilon * epsilon) * (cosh(y_diff) - cos(x_diff) + epsilon * epsilon);
-                        double constant_c = 2 * pi * pi * epsilon * epsilon /L/L/L; 
-                        u1 += constant_c * sin(x_diff) *(-3*cosh(y_diff) - cos(x_diff) - epsilon * epsilon) / denom_cube * q_ws[k];
-                        u2 += constant_c * sinh(y_diff) *(-cosh(y_diff) - 3 * cos(x_diff) + epsilon * epsilon) / denom_cube * q_ws[k];
-                    }
-                    u1s[i] = u1;
-                    u2s[i] = u2;
-                }
-            break;
+        // case vorticity_grad: // for vorticity_grad_x, vorticity_grad_x, j_grad_x, j_grad_y
+        //     // cout << "vorticity_grad kernel: " <<endl;
+        //     #ifdef OPENACC_ENABLED
+        //     #pragma acc parallel loop independent
+        //     #else
+        //     #pragma omp parallel for
+        //     #endif
+        //         for (int i = 0; i < nx; i++) {
+        //             double u1 = 0.0;
+        //             double u2 = 0.0;
+        //         #ifdef OPENACC_ENABLED
+        //         #pragma acc loop independent reduction(+:u1, u2)
+        //         #endif
+        //             for(int k = 0; k < ny; k++) {
+        //                 double x_diff = 2*pi/ L * (x_vals[i] - x_vals[k]);
+        //                 double y_diff = 2*pi/ L * (y_vals[i] - y_vals[k]);
+        //                 // if ((abs(x_vals[i] - x_vals[k]) - L) < 1e-14) {
+        //                 if (std::abs(std::abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
+        //                     x_diff = 0.0;
+        //                 }
+        //                 double denom_cube = (cosh(y_diff) - cos(x_diff) + epsilon * epsilon) * (cosh(y_diff) - cos(x_diff) + epsilon * epsilon) * (cosh(y_diff) - cos(x_diff) + epsilon * epsilon);
+        //                 double constant_c = 2 * pi * pi * epsilon * epsilon /L/L/L; 
+        //                 u1 += constant_c * sin(x_diff) *(-3*cosh(y_diff) - cos(x_diff) - epsilon * epsilon) / denom_cube * q_ws[k];
+        //                 u2 += constant_c * sinh(y_diff) *(-cosh(y_diff) - 3 * cos(x_diff) + epsilon * epsilon) / denom_cube * q_ws[k];
+        //             }
+        //             u1s[i] = u1;
+        //             u2s[i] = u2;
+        //         }
+        //     break;
 
-        case laplacian: // for vorticity_laplacian, j_laplacian;
-            // cout << "laplacian kernel: " <<endl;
-            #ifdef OPENACC_ENABLED
-            #pragma acc parallel loop independent
-            #else
-            #pragma omp parallel for
-            #endif
-                for (int i = 0; i < nx; i++) {
-                    double u1 = 0.0;
-                    double u2 = 0.0;
-                #ifdef OPENACC_ENABLED
-                #pragma acc loop independent reduction(+:u1, u2)
-                #endif
-                    for(int k = 0; k < ny; k++) {
-                        double x_diff = 2*pi/ L * (x_vals[i] - x_vals[k]);
-                        double y_diff = 2*pi/ L * (y_vals[i] - y_vals[k]);
-                        // if ((abs(x_vals[i] - x_vals[k]) - L) < 1e-14) {
-                        if (std::abs(std::abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
-                            x_diff = 0.0;
-                        }
-                        double C = cos(x_diff);
-                        double S = sin(x_diff);
-                        double H = cosh(y_diff);
-                        double Sh = sinh(y_diff);
-                        double eps_sqr = epsilon * epsilon;
-                        double eps_4 = epsilon * epsilon * epsilon * epsilon;
-                        double denom_4 = (H - C + eps_sqr)*(H - C + eps_sqr)*(H - C + eps_sqr)*(H - C + eps_sqr);
-                        double constant_c = 4 * pi * pi * pi * epsilon * epsilon /L/L/L/L; 
-                        u1 += constant_c * (C*C*C +5*C*C*H -5*C*H*H -8*C*H*eps_sqr +2*C*S*S + 10*C*Sh*Sh -C*eps_4
-                                -H*H*H + 10*H*S*S +2*H*Sh*Sh + H*eps_4 + 4*S*S*eps_sqr - 4*Sh*Sh*eps_sqr) 
-                                / denom_4 * q_ws[k];               
-                        u2 += 0;
-                    }
-                    u1s[i] = u1;
-                    u2s[i] = u2;
-                }
-            break;
+        // case laplacian: // for vorticity_laplacian, j_laplacian;
+        //     // cout << "laplacian kernel: " <<endl;
+        //     #ifdef OPENACC_ENABLED
+        //     #pragma acc parallel loop independent
+        //     #else
+        //     #pragma omp parallel for
+        //     #endif
+        //         for (int i = 0; i < nx; i++) {
+        //             double u1 = 0.0;
+        //             double u2 = 0.0;
+        //         #ifdef OPENACC_ENABLED
+        //         #pragma acc loop independent reduction(+:u1, u2)
+        //         #endif
+        //             for(int k = 0; k < ny; k++) {
+        //                 double x_diff = 2*pi/ L * (x_vals[i] - x_vals[k]);
+        //                 double y_diff = 2*pi/ L * (y_vals[i] - y_vals[k]);
+        //                 // if ((abs(x_vals[i] - x_vals[k]) - L) < 1e-14) {
+        //                 if (std::abs(std::abs(x_vals[i] - x_vals[k]) - L) < 1e-15) {
+        //                     x_diff = 0.0;
+        //                 }
+        //                 double C = cos(x_diff);
+        //                 double S = sin(x_diff);
+        //                 double H = cosh(y_diff);
+        //                 double Sh = sinh(y_diff);
+        //                 double eps_sqr = epsilon * epsilon;
+        //                 double eps_4 = epsilon * epsilon * epsilon * epsilon;
+        //                 double denom_4 = (H - C + eps_sqr)*(H - C + eps_sqr)*(H - C + eps_sqr)*(H - C + eps_sqr);
+        //                 double constant_c = 4 * pi * pi * pi * epsilon * epsilon /L/L/L/L; 
+        //                 u1 += constant_c * (C*C*C +5*C*C*H -5*C*H*H -8*C*H*eps_sqr +2*C*S*S + 10*C*Sh*Sh -C*eps_4
+        //                         -H*H*H + 10*H*S*S +2*H*Sh*Sh + H*eps_4 + 4*S*S*eps_sqr - 4*Sh*Sh*eps_sqr) 
+        //                         / denom_4 * q_ws[k];               
+        //                 u2 += 0;
+        //             }
+        //             u1s[i] = u1;
+        //             u2s[i] = u2;
+        //         }
+        //     break;
 
         default:
-            // cout << "orginal kernel: " <<endl;
+            cout << "orginal kernel: " <<endl;
             #ifdef OPENACC_ENABLED
             #pragma acc parallel loop independent
             #else
@@ -1198,7 +1200,7 @@ cList[tree_index].moments[0:Pflat])
 // =========================
 void U_Treecode::Call_BL()
 {
-    // cout << "enter Call_BL" << endl;
+    cout << "enter orginal Call_BL" << endl;
 
 #if OPENACC_ENABLED
 #pragma acc kernels copyin(leaf_count) \
@@ -1269,7 +1271,7 @@ cList)
 
 void U_Treecode::Call_Ds()
 {
-    // cout << "enter Call_DS" << endl;
+    cout << "enter original Call_DS" << endl; 
 #if OPENACC_ENABLED
 #pragma acc kernels copyin(leaf_count) \
 present(leaf_members[0:2][0:leaf_count], \
@@ -1345,6 +1347,7 @@ cList)
 
 void U_Treecode::Call_BL_u1_grad()
 {
+    cout << "enter original Call_BL_u1_grad" << endl; 
 #if OPENACC_ENABLED
 #pragma acc kernels copyin(leaf_count) \
 present(leaf_members[0:2][0:leaf_count], \
@@ -1409,6 +1412,7 @@ cList)
 
 void U_Treecode::Call_DS_u1_grad()
 {
+    cout << "enter original Call_DS_u1_grad" << endl; 
 #if OPENACC_ENABLED
 #pragma acc kernels copyin(leaf_count) \
 present(leaf_members[0:2][0:leaf_count], \
@@ -1475,6 +1479,7 @@ cList)
 
 void U_Treecode::Call_BL_u2_grad()
 {
+    cout << "enter original Call_BL_u2_grad" << endl; 
 #if OPENACC_ENABLED
 #pragma acc kernels copyin(leaf_count) \
 present(leaf_members[0:2][0:leaf_count], \
@@ -1539,6 +1544,7 @@ cList)
 
 void U_Treecode::Call_DS_u2_grad()
 {
+    cout << "enter original Call_DS_u2_grad" << endl; 
 #if OPENACC_ENABLED
 #pragma acc kernels copyin(leaf_count) \
 present(leaf_members[0:2][0:leaf_count], \
@@ -2010,6 +2016,284 @@ cList)
 
 
 
+
+void U_Treecode::Call_BL_u1_grad_free_space()
+{
+    cout << "enter Call_BL_u1_grad_free_space" << endl;
+
+#if OPENACC_ENABLED
+#pragma acc kernels copyin(leaf_count) \
+present(leaf_members[0:2][0:leaf_count], \
+particles_x[0:numpars_s], particles_y[0:numpars_s], \
+iList[0:leaf_count], \
+velo_tc_reord_x[0:numpars_s], velo_tc_reord_y[0:numpars_s], \
+cList)
+{ // Begin acc kernels region
+#endif
+
+#if OPENACC_ENABLED
+    #pragma acc loop independent
+#endif
+    for (size_t leaf_index = 0; leaf_index < leaf_count; leaf_index++) {
+        size_t batch_limit_1 = leaf_members[0][leaf_index];
+        size_t batch_limit_2 = leaf_members[1][leaf_index];
+
+        size_t far_list_size = iList[leaf_index].far_list_size;
+
+        // cout << "far_list_size for leaf " << leaf_index << ": " << far_list_size <<endl;
+
+#if OPENACC_ENABLED
+        #pragma acc loop vector(128) independent
+#endif
+        for (size_t ii = batch_limit_1; ii <= batch_limit_2; ii++) {
+            double tempx = 0.0;
+            double tempy = 0.0;
+
+            double p_x = particles_x[ii];
+            double p_y = particles_y[ii];
+
+#if OPENACC_ENABLED
+            #pragma acc loop seq
+#endif
+            for (size_t jj = 0; jj < far_list_size; jj++) {
+                size_t far_index = iList[leaf_index].far_list[jj];
+
+#if OPENACC_ENABLED
+                #pragma acc loop seq
+#endif
+                for (int kk = 0; kk < Pflat; kk++) {
+                    int i = kk / PP;
+                    int j = kk % PP;
+                    double x_diff = p_x - cList[far_index].t1[i];
+                    double y_diff = p_y - cList[far_index].t2[j];
+                    double R  = x_diff*x_diff + y_diff*y_diff + epsilon*epsilon;
+                    double R2 = R * R;
+                    tempx += (1.0 / pi) * x_diff * y_diff / R2 * cList[far_index].moments[kk];
+                    tempy -= (1.0 / (2.0 * pi)) * (x_diff*x_diff - y_diff*y_diff + epsilon*epsilon) / R2 * cList[far_index].moments[kk];
+                } // kk
+            } // jj
+
+            velo_tc_reord_x[ii] += tempx;
+            velo_tc_reord_y[ii] += tempy;
+        } // ii
+    } // leaf_index
+#if OPENACC_ENABLED
+} // End acc kernels region
+#endif
+}
+
+
+void U_Treecode::Call_DS_u1_grad_free_space()
+{
+    cout << "enter Call_DS_u1_grad_free_space" << endl;
+#if OPENACC_ENABLED
+#pragma acc kernels copyin(leaf_count) \
+present(leaf_members[0:2][0:leaf_count], \
+tree_members[0:2][0:node_count], \
+particles_x[0:numpars_s], particles_y[0:numpars_s], \
+iList[0:leaf_count], \
+lambda[0:numpars_s], \
+velo_tc_reord_x[0:numpars_s], velo_tc_reord_y[0:numpars_s], \
+cList)
+{ // Begin acc kernels region
+#endif
+
+#if OPENACC_ENABLED
+    #pragma acc loop independent
+#endif
+    for (size_t leaf_index = 0; leaf_index < leaf_count; leaf_index++) {
+        size_t limit_1_b = leaf_members[0][leaf_index];
+        size_t limit_2_b = leaf_members[1][leaf_index];
+
+        size_t near_list_size = iList[leaf_index].near_list_size;
+
+        // cout << "near_list_size for leaf " << leaf_index << ": " << near_list_size <<endl;
+
+#if OPENACC_ENABLED
+        #pragma acc loop vector(128) independent
+#endif
+        for (size_t ii = limit_1_b; ii <= limit_2_b; ii++) {
+            double tempx = 0.0;
+            double tempy = 0.0;
+
+#if OPENACC_ENABLED
+            #pragma acc loop seq
+#endif
+            for (size_t kk = 0; kk < near_list_size; kk++) {
+                size_t limit_1_c = tree_members[0][iList[leaf_index].near_list[kk]];
+                size_t limit_2_c = tree_members[1][iList[leaf_index].near_list[kk]];
+
+#if OPENACC_ENABLED
+                #pragma acc loop seq
+#endif
+                for (size_t jj = limit_1_c; jj <= limit_2_c; jj++) {
+                    double x_diff = particles_x[ii] - particles_x[jj];
+                    double y_diff = particles_y[ii] - particles_y[jj];
+                    double R  = x_diff*x_diff + y_diff*y_diff + epsilon*epsilon;
+                    double R2 = R * R;
+                    tempx += (1.0 / pi) * x_diff * y_diff / R2 * lambda[jj];
+                    tempy -= (1.0 / (2.0 * pi)) * (x_diff*x_diff - y_diff*y_diff + epsilon*epsilon) / R2 * lambda[jj];
+                } // jj
+            } // kk
+
+            velo_tc_reord_x[ii] += tempx;
+            velo_tc_reord_y[ii] += tempy;
+        } // ii
+    } // size_t leaf_index
+#if OPENACC_ENABLED
+} // End acc kernels region
+#endif
+}
+
+
+
+
+
+
+
+void U_Treecode::Call_BL_u2_grad_free_space()
+{
+    cout << "enter Call_BL_u2_grad_free_space" << endl;
+
+#if OPENACC_ENABLED
+#pragma acc kernels copyin(leaf_count) \
+present(leaf_members[0:2][0:leaf_count], \
+particles_x[0:numpars_s], particles_y[0:numpars_s], \
+iList[0:leaf_count], \
+velo_tc_reord_x[0:numpars_s], velo_tc_reord_y[0:numpars_s], \
+cList)
+{ // Begin acc kernels region
+#endif
+
+#if OPENACC_ENABLED
+    #pragma acc loop independent
+#endif
+    for (size_t leaf_index = 0; leaf_index < leaf_count; leaf_index++) {
+        size_t batch_limit_1 = leaf_members[0][leaf_index];
+        size_t batch_limit_2 = leaf_members[1][leaf_index];
+
+        size_t far_list_size = iList[leaf_index].far_list_size;
+
+        // cout << "far_list_size for leaf " << leaf_index << ": " << far_list_size <<endl;
+
+#if OPENACC_ENABLED
+        #pragma acc loop vector(128) independent
+#endif
+        for (size_t ii = batch_limit_1; ii <= batch_limit_2; ii++) {
+            double tempx = 0.0;
+            double tempy = 0.0;
+
+            double p_x = particles_x[ii];
+            double p_y = particles_y[ii];
+
+#if OPENACC_ENABLED
+            #pragma acc loop seq
+#endif
+            for (size_t jj = 0; jj < far_list_size; jj++) {
+                size_t far_index = iList[leaf_index].far_list[jj];
+
+#if OPENACC_ENABLED
+                #pragma acc loop seq
+#endif
+                for (int kk = 0; kk < Pflat; kk++) {
+                    int i = kk / PP;
+                    int j = kk % PP;
+                    double x_diff = p_x - cList[far_index].t1[i];
+                    double y_diff = p_y - cList[far_index].t2[j];
+                    double R  = x_diff*x_diff + y_diff*y_diff + epsilon*epsilon;
+                    double R2 = R * R;
+                    tempx += (1.0 / (2.0 * pi)) * (y_diff*y_diff - x_diff*x_diff + epsilon*epsilon) / R2 * cList[far_index].moments[kk];
+                    tempy -= (1.0 / pi) * (x_diff * y_diff) / R2 * cList[far_index].moments[kk];
+                } // kk
+            } // jj
+
+            velo_tc_reord_x[ii] += tempx;
+            velo_tc_reord_y[ii] += tempy;
+        } // ii
+    } // leaf_index
+#if OPENACC_ENABLED
+} // End acc kernels region
+#endif
+}
+
+
+void U_Treecode::Call_DS_u2_grad_free_space()
+{
+    cout << "enter Call_DS_u2_grad_free_space" << endl;
+#if OPENACC_ENABLED
+#pragma acc kernels copyin(leaf_count) \
+present(leaf_members[0:2][0:leaf_count], \
+tree_members[0:2][0:node_count], \
+particles_x[0:numpars_s], particles_y[0:numpars_s], \
+iList[0:leaf_count], \
+lambda[0:numpars_s], \
+velo_tc_reord_x[0:numpars_s], velo_tc_reord_y[0:numpars_s], \
+cList)
+{ // Begin acc kernels region
+#endif
+
+#if OPENACC_ENABLED
+    #pragma acc loop independent
+#endif
+    for (size_t leaf_index = 0; leaf_index < leaf_count; leaf_index++) {
+        size_t limit_1_b = leaf_members[0][leaf_index];
+        size_t limit_2_b = leaf_members[1][leaf_index];
+
+        size_t near_list_size = iList[leaf_index].near_list_size;
+
+        // cout << "near_list_size for leaf " << leaf_index << ": " << near_list_size <<endl;
+
+#if OPENACC_ENABLED
+        #pragma acc loop vector(128) independent
+#endif
+        for (size_t ii = limit_1_b; ii <= limit_2_b; ii++) {
+            double tempx = 0.0;
+            double tempy = 0.0;
+
+#if OPENACC_ENABLED
+            #pragma acc loop seq
+#endif
+            for (size_t kk = 0; kk < near_list_size; kk++) {
+                size_t limit_1_c = tree_members[0][iList[leaf_index].near_list[kk]];
+                size_t limit_2_c = tree_members[1][iList[leaf_index].near_list[kk]];
+
+#if OPENACC_ENABLED
+                #pragma acc loop seq
+#endif
+                for (size_t jj = limit_1_c; jj <= limit_2_c; jj++) {
+                    double x_diff = particles_x[ii] - particles_x[jj];
+                    double y_diff = particles_y[ii] - particles_y[jj];
+                    double R  = x_diff*x_diff + y_diff*y_diff + epsilon*epsilon;
+                    double R2 = R * R;
+                    tempx += (1.0 / (2.0 * pi)) * (y_diff*y_diff - x_diff*x_diff + epsilon*epsilon) / R2 * lambda[jj];
+                    tempy -= (1.0 / pi) * (x_diff * y_diff) / R2 * lambda[jj];
+                } // jj
+            } // kk
+
+            velo_tc_reord_x[ii] += tempx;
+            velo_tc_reord_y[ii] += tempy;
+        } // ii
+    } // size_t leaf_index
+#if OPENACC_ENABLED
+} // End acc kernels region
+#endif
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void U_Treecode::Compute_SUM()
 {
     switch (mode)
@@ -2041,6 +2325,19 @@ void U_Treecode::Compute_SUM()
             Call_BL_u2_grad();
             Call_DS_u2_grad();
             break;
+
+        case u1_grad_free_space: // for u1s_grad_x, u1s_grad_y, b1s_grad_x, b1s_grad_y
+            // cout << "u1_grad kernel: " <<endl;
+            Call_BL_u1_grad_free_space();
+            Call_DS_u1_grad_free_space();
+            break;
+
+        case u2_grad_free_space: // for u2s_grad_x, u2s_grad_y, b2s_grad_x, b2s_grad_y
+            // cout << "u2_grad kernel: " <<endl;
+            Call_BL_u2_grad_free_space();
+            Call_DS_u2_grad_free_space();
+            break;
+
 
         // case vorticity_grad: // for vorticity_grad_x, vorticity_grad_x, j_grad_x, j_grad_y
         //     // cout << "vorticity_grad kernel: " <<endl;
