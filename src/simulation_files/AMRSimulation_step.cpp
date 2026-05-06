@@ -38,6 +38,39 @@ int AMRSimulation::step() {
     general_list[0]->set_leaves_weights();
     general_list[1]->set_leaves_weights();
 
+    // calculate fileds after updating 
+    xs = general_list[0]->get_xs();
+    ys = general_list[0]->get_ys();
+    std::vector<double> u_ws_step(xs.size(), 0.0);
+    std::vector<double> b_ws_step(xs.size(), 0.0);
+    u_ws_step = general_list[0]->get_u_weights();
+    b_ws_step = general_list[0]->get_b_weights();
+    u1s.assign(xs.size(), 0.0); u2s.assign(xs.size(), 0.0);
+    b1s.assign(xs.size(), 0.0); b2s.assign(xs.size(), 0.0);
+    general_list[0]->evaluate_u_field(u1s, u2s, xs, ys, u_ws_step, t);
+    general_list[0]->evaluate_b_field(b1s, b2s, xs, ys, b_ws_step, t);
+    //external field for polarized_alfven wave
+    for (size_t i = 0; i < b1s.size(); ++i) {
+        b1s[i] +=  2.0/sqrt(5);
+        b2s[i] +=  1.0/sqrt(5);
+    }
+    // for (size_t i = 0; i < b1s.size(); ++i) {
+    //     b1s[i] += B0x;
+    //     b2s[i] += B0y;
+    // }
+
+    general_list[0]->set_u1s(u1s);
+    general_list[0]->set_u2s(u2s);
+    general_list[0]->set_b1s(b1s);
+    general_list[0]->set_b2s(b2s);
+    general_list[1]->set_u1s(u1s);
+    general_list[1]->set_u2s(u2s);
+    general_list[1]->set_b1s(b1s);
+    general_list[1]->set_b2s(b2s);
+
+
+
+
     // in future amr implementation
 
     
@@ -541,44 +574,48 @@ int AMRSimulation::rk4() {
     std::vector<double> k1_u_ws(xs.size(), 0.0), k2_u_ws(xs.size(), 0.0), k3_u_ws(xs.size(), 0.0), k4_u_ws(xs.size(), 0.0);
     std::vector<double> k1_b_ws(xs.size(), 0.0), k2_b_ws(xs.size(), 0.0), k3_b_ws(xs.size(), 0.0), k4_b_ws(xs.size(), 0.0);
 
-    if(iter_num > 1) {
-        k1_u_ws = general_list[0]->get_u_weights();
-        k1_b_ws = general_list[0]->get_b_weights();
-        general_list[0]->evaluate_u_field(k1_u1s, k1_u2s, xs, ys, k1_u_ws, t);
-        general_list[0]->evaluate_b_field(k1_b1s, k1_b2s, xs, ys, k1_b_ws, t);
+    // if(iter_num == 1) {
+    //     k1_u1s = general_list[0]->get_u1s();
+    //     k1_u2s = general_list[0]->get_u2s();
+    //     k1_b1s = general_list[0]->get_b1s();
+    //     k1_b2s = general_list[0]->get_b2s();
+    // }
+    // else{
+    //     k1_u_ws = general_list[0]->get_u_weights();
+    //     k1_b_ws = general_list[0]->get_b_weights();
+    //     general_list[0]->evaluate_u_field(k1_u1s, k1_u2s, xs, ys, k1_u_ws, t);
+    //     general_list[0]->evaluate_b_field(k1_b1s, k1_b2s, xs, ys, k1_b_ws, t);
 
-        //external field for alfven wave
-        // for (size_t i = 0; i < k1_b1s.size(); ++i) {
-        //     k1_b1s[i] +=  1.0;
-        // }
+    //     //external field for alfven wave
+    //     // for (size_t i = 0; i < k1_b1s.size(); ++i) {
+    //     //     k1_b1s[i] +=  1.0;
+    //     // }
 
-        // external field for polarized_alfven wave
-        for (size_t i = 0; i < k1_b1s.size(); ++i) {
-            k1_b1s[i] +=  2.0/sqrt(5);
-            k1_b2s[i] +=  1.0/sqrt(5);
-        }
-        // for (size_t i = 0; i < k1_b1s.size(); ++i) {
-        //     k1_b1s[i] += B0x;
-        //     k1_b2s[i] += B0y;
-        // }
+    //     // external field for polarized_alfven wave
+    //     for (size_t i = 0; i < k1_b1s.size(); ++i) {
+    //         k1_b1s[i] +=  2.0/sqrt(5);
+    //         k1_b2s[i] +=  1.0/sqrt(5);
+    //     }
+    //     // for (size_t i = 0; i < k1_b1s.size(); ++i) {
+    //     //     k1_b1s[i] += B0x;
+    //     //     k1_b2s[i] += B0y;
+    //     // }
 
+    //     general_list[0]->set_u1s(k1_u1s);
+    //     general_list[0]->set_u2s(k1_u2s);
+    //     general_list[0]->set_b1s(k1_b1s);
+    //     general_list[0]->set_b2s(k1_b2s);
 
-        general_list[0]->set_u1s(k1_u1s);
-        general_list[0]->set_u2s(k1_u2s);
-        general_list[0]->set_b1s(k1_b1s);
-        general_list[0]->set_b2s(k1_b2s);
+    //     general_list[1]->set_u1s(k1_u1s);
+    //     general_list[1]->set_u2s(k1_u2s);
+    //     general_list[1]->set_b1s(k1_b1s);
+    //     general_list[1]->set_b2s(k1_b2s);
+    // }
 
-        general_list[1]->set_u1s(k1_u1s);
-        general_list[1]->set_u2s(k1_u2s);
-        general_list[1]->set_b1s(k1_b1s);
-        general_list[1]->set_b2s(k1_b2s);
-    }
-    else{
-        k1_u1s = general_list[0]->get_u1s();
-        k1_u2s = general_list[0]->get_u2s();
-        k1_b1s = general_list[0]->get_b1s();
-        k1_b2s = general_list[0]->get_b2s();
-    }
+    k1_u1s = general_list[0]->get_u1s();
+    k1_u2s = general_list[0]->get_u2s();
+    k1_b1s = general_list[0]->get_b1s();
+    k1_b2s = general_list[0]->get_b2s();
 
     // ------------------------------------------------------------
     // Stage 1 : k1 = (k1_u1s, k1_u2s, k1_b1s, k1_b2s, k1_source_term)
@@ -881,6 +918,10 @@ int AMRSimulation::rk4() {
     general_list[1]->set_xs(original_q_minus_xs);
     general_list[1]->set_ys(original_q_minus_ys);
     general_list[1]->set_q0s(original_q_minus_q0s);
+
+
+
+    
 
     // out of rk4, in step:
     // general_list[0]->remesh();
