@@ -589,25 +589,11 @@ int AMRSimulation::rk4() {
     //     // }
 
     //     // external field for polarized_alfven wave
-    //     for (size_t i = 0; i < k1_b1s.size(); ++i) {
-    //         k1_b1s[i] +=  2.0/sqrt(5);
-    //         k1_b2s[i] +=  1.0/sqrt(5);
-    //     }
-    //     // for (size_t i = 0; i < k1_b1s.size(); ++i) {
-    //     //     k1_b1s[i] += B0x;
-    //     //     k1_b2s[i] += B0y;
-    //     // }
+        // for (size_t i = 0; i < k1_b1s.size(); ++i) {
+        //     k1_b1s[i] +=  2.0/sqrt(5);
+        //     k1_b2s[i] +=  1.0/sqrt(5);
+        // }
 
-    //     general_list[0]->set_u1s(k1_u1s);
-    //     general_list[0]->set_u2s(k1_u2s);
-    //     general_list[0]->set_b1s(k1_b1s);
-    //     general_list[0]->set_b2s(k1_b2s);
-
-    //     general_list[1]->set_u1s(k1_u1s);
-    //     general_list[1]->set_u2s(k1_u2s);
-    //     general_list[1]->set_b1s(k1_b1s);
-    //     general_list[1]->set_b2s(k1_b2s);
-    // }
 
     k1_u1s = general_list[0]->get_u1s();
     k1_u2s = general_list[0]->get_u2s();

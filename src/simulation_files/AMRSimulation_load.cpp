@@ -108,6 +108,9 @@ distribution* AMRSimulation::make_f0_return_ptr(pt::ptree &species_deck_portion)
         case 4: 
             f0 = new j0_current_sheet(kx,amp);
             break;
+        case 13:
+            f0 = new j0_bhattacharjee(kx, ky, amp);
+            break;
 
         // for alfven
         case 5: 

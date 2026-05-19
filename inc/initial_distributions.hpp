@@ -93,6 +93,16 @@ class j0_current_sheet: public distribution {
     double amp;
 };
 
+class j0_bhattacharjee: public distribution {
+    public:
+        j0_bhattacharjee(double kx_j, double ky_j, double amp_j);
+        double operator() (double x, double y);
+        void print();
+    double kx;
+    double ky;
+    double amp;
+};
+ 
 
 class j0_alfven: public distribution {
     public:

@@ -120,6 +120,29 @@ void j0_current_sheet::print() {
 }
 
 
+// ---- j0_bhattacharjee ----
+// Four-flux-tube coalescence setup, Bhattacharjee et al. Phys. Plasmas 2009.
+// psi(x,y) = A0 sin(kx*x) sin(ky*y)
+//   => j = -laplacian(psi) = A0 (kx^2 + ky^2) sin(kx*x) sin(ky*y)
+// Caller passes amp = A0 * (kx^2 + ky^2). On [0,2pi]^2 with kx=ky=1
+// and target peak |B| = 1, take A0=1 so amp = 2.
+j0_bhattacharjee::j0_bhattacharjee(double kx_j, double ky_j, double amp_j):
+    kx(kx_j), ky(ky_j), amp(amp_j) {}
+ 
+double j0_bhattacharjee::operator()(double x, double y) {
+    return amp * sin(kx * x) * sin(ky * y);
+}
+ 
+void j0_bhattacharjee::print() {
+    std::cout << "j0_bhattacharjee: amp * sin(kx * x) * sin(ky * y) "
+              << "(four-flux-tube coalescence, Bhattacharjee+09)" << std::endl;
+}
+
+
+
+
+
+
 // ---- j0_alfven----
 j0_alfven::j0_alfven(double kx_j, double amp_j):
     kx(kx_j), amp(amp_j) {}

@@ -157,6 +157,14 @@ void Periodizer::compute_xi(const std::vector<double>& near_u_on_walls)
 
     // Solve Q * xi = g in least-squares sense
     Eigen::VectorXd xi_eigen = Q_solver.solve(g);
+    
+    double g_norm = g.norm();
+    double xi_norm = xi_eigen.norm();
+    double residual = (Q_matrix * xi_eigen - g).norm();
+    std::cout << "[Periodizer] |g|=" << g_norm 
+            << " |xi|=" << xi_norm 
+            << " residual=" << residual
+            << " rel_residual=" << (g_norm > 0 ? residual/g_norm : 0) << std::endl;
 
     for (int j = 0; j < M; ++j) xi[j] = xi_eigen(j);
 }
@@ -189,54 +197,54 @@ void Periodizer::add_correction(const std::vector<double>& tx,
     }
 }
 
-void Periodizer::add_correction_grad_u1(const std::vector<double>& tx,
-                                        const std::vector<double>& ty,
-                                        std::vector<double>& du1_dx,
-                                        std::vector<double>& du1_dy) const
-{
-    const double pi = 3.14159265358979323846;
-    const int N = (int)tx.size();
+// void Periodizer::add_correction_grad_u1(const std::vector<double>& tx,
+//                                         const std::vector<double>& ty,
+//                                         std::vector<double>& du1_dx,
+//                                         std::vector<double>& du1_dy) const
+// {
+//     const double pi = 3.14159265358979323846;
+//     const int N = (int)tx.size();
 
-    #pragma omp parallel for
-    for (int i = 0; i < N; ++i) {
-        double s1 = 0.0, s2 = 0.0;
-        for (int j = 0; j < M; ++j) {
-            double dx = tx[i] - proxy_x[j];
-            double dy = ty[i] - proxy_y[j];
-            double R  = dx*dx + dy*dy + eps*eps;
-            double R2 = R * R;
-            // d/dx of (-1/(2pi) * dy / R) summed over j:
-            s1 += xi[j] * ( (1.0 / pi) * (dx * dy) / R2 );
-            // d/dy of (-1/(2pi) * dy / R):
-            s2 += xi[j] * ( -(1.0 / (2.0 * pi)) * (dx*dx - dy*dy + eps*eps) / R2 );
-        }
-        du1_dx[i] += s1;
-        du1_dy[i] += s2;
-    }
-}
+//     #pragma omp parallel for
+//     for (int i = 0; i < N; ++i) {
+//         double s1 = 0.0, s2 = 0.0;
+//         for (int j = 0; j < M; ++j) {
+//             double dx = tx[i] - proxy_x[j];
+//             double dy = ty[i] - proxy_y[j];
+//             double R  = dx*dx + dy*dy + eps*eps;
+//             double R2 = R * R;
+//             // d/dx of (-1/(2pi) * dy / R) summed over j:
+//             s1 += xi[j] * ( (1.0 / pi) * (dx * dy) / R2 );
+//             // d/dy of (-1/(2pi) * dy / R):
+//             s2 += xi[j] * ( -(1.0 / (2.0 * pi)) * (dx*dx - dy*dy + eps*eps) / R2 );
+//         }
+//         du1_dx[i] += s1;
+//         du1_dy[i] += s2;
+//     }
+// }
 
-void Periodizer::add_correction_grad_u2(const std::vector<double>& tx,
-                                        const std::vector<double>& ty,
-                                        std::vector<double>& du2_dx,
-                                        std::vector<double>& du2_dy) const
-{
-    const double pi = 3.14159265358979323846;
-    const int N = (int)tx.size();
+// void Periodizer::add_correction_grad_u2(const std::vector<double>& tx,
+//                                         const std::vector<double>& ty,
+//                                         std::vector<double>& du2_dx,
+//                                         std::vector<double>& du2_dy) const
+// {
+//     const double pi = 3.14159265358979323846;
+//     const int N = (int)tx.size();
 
-    #pragma omp parallel for
-    for (int i = 0; i < N; ++i) {
-        double s1 = 0.0, s2 = 0.0;
-        for (int j = 0; j < M; ++j) {
-            double dx = tx[i] - proxy_x[j];
-            double dy = ty[i] - proxy_y[j];
-            double R  = dx*dx + dy*dy + eps*eps;
-            double R2 = R * R;
-            // d/dx of (1/(2pi) * dx / R):
-            s1 += xi[j] * ( (1.0 / (2.0 * pi)) * (dy*dy - dx*dx + eps*eps) / R2 );
-            // d/dy of (1/(2pi) * dx / R):
-            s2 += xi[j] * ( -(1.0 / pi) * (dx * dy) / R2 );
-        }
-        du2_dx[i] += s1;
-        du2_dy[i] += s2;
-    }
-}
+//     #pragma omp parallel for
+//     for (int i = 0; i < N; ++i) {
+//         double s1 = 0.0, s2 = 0.0;
+//         for (int j = 0; j < M; ++j) {
+//             double dx = tx[i] - proxy_x[j];
+//             double dy = ty[i] - proxy_y[j];
+//             double R  = dx*dx + dy*dy + eps*eps;
+//             double R2 = R * R;
+//             // d/dx of (1/(2pi) * dx / R):
+//             s1 += xi[j] * ( (1.0 / (2.0 * pi)) * (dy*dy - dx*dx + eps*eps) / R2 );
+//             // d/dy of (1/(2pi) * dx / R):
+//             s2 += xi[j] * ( -(1.0 / pi) * (dx * dy) / R2 );
+//         }
+//         du2_dx[i] += s1;
+//         du2_dy[i] += s2;
+//     }
+// }
