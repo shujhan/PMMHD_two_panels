@@ -86,6 +86,17 @@ void Panel::set_child_inds_start(int c0) {
     child_inds_start = c0;
 }
 
+
+void Panel::set_child_inds_start(int c0, bool refined_y) {
+    is_refined_y = true;
+    needs_refinement = false;
+    child_inds_start = c0;
+}
+
+
+
+
+
 void Panel::print_panel() const {
     cout << "--------\n";
     cout << "Panel " << panel_ind << " is at level " << level << endl;

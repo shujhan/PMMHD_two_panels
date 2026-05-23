@@ -124,8 +124,10 @@ class AMRStructure {
 
         int create_prerefined_mesh(); 
 
-        void refine_panels(std::function<double (double,double)> f, bool do_adaptive_refine);
+        void refine_panels(std::function<double (double,double)> f, bool do_adaptive_refine, bool is_initial_step);
+        void refine_panels_refine_v(std::function<double (double,double)> f, bool do_adaptive_refine);
 
+        
         void set_leaves_weights();
         void recursively_set_leaves_weights(int panel_ind);
 

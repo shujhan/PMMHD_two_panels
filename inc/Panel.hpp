@@ -68,6 +68,7 @@ struct Panel {
                         int p5, int p6, int p7, int p8);
 
     void set_child_inds_start(int c0);
+    void set_child_inds_start(int c0, bool refined_y);
 
 
     void print_panel() const;

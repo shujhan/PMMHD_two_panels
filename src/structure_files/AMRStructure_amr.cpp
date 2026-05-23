@@ -6,7 +6,7 @@ void AMRStructure::generate_mesh(std::function<double (double,double)> f0,
                                 std::function<double (double,double)> f2, 
                                  bool do_adaptive_refine, bool is_initial_step) 
 {
-    // bool verbose=false;
+    bool verbose=false;
 
     // auto start = high_resolution_clock::now();
     create_prerefined_mesh();
@@ -41,7 +41,7 @@ void AMRStructure::generate_mesh(std::function<double (double,double)> f0,
     int num_panels_pre_refine = panels.size();
 
     if (do_adaptive_refine) {
-        start = high_resolution_clock::now();
+        // start = high_resolution_clock::now();
 
         for (int ii = minimum_unrefined_index; ii < panels.size(); ++ii) {
             test_panel(ii, verbose);
@@ -52,15 +52,15 @@ void AMRStructure::generate_mesh(std::function<double (double,double)> f0,
 
         while (need_further_refinement) {
             need_further_refinement = false;
-            auto amr_start = high_resolution_clock::now();
-            refine_panels(f0, do_adaptive_refine);
+            // auto amr_start = high_resolution_clock::now();
+            refine_panels(f0, do_adaptive_refine, is_initial_step);
             // refine_panels(f1, do_adaptive_refine);
-            auto amr_stop = high_resolution_clock::now();
+            // auto amr_stop = high_resolution_clock::now();
             add_time(amr_refine_time, duration_cast<duration<double>>(amr_stop-amr_start) );
 
             amr_start = high_resolution_clock::now();
             for (int ii = minimum_unrefined_index; ii < panels.size(); ++ii) {
-                if (!panels[ii].is_refined_xv) {
+                if (!panels[ii].is_refined_xy) {
                     test_panel(ii, verbose);
                 }
             }
@@ -182,7 +182,7 @@ int AMRStructure::create_prerefined_mesh() {
         for (auto panel_it = panels.begin() + minimum_unrefined_index; panel_it != panels.end(); ++panel_it) {
             panel_it->needs_refinement = true;
         }
-        refine_panels( [] (double x, double y) {return 1.0;} , false);
+        refine_panels( [] (double x, double y) {return 1.0;} , false, true);
         minimum_unrefined_index = num_panels_pre_refine;
     }
 
@@ -528,7 +528,7 @@ void AMRStructure::refine_panels_refine_v(std::function<double (double,double)> 
 
 
 
-void AMRStructure::refine_panels(std::function<double (double,double)> f, bool do_adaptive_refine) {
+void AMRStructure::refine_panels(std::function<double (double,double)> f, bool do_adaptive_refine, bool is_initial_step) {
     std::vector <double> new_xs;
     std::vector <double> new_ys;
     std::vector <double> new_w0s;
@@ -872,11 +872,22 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
     new_w0s.reserve(new_xs.size() );
     new_j0s.reserve(new_xs.size() );
     new_q0s.reserve(new_xs.size() );
-    for (int ii = 0; ii < new_xs.size(); ++ii) {
-        new_w0s.push_back( f(new_xs.at(ii), new_ys.at(ii)) );
-        new_j0s.push_back( f(new_xs.at(ii), new_ys.at(ii)) );
-        new_q0s.push_back( f(new_xs.at(ii), new_ys.at(ii)) );
+
+    if (is_initial_step) {
+        for (int ii = 0; ii < new_xs.size(); ++ii) {
+            new_w0s.push_back( f(new_xs.at(ii), new_ys.at(ii)) );
+            new_j0s.push_back( f(new_xs.at(ii), new_ys.at(ii)) );
+            new_q0s.push_back( f(new_xs.at(ii), new_ys.at(ii)) );
+        }
     }
+    else {
+        for (int ii = 0; ii < new_xs.size(); ++ii) {
+            new_w0s.push_back( (*w0)(new_xs.at(ii), new_ys.at(ii)) );
+            new_j0s.push_back( (*j0)(new_xs.at(ii), new_ys.at(ii)) );
+            new_q0s.push_back( (*q0)(new_xs.at(ii), new_ys.at(ii)) );
+        }
+    }
+
 
     for (int ii = 0; ii < new_xs.size(); ++ii) {
         xs.push_back(new_xs[ii]); 
