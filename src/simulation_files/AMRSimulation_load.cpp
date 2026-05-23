@@ -178,8 +178,17 @@ AMRStructure* AMRSimulation::make_species_return_ptr(pt::ptree &species_deck_por
     int y_height = deck.get<int>("y_height",0);
     int max_height = deck.get<int>("max_height", initial_height);
     bool do_adaptively_refine = deck.get<bool> ("do_adaptively_refine", false);
-    double amr_epsilons = deck.get<double>("amr_epsilons",0.1);
-    
+    std::vector<double> amr_epsilons; 
+    try {
+        for (pt::ptree::value_type &eps : deck.get_child("amr_epsilons")) {
+            amr_epsilons.push_back(eps.second.get_value<double>() );
+        }
+    } catch(std::exception& err) {
+        cout << "Unable to find amr refinement values.  Disabling amr." << endl;
+        amr_epsilons = std::vector<double>();
+
+        do_adaptively_refine = false;
+    }
 
     AMRStructure *species = new AMRStructure{sim_dir, sp_name,
                 w0, j0, q0, initial_height, y_height,max_height, greens_epsilon,

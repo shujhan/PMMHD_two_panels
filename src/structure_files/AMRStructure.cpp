@@ -9,7 +9,7 @@ AMRStructure::AMRStructure(std::string sim_dir, std::string species_name,
                             double x_min, double x_max, double y_min, double y_max, 
                             BoundaryConditions bcs, 
                             Quadrature quad, Field* calculate_e, Periodizer* periodizer,
-                            bool do_adaptively_refine, double amr_epsilons)
+                            bool do_adaptively_refine, std::vector<double> amr_epsilons)
                            : w0(w0), j0(j0), q0(q0),
                            initial_height(initial_height), y_height(y_height),
                            max_height(max_height), greens_epsilon(greens_epsilon),

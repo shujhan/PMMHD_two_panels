@@ -324,19 +324,46 @@ void AMRStructure::refine_panels_refine_v(std::function<double (double,double)> 
             // check bottom neighbor
             int bottom_nbr_ind = panel->bottom_nbr_ind;
             if (bottom_nbr_ind == -2) {
+                // Hard boundary: no periodicity in y; child 0 has no bottom neighbor.
+                // Note: refine_v on its own does not introduce new bottom-edge vertices
+                // because the bottom edge of the parent IS the bottom edge of child 0
+                // (no new mid-x vertex needed below the parent).
                 child_0_bottom_nbr_ind = -2;
             } else if (bottom_nbr_ind == -1) {
-                cout << "not allowed to refine in v if panel doesn't have bottom neighbor!" << endl;
+                // Bottom neighbor at this level is not yet refined: walk up to parent
+                // and flag the parent's bottom neighbor for refinement so the cascade
+                // can continue. This mirrors the behavior in refine_panels.
+                panel_parent = &(panels[panel->parent_ind]);
+                Panel* parent_bottom = &(panels[panel_parent->bottom_nbr_ind]);
+                if (!(parent_bottom->is_refined_xy || parent_bottom->is_refined_y)) {
+                    parent_bottom->needs_refinement = true;
+                    need_further_refinement = true;
+                    #ifdef DEBUG
+                    cout << "refine_v: setting refinement flag on parent's bottom nbr, from panel " << jj << endl;
+                    #endif
+                }
+                child_0_bottom_nbr_ind = -1;
             } else {
                 Panel* panel_bottom = &(panels[bottom_nbr_ind]);
-                if (panel_bottom->is_refined_xy ) {
+                if (panel_bottom->is_refined_xy) {
+                    // Design intent: don't mix xy-refined neighbors with v-only refinement.
                     cout << "Shouldn't be allowed to call refine in v if bottom neighbor is refined in x and v!" << endl;
+                    child_0_bottom_nbr_ind = bottom_nbr_ind;  // best-effort fallback
                 }
                 else {
                     if (!panel_bottom->is_refined_y) {
+                        // Neighbor exists at our level but isn't subdivided.
+                        // The new child 0's bottom neighbor is the whole panel_bottom.
+                        // Update panel_bottom's top neighbor to point at our new child 0.
                         child_0_bottom_nbr_ind = bottom_nbr_ind;
+                        // Only repoint if we're not crossing a periodic seam --
+                        // i.e., if our panel is NOT on the bottom boundary, OR if BCs are not periodic.
+                        // (If we ARE on the periodic bottom seam, panel_bottom is the wrapped panel
+                        //  at the top of the domain; its top_nbr_ind should keep pointing into us
+                        //  the same way it always did. The same line works either way.)
                         panel_bottom->top_nbr_ind = num_new_panels;
-                    } else { //panel_bottom is refined in v
+                    } else {
+                        // Neighbor is itself y-refined: reuse its top child (index +1) as our child 0's bottom neighbor.
                         child_0_bottom_nbr_ind = panel_bottom->child_inds_start + 1;
                         Panel* child_0_bottom_nbr = &(panels[child_0_bottom_nbr_ind]);
                         child_0_bottom_nbr->top_nbr_ind = num_new_panels;
@@ -349,17 +376,31 @@ void AMRStructure::refine_panels_refine_v(std::function<double (double,double)> 
             if (top_nbr_ind == -2) {
                 child_1_top_nbr_ind = -2;
             } else if (top_nbr_ind == -1) {
-                cout << "not allowed to refine in v if panel doesn't have top neighbor!" << endl;
+                // Top neighbor at this level isn't refined: cascade up to the parent.
+                panel_parent = &(panels[panel->parent_ind]);
+                Panel* parent_top = &(panels[panel_parent->top_nbr_ind]);
+                if (!(parent_top->is_refined_xy || parent_top->is_refined_y)) {
+                    parent_top->needs_refinement = true;
+                    need_further_refinement = true;
+                    #ifdef DEBUG
+                    cout << "refine_v: setting refinement flag on parent's top nbr, from panel " << jj << endl;
+                    #endif
+                }
+                child_1_top_nbr_ind = -1;
             } else {
                 Panel* panel_top = &(panels[top_nbr_ind]);
-                if (panel_top->is_refined_xy ) {
-                    cout << "Shouldn't be allowed to call refine in v if bottom neighbor is refined in x and v!" << endl;
+                if (panel_top->is_refined_xy) {
+                    cout << "Shouldn't be allowed to call refine in v if top neighbor is refined in x and v!" << endl;
+                    child_1_top_nbr_ind = top_nbr_ind;  // best-effort fallback
                 } else {
                     if (!panel_top->is_refined_y) {
-                        child_1_top_nbr_ind = -1;
-                        // panel_top->bottom_nbr_ind = num_new_panels + 1;
+                        // Top neighbor exists but isn't subdivided.
+                        // Make child 1's top neighbor the whole panel_top, and update panel_top's bottom_nbr_ind.
+                        child_1_top_nbr_ind = top_nbr_ind;
+                        panel_top->bottom_nbr_ind = num_new_panels + 1;
                     }
                     else {
+                        // Top neighbor is y-refined: reuse its bottom child (index +0) as our child 1's top neighbor.
                         child_1_top_nbr_ind = panel_top->child_inds_start;
                         Panel* child_1_top_nbr = &(panels[child_1_top_nbr_ind]);
                         child_1_top_nbr->bottom_nbr_ind = num_new_panels + 1;
@@ -850,73 +891,43 @@ void AMRStructure::refine_panels(std::function<double (double,double)> f, bool d
 
 
 void AMRStructure::test_panel(int panel_ind, bool verbose) {
-    // cout << "testing panel " << panel_ind << endl;
+    auto panel_it = panels.begin() + panel_ind;
 
     double panel_w0s[9];
     double panel_j0s[9];
-    auto panel_it = panels.begin() + panel_ind;
     for (int ii = 0; ii < 9; ++ii) {
         panel_w0s[ii] = w0s[panel_it->point_inds[ii]];
         panel_j0s[ii] = j0s[panel_it->point_inds[ii]];
     }
-    // std::vector<bool> criteria(amr_epsilons.size(), true);
-    bool refine_criteria_met = false;
-    if (amr_epsilons.size() > 0) {
-        double max_w0s = panel_w0s[0];
-        double min_w0s = panel_w0s[0];
-        double max_j0s = panel_j0s[0];
-        double min_j0s = panel_j0s[0];
-        for (int ii = 1; ii < 9; ++ii) {
-            double w0sii = panel_w0s[ii];
-            double j0sii = panel_j0s[ii];
-            if (max_w0s < w0sii) { max_w0s = w0sii; }
-            if (min_w0s > w0sii) { min_w0s = w0sii; }
-            if (max_j0s < j0sii) { max_j0s = j0sii; }
-            if (min_j0s > j0sii) { min_j0s = j0sii; }
-        }
-        // finding trouble panels in amr
-        if (max_w0s - min_w0s >= 800) {
-            cout << "interpolation trouble at panel " << panel_ind << endl;
-            cout << "max w0s " << max_w0s << ", min w0s" << min_w0s << ", difference= " << max_w0s - min_w0s << endl;
-            for (int ii = 0; ii < 9; ++ii) {
-                int pind = panel_it->point_inds[ii];
-                cout << "point " << pind << ": (x,y,w0s)=(" << xs[pind] << ", " << ys[pind] << ", " << panel_w0s[ii] << ")" << endl;
-            }
-            cout << endl;
-        }
 
-        if (max_j0s - min_j0s >= 800) {
-            cout << "interpolation trouble at panel " << panel_ind << endl;
-            cout << "max j0s " << max_j0s << ", min j0s" << min_j0s << ", difference= " << max_j0s - min_j0s << endl;
-            for (int ii = 0; ii < 9; ++ii) {
-                int pind = panel_it->point_inds[ii];
-                cout << "point " << pind << ": (x,y,j0s)=(" << xs[pind] << ", " << ys[pind] << ", " << panel_j0s[ii] << ")" << endl;
-            }
-            cout << endl;
-        }
+    double max_w0 = panel_w0s[0], min_w0 = panel_w0s[0];
+    double max_j0 = panel_j0s[0], min_j0 = panel_j0s[0];
+    for (int ii = 1; ii < 9; ++ii) {
+        if (panel_w0s[ii] > max_w0) max_w0 = panel_w0s[ii];
+        if (panel_w0s[ii] < min_w0) min_w0 = panel_w0s[ii];
+        if (panel_j0s[ii] > max_j0) max_j0 = panel_j0s[ii];
+        if (panel_j0s[ii] < min_j0) min_j0 = panel_j0s[ii];
+    }
 
+    // amr_epsilons[0] is for vorticity, amr_epsilons[1] is for j
+    bool refine_criteria_met =
+        (max_w0 - min_w0 > amr_epsilons[0]) ||
+        (max_j0 - min_j0 > amr_epsilons[1]); 
 
-        refine_criteria_met = refine_criteria_met || (max_w0s - min_w0s > amr_epsilons[0]) || (max_j0s - min_j0s > amr_epsilons[0]);
-
-    if (panel_it->level < max_height && refine_criteria_met) { 
-        panel_it->needs_refinement = true; 
+    if (panel_it->level < max_height && refine_criteria_met) {
+        panel_it->needs_refinement = true;
         need_further_refinement = true;
         if (verbose) {
-            cout << "panel " << panel_ind << " is level " << panel_it->level << ", max height " << max_height << ", and is flagged for refinement" << endl;
+            cout << "panel " << panel_ind << " is level " << panel_it->level
+                 << ", max height " << max_height
+                 << ", and is flagged for refinement" << endl;
         }
-    }
-    else if (verbose)
-    {
-        cout << "panel " << panel_ind << " is level " << panel_it->level << ", max height " << max_height;
-        if (refine_criteria_met) {
-            cout << ", and is flagged for refinement" << endl;
-        } else {
-            cout << ", and is not flagged for refinement" << endl;
-        }
+    } else if (verbose) {
+        cout << "panel " << panel_ind << " is level " << panel_it->level
+             << ", max height " << max_height
+             << ", and is not flagged for refinement" << endl;
     }
 }
-
-
 
 
 
